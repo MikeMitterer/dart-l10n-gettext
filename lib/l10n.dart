@@ -6,7 +6,7 @@ import 'dart:convert';
 
 import "package:validate/validate.dart";
 
-import "package:l10n/interfaces.dart";
+part "interfaces.dart";
 
 part 'src/l10n/keys.dart';
 part 'src/l10n/L10NImpl.dart';
@@ -15,7 +15,7 @@ final L10NTranslate TRANSLATOR = new L10NTranslate();
 
 /// Shortcut to get a L10N object
 L10N l10n(final String key,final String defaultMessage, [final Map<String, dynamic> l10nvariables = const {} ]) {
-    return new L10NImpl(key,defaultMessage,l10nvariables);
+    return new L10N(key,defaultMessage,l10nvariables);
 }
 
 /**

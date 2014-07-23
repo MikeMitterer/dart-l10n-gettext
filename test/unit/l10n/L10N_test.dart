@@ -40,6 +40,14 @@ testL10N() {
             expect(message.message,"Hallo Mike");
         }); // end of 'Creation' test
 
+        test('> const Creation', () {
+            const L10N message = const L10N("test.message","Hallo Mike");
+            expect(message,isNotNull);
+
+            expect(message.key,"test.message");
+            expect(message.message,"Hallo Mike");
+        }); // end of 'const Creation' test
+
         test('> Creation with vars', () {
             final L10N message = l10n("test.message","Hallo {{name}}, du bist jetzt {{age}} Jahre alt",{ "name" : "Mike", "age" : 47});
             expect(message,isNotNull);

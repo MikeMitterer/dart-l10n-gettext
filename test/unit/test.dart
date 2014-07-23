@@ -24,7 +24,6 @@ import 'package:logging/logging.dart';
 //---------------------------------------------------------
 import 'package:validate/validate.dart';
 import 'package:console_log_handler/console_log_handler.dart';
-import "package:l10n/interfaces.dart";
 import 'package:l10n/l10n.dart';
 
 //---------------------------------------------------------
