@@ -15,34 +15,32 @@ class L10NImpl implements L10N {
     final _logger = new Logger('l10n.L10NMessage');
 
     /// Key auf den Eintrag in der Sprachtabelle
-    String _key;
+    final String _key;
 
     /// DefaultMessage die angzeigt wird wenn der Key nicht gefunden wird
-    String _defaultMessage;
+    final String _defaultMessage;
 
     /// Die Variablen die im _l10nkey gesetzt werden können
-    Map<String, dynamic> _variables = new HashMap<String,dynamic>();
+    final Map<String, dynamic> _variables;
 
     L10NImpl(this._key,final String defaultMessage, [ Map<String, dynamic> l10nvariables = const {} ]) :
-        _variables = new HashMap.from(l10nvariables), _defaultMessage = defaultMessage.trim() {
+        _variables = new HashMap.from(l10nvariables), _defaultMessage = defaultMessage.trim();
 
-        Validate.notBlank(_key);
-        Validate.notBlank(_defaultMessage);
-        Validate.notNull(_variables);
-    }
-
-    L10NImpl.fromJson(final data) {
+    factory L10NImpl.fromJson(final data) {
         Validate.notNull(data);
-        Map<String,dynamic> json = _toJsonMap(data);
+        Map<String,dynamic> json = L10NImpl._toJsonMap(data);
 
         Validate.isKeyInMap("key",json);
         Validate.isKeyInMap("defaultmessage",json);
 
-        _key = json['key'];
-        _defaultMessage = json['defaultmessage'];
+        final String key = json['key'];
+        final String defaultMessage = json['defaultmessage'];
+        Map<String, dynamic> variablesTemp = new HashMap<String,dynamic>();
+
         if(json.containsKey("variables")) {
-            _variables = _toJsonMap(json["variables"]);
+            variablesTemp = L10NImpl._toJsonMap(json["variables"]);
         }
+        return new L10NImpl(key,defaultMessage,variablesTemp);
     }
 
     Map<String, dynamic> get variables => _variables;
@@ -83,7 +81,7 @@ class L10NImpl implements L10N {
 
     /// Egal wie die Daten ankommen, ob als bereits als Map oder als String, die Daten werden
     /// immer als JSON-Map zurückgegeben
-    Map<String,dynamic> _toJsonMap(final data) {
+    static Map<String,dynamic> _toJsonMap(final data) {
         Validate.notNull(data);
 
         if(data is Map) {
