@@ -1,7 +1,7 @@
 library l10n;
 
 import "dart:collection";
-import 'package:logging/logging.dart';
+//import 'package:logging/logging.dart';
 import 'dart:convert';
 
 import "package:validate/validate.dart";
@@ -14,13 +14,8 @@ part 'src/l10n/L10NImpl.dart';
 final L10NTranslate TRANSLATOR = new L10NTranslate();
 
 /// Shortcut to get a L10N object
-L10N l10n(final String key,final String defaultMessage, [ Map<String, dynamic> l10nvariables = const {} ]) {
+L10N l10n(final String key,final String defaultMessage, [final Map<String, dynamic> l10nvariables = const {} ]) {
     return new L10NImpl(key,defaultMessage,l10nvariables);
-}
-
-String _sanitizeMessage(final String translatedMessage) {
-    Validate.notBlank(translatedMessage);
-    return translatedMessage.replaceAll(new RegExp(r'(\.\n)'),". ").replaceAll(new RegExp(r'(\n|\r|\s{2,})')," ").trim();
 }
 
 /**

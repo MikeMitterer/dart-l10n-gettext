@@ -1,5 +1,10 @@
 part of l10n;
 
+String _sanitizeMessage(final String translatedMessage) {
+    Validate.notBlank(translatedMessage);
+    return translatedMessage.replaceAll(new RegExp(r'(\.\n)'),". ").replaceAll(new RegExp(r'(\n|\r|\s{2,})')," ").trim();
+}
+
 /**
  * Handelt eine Message die später übersetzt werden kann.
  *
@@ -12,8 +17,6 @@ part of l10n;
  * Ergebnis für das oben genannte Sample wäre dann: "Hallo Mike, du bist jetzt 47 Jahre alt"
  */
 class L10NImpl implements L10N {
-    final _logger = new Logger('l10n.L10NMessage');
-
     /// Key auf den Eintrag in der Sprachtabelle
     final String _key;
 
@@ -23,8 +26,7 @@ class L10NImpl implements L10N {
     /// Die Variablen die im _l10nkey gesetzt werden können
     final Map<String, dynamic> _variables;
 
-    L10NImpl(this._key,final String defaultMessage, [ Map<String, dynamic> l10nvariables = const {} ]) :
-        _variables = new HashMap.from(l10nvariables), _defaultMessage = defaultMessage.trim();
+    const L10NImpl(this._key,this._defaultMessage, [ Map<String, dynamic> this._variables = const {} ]);
 
     factory L10NImpl.fromJson(final data) {
         Validate.notNull(data);
@@ -48,7 +50,7 @@ class L10NImpl implements L10N {
     String get key => _key;
 
     String get message {
-        String message = _defaultMessage;
+        String message = _defaultMessage.trim();
 
         _variables.forEach((final String key,final value) {
             message = message.replaceAll("{{$key}}",value.toString());
