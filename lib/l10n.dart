@@ -37,7 +37,7 @@ class L10NTranslate {
         if(_locale.containsKey(l10n.key)) {
             translatedMessage = _locale[l10n.key];
 
-            l10n.variables.forEach((final String key,final value) {
+            l10n.vars.forEach((final String key,final value) {
                 translatedMessage = translatedMessage.replaceAll("{{$key}}",value.toString());
             });
 

@@ -16,7 +16,7 @@ testL10N() {
     final String jsonToTest = "{\n" +
         "   \"key\" : \"test.message\",\n" +
         "   \"defaultmessage\" : \"Hallo {{name}}, du bist jetzt {{age}} Jahre alt\",\n" +
-        "   \"variables\" :\n" +
+        "   \"vars\" :\n" +
         "      {\n" +
         "         \"name\" : \"Mike\",\n" +
         "         \"age\" : 47\n" +
@@ -67,9 +67,9 @@ testL10N() {
             expect(message.key,"test.message");
             expect(message.message,"Hallo Mike, du bist jetzt 47 Jahre alt");
 
-            expect(message.variables.length,2);
-            expect(message.variables["name"],"Mike");
-            expect(message.variables["age"],47);
+            expect(message.vars.length,2);
+            expect(message.vars["name"],"Mike");
+            expect(message.vars["age"],47);
         }); // end of 'from Json' test
 
         test('> from Json ohne Vars', () {
@@ -80,7 +80,7 @@ testL10N() {
             expect(message.key,"test.message");
             expect(message.message,"Hallo {{name}}, du bist jetzt {{age}} Jahre alt");
 
-            expect(message.variables.length,0);
+            expect(message.vars.length,0);
         }); // end of 'from Json ohne Vars' test
 
         test('> Translatable', () {

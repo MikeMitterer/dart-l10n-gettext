@@ -1,18 +1,11 @@
 library unit.test;
 
-import 'dart:html';
-import 'dart:convert';
 import 'package:unittest/html_enhanced_config.dart';
 
 //-----------------------------------------------------------------------------
 // Notwendige externe includes
 
 import 'package:unittest/unittest.dart';
-
-import 'dart:collection';
-import 'dart:async';
-
-import 'package:intl/intl.dart';
 
 //-----------------------------------------------------------------------------
 // Logging
@@ -22,7 +15,6 @@ import 'package:logging/logging.dart';
 //---------------------------------------------------------
 // Extra packages (piepag) (http_utils, validate, signer)
 //---------------------------------------------------------
-import 'package:validate/validate.dart';
 import 'package:console_log_handler/console_log_handler.dart';
 import 'package:l10n/l10n.dart';
 

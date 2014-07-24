@@ -24,9 +24,9 @@ class L10NImpl implements L10N {
     final String _defaultMessage;
 
     /// Die Variablen die im _l10nkey gesetzt werden können
-    final Map<String, dynamic> _variables;
+    final Map<String, dynamic> _vars;
 
-    const L10NImpl(this._key,this._defaultMessage, [ Map<String, dynamic> this._variables = const {} ]);
+    const L10NImpl(this._key,this._defaultMessage, [ Map<String, dynamic> this._vars = const {} ]);
 
     factory L10NImpl.fromJson(final data) {
         Validate.notNull(data);
@@ -37,22 +37,22 @@ class L10NImpl implements L10N {
 
         final String key = json['key'];
         final String defaultMessage = json['defaultmessage'];
-        Map<String, dynamic> variablesTemp = new HashMap<String,dynamic>();
+        Map<String, dynamic> tempVars = new HashMap<String,dynamic>();
 
-        if(json.containsKey("variables")) {
-            variablesTemp = L10NImpl._toJsonMap(json["variables"]);
+        if(json.containsKey("vars")) {
+            tempVars = L10NImpl._toJsonMap(json["vars"]);
         }
-        return new L10NImpl(key,defaultMessage,variablesTemp);
+        return new L10NImpl(key,defaultMessage,tempVars);
     }
 
-    Map<String, dynamic> get variables => _variables;
+    Map<String, dynamic> get vars => _vars;
 
     String get key => _key;
 
     String get message {
         String message = _defaultMessage.trim();
 
-        _variables.forEach((final String key,final value) {
+        _vars.forEach((final String key,final value) {
             message = message.replaceAll("{{$key}}",value.toString());
         });
 
@@ -64,7 +64,7 @@ class L10NImpl implements L10N {
 
         map['key'] = _key;
         map['defaultmessage'] = _defaultMessage;
-        map['variables'] = _variables;
+        map['vars'] = _vars;
 
         return map;
     }
