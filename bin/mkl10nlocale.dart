@@ -1,12 +1,5 @@
 #!/usr/bin/env dart
 
-// Weiterlesen:
-//      https://www.dartlang.org/docs/serverguide.html#shell-scripting
-//
-// Sample:
-//      git --git-dir=/Volumes/Daten/DevLocal/DevJava/MobileAdvertising/MobiAd.REST/.git history
-//
-
 import 'package:args/args.dart';
 import 'dart:io';
 import 'dart:async';
@@ -199,26 +192,5 @@ class Application {
 void main(List<String> arguments) {
     final Application application = new Application();
     application.run(arguments);
-
-    //    final ArgParser parser = application._createOptions();
-    //
-    //    try {
-    //        final ArgResults argResults = parser.parse(arguments);
-    //        final List<String> dirstoscan = argResults.rest;
-    //
-    //        print("ArgResult for $LINE_NUMBER: ${argResults[LINE_NUMBER]}");
-    //
-    //        for(final String dir in dirstoscan) {
-    //            print("Path: $path");
-    //        }
-    //
-    ////        Process.run('ls', ['-l']).then((ProcessResult results) {
-    ////            print(results.stdout);
-    ////        });
-    //
-    //    } on FormatException catch (error) {
-    //        print("Usage: extract-pot [options] <dir(s) to scan>");
-    //        print(parser.getUsage());
-    //    }
 }
 

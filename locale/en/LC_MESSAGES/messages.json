@@ -3,7 +3,7 @@
       "Hallo {{l10n}}": "Hallo {{l10n}}",
       "Hallo, dies ist ein {{what}}": "Hallo, dies ist ein {{what}}",
       "Hello {{what}}": "Hello {{what}}",
-      "Mike + {{name}}": "Mike1111 + {{name}}",
+      "Mike + {{name}}": "Mike + {{name}}",
       "Hallo {{name}}, du bist jetzt {{age}} Jahre alt": "Hallo {{name}}, du bist jetzt {{age}} Jahre alt",
       "Hallo, {{name}}": "Hallo, {{name}}",
       "Hallo Mike": "Hallo Mike",
