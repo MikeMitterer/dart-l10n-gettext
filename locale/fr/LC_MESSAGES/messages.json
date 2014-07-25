@@ -1,0 +1,14 @@
+{
+   "fr": {
+      "Hallo {{l10n}}": "",
+      "Hallo, dies ist ein {{what}}": "",
+      "Hello {{what}}": "",
+      "Mike + {{name}}": "",
+      "Hallo {{name}}, du bist jetzt {{age}} Jahre alt": "",
+      "Hallo, {{name}}": "",
+      "Hallo Mike": "",
+      "Hallo Mike II": "",
+      "Hallo {{?}}": "",
+      "Hallo {{name}}": ""
+   }
+}
