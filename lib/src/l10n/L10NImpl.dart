@@ -9,48 +9,44 @@ String _sanitizeMessage(final String translatedMessage) {
  * Handelt eine Message die später übersetzt werden kann.
  *
  * Sample:
- *      final L10NMessage message = new L10NMessage("test.message","Hallo {{name}}, du bist jetzt {{age}} Jahre alt",{ "name" : "Mike", "age" : 47});
+ *      final L10NMessage message = new L10NMessage("Hallo {{name}}, du bist jetzt {{age}} Jahre alt",{ "name" : "Mike", "age" : 47});
  *
- * Über den key kann die MessageID aus einem Json-File abgefragt werden.
+ * Über die msgid (MessageID) aus einem Json-File abgefragt werden.
  * {{<variabl>}} werden durch die Werte in der Variablen-Tabelle ersetzt.
  *
  * Ergebnis für das oben genannte Sample wäre dann: "Hallo Mike, du bist jetzt 47 Jahre alt"
  */
 class L10NImpl implements L10N {
     /// Key auf den Eintrag in der Sprachtabelle
-    final String _key;
-
-    /// DefaultMessage die angzeigt wird wenn der Key nicht gefunden wird
-    final String _defaultMessage;
+    final String _msgID;
 
     /// Die Variablen die im _l10nkey gesetzt werden können
     final Map<String, dynamic> _vars;
 
-    const L10NImpl(this._key,this._defaultMessage, [ Map<String, dynamic> this._vars = const {} ]);
+    const L10NImpl(this._msgID, [ Map<String, dynamic> this._vars = const {} ]);
 
     factory L10NImpl.fromJson(final data) {
         Validate.notNull(data);
         Map<String,dynamic> json = L10NImpl._toJsonMap(data);
 
-        Validate.isKeyInMap("key",json);
-        Validate.isKeyInMap("defaultmessage",json);
+        Validate.isKeyInMap("msgid",json);
 
-        final String key = json['key'];
-        final String defaultMessage = json['defaultmessage'];
-        Map<String, dynamic> tempVars = new HashMap<String,dynamic>();
+        final String msgid = json['msgid'];
+        Map<String, dynamic> vars = new HashMap<String,dynamic>();
 
         if(json.containsKey("vars")) {
-            tempVars = L10NImpl._toJsonMap(json["vars"]);
+            vars = L10NImpl._toJsonMap(json["vars"]);
         }
-        return new L10NImpl(key,defaultMessage,tempVars);
+        return new L10NImpl(msgid,vars);
     }
 
     Map<String, dynamic> get vars => _vars;
 
-    String get key => _key;
+    String get msgid => _msgID;
 
+    /// Gives back the msgid with all the vars set
     String get message {
-        String message = _defaultMessage.trim();
+        String message = _msgID.trim();
 
         _vars.forEach((final String key,final value) {
             message = message.replaceAll("{{$key}}",value.toString());
@@ -62,8 +58,7 @@ class L10NImpl implements L10N {
     Map<String, dynamic> toJson() {
         final Map map = new Map<String, dynamic>();
 
-        map['key'] = _key;
-        map['defaultmessage'] = _defaultMessage;
+        map['msgid'] = _msgID;
         map['vars'] = _vars;
 
         return map;

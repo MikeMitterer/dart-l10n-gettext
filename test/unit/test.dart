@@ -6,6 +6,7 @@ import 'package:unittest/html_enhanced_config.dart';
 // Notwendige externe includes
 
 import 'package:unittest/unittest.dart';
+import 'package:intl/intl.dart';
 
 //-----------------------------------------------------------------------------
 // Logging
@@ -49,7 +50,8 @@ import 'package:l10n/l10n.dart';
 //
 
 part "l10n/L10N_test.dart";
-
+part "l10n/L10NTranslation_test.dart";
+part "regexp/RegExp_test.dart";
 
 // Mehr Infos: http://www.dartlang.org/articles/dart-unit-tests/
 void main() {
@@ -59,6 +61,9 @@ void main() {
     configLogging();
 
     testL10N();
+    testL10NTranslation();
+
+    testRegExp();
 }
 
 // Weitere Infos: https://github.com/chrisbu/logging_handlers#quick-reference

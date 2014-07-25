@@ -6,16 +6,15 @@ class Name implements Translatable {
     Name(this.firstname);
 
     L10N get l10n {
-        return new L10NImpl("test.name","My name is {{firstname}}",{ "firstname" : firstname} );
+        return new L10NImpl("My name is {{firstname}}",{ "firstname" : firstname} );
     }
 }
 
 testL10N() {
-    final Logger logger = new Logger("test.L10NMessage");
+    final Logger _logger = new Logger("test.L10NMessage");
 
     final String jsonToTest = "{\n" +
-        "   \"key\" : \"test.message\",\n" +
-        "   \"defaultmessage\" : \"Hallo {{name}}, du bist jetzt {{age}} Jahre alt\",\n" +
+        "   \"msgid\" : \"Hallo {{name}}, du bist jetzt {{age}} Jahre alt\",\n" +
         "   \"vars\" :\n" +
         "      {\n" +
         "         \"name\" : \"Mike\",\n" +
@@ -24,63 +23,75 @@ testL10N() {
         "}";
 
     final String jsonToTestOhneVars = "{\n" +
-    "   \"key\" : \"test.message\",\n" +
-    "   \"defaultmessage\" : \"Hallo {{name}}, du bist jetzt {{age}} Jahre alt\"\n" +
-    "}";
+        "   \"msgid\" : \"Hallo {{name}}, du bist jetzt {{age}} Jahre alt\"\n" +
+        "}";
+
 
     group('L10NMessage', () {
         setUp(() {
         });
 
         test('> Creation', () {
-            final L10N message = l10n("test.message","Hallo Mike");
-            expect(message,isNotNull);
+            final L10N l10n = new L10N("Hallo Mike");
+            expect(l10n,isNotNull);
 
-            expect(message.key,"test.message");
-            expect(message.message,"Hallo Mike");
+            expect(l10n.msgid,"Hallo Mike");
+            expect(l10n.message,"Hallo Mike");
         }); // end of 'Creation' test
 
         test('> const Creation', () {
-            const L10N message = const L10N("test.message","Hallo Mike");
-            expect(message,isNotNull);
+            const L10N l10n = const L10N("Hallo Mike II");
+            expect(l10n,isNotNull);
 
-            expect(message.key,"test.message");
-            expect(message.message,"Hallo Mike");
+            expect(l10n.msgid,"Hallo Mike II");
+            expect(l10n.message,"Hallo Mike II");
         }); // end of 'const Creation' test
 
+        test('> Create with l10n-function', () {
+
+            final L10N _l10n = l10n("Hallo {{?}}",{ "?" : "Welt" });
+            expect(_l10n,isNotNull);
+
+            expect(_l10n.msgid,"Hallo {{?}}");
+            expect(_l10n.message,"Hallo Welt");
+
+        }); // end of 'Create with l10n-function' test
+
+        test('> l10n function', () {
+            expect(l10n("Hello {{what}}",{ "what" : "World" }).message, "Hello World");
+        }); // end of 'l10n function' test
+
         test('> Creation with vars', () {
-            final L10N message = l10n("test.message","Hallo {{name}}, du bist jetzt {{age}} Jahre alt",{ "name" : "Mike", "age" : 47});
-            expect(message,isNotNull);
+            final L10N l10n = const L10N("Hallo {{name}}, du bist jetzt {{age}} Jahre alt",const { "name" : "Mike", "age" : 47} );
+            expect(l10n,isNotNull);
 
-            //logger.info(message.toString());
+            //logger.info(l10n.toString());
 
-            expect(message.key,"test.message");
-            expect(message.message,"Hallo Mike, du bist jetzt 47 Jahre alt");
+            expect(l10n.message,"Hallo Mike, du bist jetzt 47 Jahre alt");
 
         }); // end of 'Creation with vars' test
 
         test('> from Json', () {
-            final L10N message = new L10NImpl.fromJson(jsonToTest);
+            final L10N l10n = new L10NImpl.fromJson(jsonToTest);
 
-            expect(message,isNotNull);
+            expect(l10n,isNotNull);
 
-            expect(message.key,"test.message");
-            expect(message.message,"Hallo Mike, du bist jetzt 47 Jahre alt");
+            expect(l10n.msgid,"Hallo {{name}}, du bist jetzt {{age}} Jahre alt");
+            expect(l10n.message,"Hallo Mike, du bist jetzt 47 Jahre alt");
 
-            expect(message.vars.length,2);
-            expect(message.vars["name"],"Mike");
-            expect(message.vars["age"],47);
+            expect(l10n.vars.length,2);
+            expect(l10n.vars["name"],"Mike");
+            expect(l10n.vars["age"],47);
         }); // end of 'from Json' test
 
         test('> from Json ohne Vars', () {
-            final L10N message = new L10NImpl.fromJson(jsonToTestOhneVars);
+            final L10N l10n = new L10NImpl.fromJson(jsonToTestOhneVars);
 
-            expect(message,isNotNull);
+            expect(l10n,isNotNull);
 
-            expect(message.key,"test.message");
-            expect(message.message,"Hallo {{name}}, du bist jetzt {{age}} Jahre alt");
+            expect(l10n.msgid,"Hallo {{name}}, du bist jetzt {{age}} Jahre alt");
 
-            expect(message.vars.length,0);
+            expect(l10n.vars.length,0);
         }); // end of 'from Json ohne Vars' test
 
         test('> Translatable', () {
@@ -90,26 +101,6 @@ testL10N() {
             expect(name.l10n.message,"My name is Mike");
         }); // end of 'Translatable' test
 
-        test('> Translate', () {
-            final L10N message = l10n("test.key","Hallo {{message}}",{
-                "message" : TRANSLATOR(l10n("test.nokey","Mike + {{name}}", { "name" : "Sarah" })
-                )
-            });
-
-            expect(message.message,"Hallo Mike + Sarah");
-        }); // end of 'Translate' test
-
-        test('> Translate with Table', () {
-            final L10NTranslate translator = new L10NTranslate.withMap({ "test.key" : "Willkommen {{message}}", "test.nokey" : "in Australien {{name}}"});
-
-            final L10N message = l10n("test.key","Hallo {{message}}",{
-                "message" : translator( l10n("test.nokey","Mike + {{name}}", { "name" : "Sarah" })
-                )}
-            );
-
-            expect(translator( l10n("test.nokey","Mike + {{name}}", { "name" : "Sarah" })),"in Australien Sarah");
-            expect(translator(message),"Willkommen in Australien Sarah");
-        }); // end of 'Translate with Table' test
 
     });
     // end 'L10NMessage' group
