@@ -105,6 +105,9 @@ testL10NTranslation() {
             expect(translate(l10n("Hallo, {{name}}",{ "name" : "Mike"})),"Hallo, Mike");
         }); // end of 'Switch locale' test
 
+        test('> for mkl10nlocale', () {
+            expect((l10n("Test1").message),"Test1");
+        }); // end of 'for mkl10nlocale' test
 
     });
     // end 'L10NTranslation' group
