@@ -6,12 +6,37 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 
+import 'package:logging/logging.dart';
+import 'package:logging_handlers/logging_handlers_shared.dart';
+
+import 'package:validate/validate.dart';
+
+class Config {
+    final Logger _logger = new Logger("mkl10llocale.Config");
+
+    static const String _KEY_LOCALE_DIR = "localeDir";
+    static const String _KEY_TEMPLATES_DIR = "templatesDir";
+    static const String _KEY_POT_FILENAME = "potfile";
+
+    final ArgResults _argResults;
+    final Map<String,dynamic> _settings = new Map<String,dynamic>();
+
+    Config(this._argResults) {
+        _settings[_KEY_LOCALE_DIR] = 'locale';
+        _settings[_KEY_TEMPLATES_DIR] = 'templates/LC_MESSAGES';
+        _settings[_KEY_POT_FILENAME] = 'messages.pot';
+    }
+
+    List<String> get dirstoscan => _argResults.rest;
+    String get potdir => "${_settings[_KEY_LOCALE_DIR]}/${_settings[_KEY_TEMPLATES_DIR]}";
+    String get potfile => "$potdir/_settings[_KEY_POT_FILENAME]";
+}
+
 class Application {
+    final Logger _logger = new Logger("mkl10llocale.Application");
+
     static const _OPTION_LOCALES = 'locales';
     static const _FLAG_HELP = 'help';
-
-    static const _DEFAULT_POT_DIR = 'locale/templates/LC_MESSAGES';
-    static const _POT_FILE = 'messages.pot';
 
     final ArgParser _parser;
 
@@ -20,24 +45,32 @@ class Application {
     void run(List<String> args) {
         try {
             final ArgResults argResults = _parser.parse(args);
-            final List<String> dirstoscan = argResults.rest;
+            final Config config = new Config(argResults);
 
-            if (argResults[_FLAG_HELP] || (dirstoscan.length == 0 && args.length == 0)) {
+            if (argResults[_FLAG_HELP] || (config.dirstoscan.length == 0 && args.length == 0)) {
                 _showUsage();
 
             }
             else {
-                _preparePOTFile(_DEFAULT_POT_DIR, _POT_FILE).then((final File potfile) {
+                _configLogging();
+                _preparePOTFile(config.potfile).then((final File potfile) {
 
-                    _scanDirsAndMakePOT(dirstoscan, _DEFAULT_POT_DIR).then((_) {
+                    _scanDirsAndMakePOT(config.dirstoscan,config.potfile).then((_) {
 
                         if (argResults[_OPTION_LOCALES] != null) {
+
                             final List<String> locales = (argResults[_OPTION_LOCALES] as String).split(',');
+                            final Map<String,Map<String,String>> json = new HashMap<String,Map<String,String>>();
+                            final List<Future> futuresForJson = new List<Future>();
                             locales.forEach((final String locale) {
                                 final File pofile = _preparePOFile(locale, potfile,"locale/$locale/LC_MESSAGES/messages.po");
-                                _mergePO(pofile,potfile);
-                                _creatJson(locale,pofile);
 
+                                _mergePO(pofile,potfile);
+                                futuresForJson.add( _creatJson(locale,pofile).then((final Map<String,String> jsonForLocale) => json[locale] = jsonForLocale));
+                            });
+                            Future.wait(futuresForJson).then((_) {
+                                _createMergedJson(json,"locale/messages.json");
+                                _createDartFile(json,"locale/messages.dart",libPrefix: "test");
                             });
                         }
                     });
@@ -52,13 +85,44 @@ class Application {
     }
 
     // -- private -------------------------------------------------------------
+    void _createDartFile(final Map<String,Map<String,String>> json, final String filename,{ final String libPrefix: "not.defined" } ) {
+        Validate.notEmpty(json);
+        Validate.notBlank(filename);
+
+        final File dartFile = new File(filename);
+        final StringBuffer buffer = new StringBuffer();
+
+        buffer.writeln("library $libPrefix.locale;\n");
+        buffer.writeln('/**');
+        buffer.writeln('* DO NOT EDIT. This is code generated via pkg/l10n/bin/mkl10llocale.dart');
+        buffer.writeln('* This is a library that provides messages for all your locales.');
+        buffer.writeln('*/');
+        buffer.writeln("");
+        buffer.writeln("import 'package:l10n/l10n.dart';");
+        buffer.writeln("\n");
+        buffer.write('final L10NTranslate translate = new L10NTranslate.withTranslations( ');
+        buffer.write(_makePrettyJsonString(json));
+        buffer.writeln(");\n");
+
+        dartFile.writeAsStringSync(buffer.toString());
+        _logger.fine("${dartFile.path} created");
+    }
+
+    void _createMergedJson(final Map<String,Map<String,String>> json, final String filename) {
+        Validate.notEmpty(json);
+        Validate.notBlank(filename);
+
+        final File jsonFile = new File(filename);
+        jsonFile.writeAsStringSync(_makePrettyJsonString(json));
+        _logger.fine("${jsonFile.path} created");
+    }
 
     void _mergePO(final File pofile,final File potfile) {
         final ProcessResult result = Process.runSync('msgmerge', ['-U', pofile.path, potfile.path]);
         if(result.exitCode != 0) {
-            print(result.stderr);
+            _logger.fine(result.stderr);
         }
-        print("${pofile.path} merged!");
+        _logger.fine("${pofile.path} merged!");
     }
 
     File _preparePOFile(final String locale, final File potfile, final String pofilename) {
@@ -67,26 +131,26 @@ class Application {
             pofile.createSync(recursive: true);
             final ProcessResult result = Process.runSync('msginit', ['--no-translator','--input', potfile.path, '--output', pofile.path, '-l', locale]);
             if(result.exitCode != 0) {
-                print(result.stderr);
+                _logger.fine(result.stderr);
             }
         }
         return pofile;
     }
 
-    Future<File> _preparePOTFile(final String outputdir, final String outputfile) {
-        final File file = new File("$outputdir/$outputfile");
+    Future<File> _preparePOTFile(final String potfile) {
+        final File file = new File(potfile);
         return file.create(recursive: true);
     }
 
-    Future<bool> _scanDirsAndMakePOT(final List<String> dirstoscan, final String outDir) {
+    Future<bool> _scanDirsAndMakePOT(final List<String> dirstoscan, final String potfile) {
         final Future<bool> future = new Future<bool>(() {
             for (final String dir in dirstoscan) {
                 _iterateThroughDirSync(dir, (final File file) {
-                    print(" -> ${file.path}");
-                    final ProcessResult result = Process.runSync('xgettext', ['-kl10n', '-kL10N', '-j', '-o', "$outDir/$_POT_FILE", '-L', 'JavaScript', file.path ]);
+                    _logger.fine(" -> ${file.path}");
+                    final ProcessResult result = Process.runSync('xgettext', ['-kl10n', '-kL10N', '-j', '-o', "$potfile", '-L', 'JavaScript', file.path ]);
 
                     if (result.exitCode != 0) {
-                        print("${result.stderr}");
+                        _logger.fine("${result.stderr}");
                     }
                 });
             }
@@ -97,7 +161,7 @@ class Application {
     }
 
     void _iterateThroughDir(final String dir, void callback(final File file)) {
-        print("Scanning: $dir");
+        _logger.fine("Scanning: $dir");
 
         final Directory directory = new Directory(dir);
         directory.exists().then((_) {
@@ -108,12 +172,12 @@ class Application {
                 callback(file);
             });
         }).catchError((final dynamic error, final StackTrace stacktrace) {
-            print(error);
+            _logger.fine(error);
         });
     }
 
     void _iterateThroughDirSync(final String dir, void callback(final File file)) {
-        print("Scanning: $dir");
+        _logger.fine("Scanning: $dir");
 
         final Directory directory = new Directory(dir);
         if (directory.existsSync()) {
@@ -128,11 +192,11 @@ class Application {
     }
 
     void _showUsage() {
-        print("Usage: l10nlocale [options] <dir(s) to scan>");
+        _logger.fine("Usage: l10nlocale [options] <dir(s) to scan>");
         _parser.getUsage().split("\n").forEach((final String line) {
-            print("    $line");
+            _logger.fine("    $line");
         });
-        print("");
+        _logger.fine("");
     }
 
     static ArgParser _createOptions() {
@@ -144,7 +208,12 @@ class Application {
         return parser;
     }
 
-    void _creatJson(final String locale,final File pofile) {
+    Future<HashMap<String,String>> _creatJson(final String locale,final File pofile) {
+        final Completer<HashMap<String,String>> completer = new Completer<HashMap<String,String>>();
+
+        final Map<String,Map<String,String>> json = new HashMap<String,Map<String,String>>();
+        json[locale] = new HashMap<String,String>();
+
         if(pofile.existsSync()) {
             final File jsonFile = new File(pofile.path.replaceFirst(new RegExp("\.po"),".json"));
             if(jsonFile.existsSync()) {
@@ -153,8 +222,6 @@ class Application {
             jsonFile.createSync(recursive: true);
 
             pofile.readAsString().then((final String content) {
-                final Map<String,Map<String,String>> json = new HashMap<String,Map<String,String>>();
-                json[locale] = new HashMap<String,String>();
 
                 final List<String> msgblocks = content.split(new RegExp("(\r\n|\n){2}"));
 
@@ -173,19 +240,33 @@ class Application {
                     json[locale][key] = value;
                 });
 
-                String _makePrettyJsonString() {
-                    final JsonEncoder encoder = const JsonEncoder.withIndent('   ');
-                    return encoder.convert(json);
-                }
-
-                jsonFile.writeAsString(_makePrettyJsonString()).then((final File file) {
-                    print("${file.path} created!");
+                jsonFile.writeAsString(_makePrettyJsonString(json)).then((final File file) {
+                    _logger.fine("${file.path} created!");
+                    completer.complete(json[locale]);
                 });
             });
 
         } else {
-            print("${pofile.path} does not exist!");
+            _logger.fine("${pofile.path} does not exist!");
         }
+
+        return completer.future;
+    }
+
+    String _makePrettyJsonString(final json) {
+        Validate.notEmpty(json);
+
+        final JsonEncoder encoder = const JsonEncoder.withIndent('   ');
+        return encoder.convert(json);
+    }
+
+    void _configLogging() {
+        hierarchicalLoggingEnabled = false; // set this to true - its part of Logging SDK
+
+        // now control the logging.
+        // Turn off all logging first
+        Logger.root.level = Level.FINE;
+        Logger.root.onRecord.listen(new LogPrintHandler(messageFormat: "%m"));
     }
 }
 

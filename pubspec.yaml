@@ -12,6 +12,7 @@ dependencies:
   validate: any
 
   intl: any
+  validate: any
 
 dependency_overrides:
   analyzer: ">=0.21.1 <0.22.0"

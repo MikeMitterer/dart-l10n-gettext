@@ -3,11 +3,13 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/bin/packages" />
       <excludeFolder url="file://$MODULE_DIR$/packages/console_log_handler" />
       <excludeFolder url="file://$MODULE_DIR$/packages/l10n" />
       <excludeFolder url="file://$MODULE_DIR$/test/packages" />
       <excludeFolder url="file://$MODULE_DIR$/test/unit/l10n/packages" />
       <excludeFolder url="file://$MODULE_DIR$/test/unit/packages" />
+      <excludeFolder url="file://$MODULE_DIR$/test/unit/regexp/packages" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Dart SDK" level="application" />
