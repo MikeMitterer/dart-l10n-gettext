@@ -17,19 +17,47 @@ class Config {
     static const String _KEY_LOCALE_DIR = "localeDir";
     static const String _KEY_TEMPLATES_DIR = "templatesDir";
     static const String _KEY_POT_FILENAME = "potfile";
+    static const String _KEY_PO_FILENAME = "pofile";
+    static const String _KEY_JSON_FILENAME = "jsonfilename";
+    static const String _KEY_DART_FILENAME = "jsonfilename";
+    static const String _KEY_LIB_PREFIX = "libprefix";
 
     final ArgResults _argResults;
     final Map<String,dynamic> _settings = new Map<String,dynamic>();
 
     Config(this._argResults) {
-        _settings[_KEY_LOCALE_DIR] = 'locale';
-        _settings[_KEY_TEMPLATES_DIR] = 'templates/LC_MESSAGES';
-        _settings[_KEY_POT_FILENAME] = 'messages.pot';
+        _settings[_KEY_LOCALE_DIR]      = 'locale';
+        _settings[_KEY_TEMPLATES_DIR]   = 'templates/LC_MESSAGES';
+
+        _settings[_KEY_POT_FILENAME]    = 'messages.pot';
+        _settings[_KEY_PO_FILENAME]     = 'messages.po';
+
+        _settings[_KEY_JSON_FILENAME]   = 'messages.json';
+        _settings[_KEY_DART_FILENAME]   = 'messages.dart';
+
+        _settings[_KEY_LIB_PREFIX]      = 'l10n';
     }
 
+
     List<String> get dirstoscan => _argResults.rest;
+
+    /// Something like: locale/templates/LC_MESSAGES
     String get potdir => "${_settings[_KEY_LOCALE_DIR]}/${_settings[_KEY_TEMPLATES_DIR]}";
-    String get potfile => "$potdir/_settings[_KEY_POT_FILENAME]";
+
+    /// Something like: locale/templates/LC_MESSAGES/messages.pot
+    String get potfile => "$potdir/${_settings[_KEY_POT_FILENAME]}";
+
+    /// Something like: locale/en/LC_MESSAGES/messages.po
+    String getPOFile(final String locale) => "${_settings[_KEY_LOCALE_DIR]}/$locale/LC_MESSAGES/${_settings[_KEY_PO_FILENAME]}";
+
+    /// Something like: locale/messages.json
+    String get jsonfile => "${_settings[_KEY_LOCALE_DIR]}/${_settings[_KEY_JSON_FILENAME]}";
+
+    /// Something like: locale/messages.dart
+    String get dartfile => "${_settings[_KEY_LOCALE_DIR]}/${_settings[_KEY_DART_FILENAME]}";
+
+    String get libprefix => _settings[_KEY_LIB_PREFIX];
+
 }
 
 class Application {
@@ -53,24 +81,28 @@ class Application {
             }
             else {
                 _configLogging();
-                _preparePOTFile(config.potfile).then((final File potfile) {
+                _createPOTFile(config.potfile).then((final File potfile) {
 
-                    _scanDirsAndMakePOT(config.dirstoscan,config.potfile).then((_) {
+                    _scanDirsAndFillPOT(config.dirstoscan,config.potfile).then((_) {
 
                         if (argResults[_OPTION_LOCALES] != null) {
 
                             final List<String> locales = (argResults[_OPTION_LOCALES] as String).split(',');
+
+                            // accumulated JSON (the one ine locale)
                             final Map<String,Map<String,String>> json = new HashMap<String,Map<String,String>>();
+
+                            // _createJson returns ASYNC - so we wait until all locale JSON-Files are created
                             final List<Future> futuresForJson = new List<Future>();
-                            locales.forEach((final String locale) {
-                                final File pofile = _preparePOFile(locale, potfile,"locale/$locale/LC_MESSAGES/messages.po");
+                            locales.forEach( (final String locale) {
+                                final File pofile = _preparePOFile(locale, potfile,config.getPOFile(locale));
 
                                 _mergePO(pofile,potfile);
                                 futuresForJson.add( _creatJson(locale,pofile).then((final Map<String,String> jsonForLocale) => json[locale] = jsonForLocale));
                             });
                             Future.wait(futuresForJson).then((_) {
-                                _createMergedJson(json,"locale/messages.json");
-                                _createDartFile(json,"locale/messages.dart",libPrefix: "test");
+                                _createMergedJson(json,config.jsonfile);
+                                _createDartFile(json,config.dartfile,libPrefix: config.libprefix);
                             });
                         }
                     });
@@ -85,6 +117,8 @@ class Application {
     }
 
     // -- private -------------------------------------------------------------
+
+    /// Writes the DART-File - makes translation easy
     void _createDartFile(final Map<String,Map<String,String>> json, final String filename,{ final String libPrefix: "not.defined" } ) {
         Validate.notEmpty(json);
         Validate.notBlank(filename);
@@ -108,6 +142,7 @@ class Application {
         _logger.fine("${dartFile.path} created");
     }
 
+    /// message.json in locale, contains all the specified locales
     void _createMergedJson(final Map<String,Map<String,String>> json, final String filename) {
         Validate.notEmpty(json);
         Validate.notBlank(filename);
@@ -117,6 +152,7 @@ class Application {
         _logger.fine("${jsonFile.path} created");
     }
 
+    /// Updates your translated PO with new entries from .pot-File
     void _mergePO(final File pofile,final File potfile) {
         final ProcessResult result = Process.runSync('msgmerge', ['-U', pofile.path, potfile.path]);
         if(result.exitCode != 0) {
@@ -125,6 +161,7 @@ class Application {
         _logger.fine("${pofile.path} merged!");
     }
 
+    /// Mainly a copy of POT File
     File _preparePOFile(final String locale, final File potfile, final String pofilename) {
         final File pofile = new File(pofilename);
         if(!pofile.existsSync()) {
@@ -137,12 +174,14 @@ class Application {
         return pofile;
     }
 
-    Future<File> _preparePOTFile(final String potfile) {
+    /// Make sure that the POT-File exists before xgettext
+    Future<File> _createPOTFile(final String potfile) {
         final File file = new File(potfile);
         return file.create(recursive: true);
     }
 
-    Future<bool> _scanDirsAndMakePOT(final List<String> dirstoscan, final String potfile) {
+    /// Itarees through dirs and adds the result to the POT-File
+    Future<bool> _scanDirsAndFillPOT(final List<String> dirstoscan, final String potfile) {
         final Future<bool> future = new Future<bool>(() {
             for (final String dir in dirstoscan) {
                 _iterateThroughDirSync(dir, (final File file) {
@@ -160,6 +199,9 @@ class Application {
         return future;
     }
 
+    /**
+     * Only for testing - I'm using the SYNC-Version because otherwise it bring xgettext into trouble
+     */
     void _iterateThroughDir(final String dir, void callback(final File file)) {
         _logger.fine("Scanning: $dir");
 
@@ -208,6 +250,7 @@ class Application {
         return parser;
     }
 
+    /// Creates .json-File in the same location where the .po file is
     Future<HashMap<String,String>> _creatJson(final String locale,final File pofile) {
         final Completer<HashMap<String,String>> completer = new Completer<HashMap<String,String>>();
 
@@ -223,6 +266,7 @@ class Application {
 
             pofile.readAsString().then((final String content) {
 
+                // There is always a newline between the msg-blocks, so split there
                 final List<String> msgblocks = content.split(new RegExp("(\r\n|\n){2}"));
 
                 String _sanityze(final String value) {
