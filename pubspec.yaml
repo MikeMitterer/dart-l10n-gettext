@@ -1,22 +1,13 @@
 name: l10n
-version: 0.9.14
+version: 0.9.16
 author: Mike Mitterer  <office@mikemitterer.at>
 description: Creates translatable PO-Files, strong orientation to xgettext
-
 homepage: https://github.com/MikeMitterer/dart-l10n-gettext
-
 dependencies:
   browser: any
-
   logging: any
   logging_handlers: any
-
   intl: any
   validate: any
-
-#dependency_overrides:
-#  analyzer: ">=0.21.1 <0.22.0"
-
 dev_dependencies:
-
   unittest: any
