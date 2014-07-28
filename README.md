@@ -8,12 +8,12 @@ l10n / (gettext-oriented) PO-File Generator
 If Dart 1.6 is out then
 ```bash
 $ pub global activate mkl10nlocale.dart
-``
+```
 
 You can run the script from any local directory.
 ```bash
 $ pub global run mkl10nlocale.dart --help
-``
+```
 
 For now (at least I think) you have to clone the script from GH
 
