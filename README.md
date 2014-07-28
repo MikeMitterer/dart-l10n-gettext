@@ -16,6 +16,7 @@ $ pub global run mkl10nlocale.dart --help
 ```
 
 For now (at least I think) you have to clone the script from GH
+As you can see I have a symlink to bin/mkl10nlocale.dart
 
 ###How to use it###
 
