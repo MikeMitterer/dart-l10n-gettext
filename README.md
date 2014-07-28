@@ -17,7 +17,7 @@ $ pub global run mkl10nlocale.dart --help
 ```
 
 For now (at least I think) you have to clone the [script](https://github.com/MikeMitterer/dart-l10n-gettext/tree/master/bin) 
-and copy it to your package/bin.
+and copy it to <your package>/bin.
 
 As you can see I have a symlink to bin/mkl10nlocale.dart
 
