@@ -1,11 +1,12 @@
 #!/usr/bin/env dart
 
-import 'package:args/args.dart';
 import 'dart:io';
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
+
+import 'package:args/args.dart';
 
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
@@ -200,10 +201,11 @@ class Application {
         final Directory directory = new Directory(dir);
         if (directory.existsSync()) {
             directory.listSync(recursive: true).where((final FileSystemEntity entity) {
-
-                return (FileSystemEntity.isFileSync(entity.path) && entity.path.contains("packages") == false && ( entity.path.endsWith(".dart") || entity.path.endsWith(".DART")));
+                print(entity);
+                return (entity != null && FileSystemEntity.isFileSync(entity.path) && entity.path.contains("packages") == false && ( entity.path.endsWith(".dart") || entity.path.endsWith(".DART")));
 
             }).any((final File file) {
+                print(file);
                 callback(file);
             });
         }

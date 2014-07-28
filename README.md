@@ -4,22 +4,33 @@ l10n / (gettext-oriented) PO-File Generator
 
 [![Screenshot][1])](http://www.youtube.com/watch?v=vPfl-xPTjs0)
 
-###Install###
-If Dart 1.6 is out then
-```bash
-$ pub global activate mkl10nlocale.dart
+###Install - WORKS###
+
+```yaml
+dependencies:
+  ...  
+  l10n: any
 ```
-should work...
+    
+```bash
+pub update
+ln -s packages/l10n/mkl10nlocale.dart mkl10nlocale
+
+mkl10nlocale --help
+```
+
+####Install (should work)####
+In Dart(-sdk) 1.6 
+```bash
+$ pub global activate l10n
+```
+should works... - <strong>BUT DOES NOT!!!!</strong>
 
 You can run the script from any local directory.
 ```bash
-$ pub global run mkl10nlocale.dart --help
+$ pub global run l10n:mkl10nlocale --help
 ```
-
-For now (at least I think) you have to clone the [script](https://github.com/MikeMitterer/dart-l10n-gettext/tree/master/bin) 
-and copy it to <your package>/bin.
-
-As you can see I have a symlink to bin/mkl10nlocale.dart
+<strong>pub global activate + run is not ready!</strong>
 
 ###How to use it###
 
