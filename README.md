@@ -4,7 +4,21 @@ l10n / (gettext-oriented) PO-File Generator
 
 [![Screenshot][1])](http://www.youtube.com/watch?v=vPfl-xPTjs0)
 
+###Install###
+If Dart 1.6 is out then
+```bash
+$ pub global activate mkl10nlocale.dart
+``
+
+You can run the script from any local directory.
+```bash
+$ pub global run mkl10nlocale.dart --help
+``
+
+For now (at least I think) you have to clone the script from GH
+
 ###How to use it###
+
 ```dart
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
@@ -44,7 +58,6 @@ void main(List<String> arguments) {
 ```
 
 ###System requirements###
-Software must be installed:
 * xgettext
 * msginit
 * msgmerge

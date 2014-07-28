@@ -1,5 +1,5 @@
 name: l10n
-version: 0.9.0
+version: 0.9.1
 author: Mike Mitterer  <office@mikemitterer.at>
 description: Creates translatable PO-Files, strong orientation to xgettext
 
@@ -14,8 +14,8 @@ dependencies:
   intl: any
   validate: any
 
-dependency_overrides:
-  analyzer: ">=0.21.1 <0.22.0"
+#dependency_overrides:
+#  analyzer: ">=0.21.1 <0.22.0"
 
 dev_dependencies:
 
