@@ -2,7 +2,7 @@ l10n / (gettext-oriented) PO-File Generator
 -------------------------------------------
 ####Helps to localize your application####
 
-(![Screenshot][1])[http://www.youtube.com/watch?v=vPfl-xPTjs0]
+[![Screenshot][1])](http://www.youtube.com/watch?v=vPfl-xPTjs0)
 
 ###How to use it###
 ```dart
