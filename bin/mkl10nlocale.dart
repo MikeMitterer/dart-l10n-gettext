@@ -462,10 +462,10 @@ class Config {
 void main(List<String> arguments) {
 
     findSystemLocale().then((final String locale) {
-        translate.locale = locale;
+        translate.locale = Intl.shortLocale(locale);
 
         final Application application = new Application();
-        application.run(arguments, Intl.shortLocale(locale));
+        application.run(arguments, Intl.shortLocale(translate.locale));
     });
 }
 

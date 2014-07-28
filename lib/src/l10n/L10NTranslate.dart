@@ -73,7 +73,7 @@ class L10NTranslate {
 
     void set locale(final String locale) {
         Validate.notBlank(locale);
-        Validate.matchesPattern(locale,_regexpLocale);
+        Validate.matchesPattern(locale,_regexpLocale,"Locale must be something like 'de' or en_US - but was $locale");
 
         _locale = locale;
     }
