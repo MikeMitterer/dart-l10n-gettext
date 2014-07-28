@@ -2,7 +2,7 @@ l10n / (gettext-oriented) PO-File Generator
 -------------------------------------------
 ####Helps to localize your application####
 
-<iframe width="560" height="315" src="//www.youtube.com/embed/vPfl-xPTjs0" frameborder="0" allowfullscreen></iframe>
+![Screenshot][1]
 
 ###How to use it###
 ```dart
@@ -79,6 +79,6 @@ These programs are on your system if you are working on Mac or Linux.
     
 If this plugin is helpful for you - please [(Circle)](http://gplus.mikemitterer.at/) me.
 
-[1]: https://raw.githubusercontent.com/MikeMitterer/dart-console_log_handler/master/doc/_resources/screenshot.png
+[1]: https://raw.githubusercontent.com/MikeMitterer/dart-l10n-gettext/master/doc/_resources/screenshot.png
 [2]: https://github.com/MikeMitterer/dart-l10n-gettext/issues
 
