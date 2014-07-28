@@ -1,0 +1,13 @@
+{
+   "de": {
+      "Usage: mkl10nlocale [options] <dir(s) to scan>": "Verwendung: mkl10nlocale [options] <dir(s) to scan>",
+      "Libprefix for generated DART-File (library <prefix>.locale;)": "Library-Prefix für das generierte DART-File (library <prefix>.locale;)",
+      "Defines where to place your locale-Dir": "Definiert Basisverzeichnis für das locale-Directory",
+      "Dirs to scan": "Directory dass durchsucht werden soll",
+      "Settings:": "Einstellungen:",
+      "locales - separated by colon, Sample: --locales en,de,es": "locales - getrennt durch Beistrich, Sample: --locales en,de,es",
+      "Shows this message": "Zeigt diese Message an",
+      "Where should the DART-File go? (<path>/locale/messages.dart)": "Wo soll das DART-File generiert werden? (<pfad>/locale/messages.dart)",
+      "Prints settings": "Settings werden angezeigt"
+   }
+}

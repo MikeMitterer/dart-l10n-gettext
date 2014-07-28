@@ -1,0 +1,54 @@
+# English translations for L package.
+# Copyright (C) 2014 THE L'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the L package.
+# Automatically generated, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: L 10N\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-28 16:54+0200\n"
+"PO-Revision-Date: 2014-07-28 16:54+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: bin/mkl10nlocale.dart:214
+msgid "Usage: mkl10nlocale [options] <dir(s) to scan>"
+msgstr "Usage: mkl10nlocale [options] <dir(s) to scan>"
+
+#: bin/mkl10nlocale.dart:236
+msgid "Settings:"
+msgstr "Settings:"
+
+#: bin/mkl10nlocale.dart:245
+msgid "Shows this message"
+msgstr "Shows this message"
+
+#: bin/mkl10nlocale.dart:246
+msgid "Prints settings"
+msgstr "Prints settings"
+
+#: bin/mkl10nlocale.dart:248
+msgid "locales - separated by colon, Sample: --locales en,de,es"
+msgstr "locales - separated by colon, Sample: --locales en,de,es"
+
+#: bin/mkl10nlocale.dart:250
+msgid "Libprefix for generated DART-File (library <prefix>.locale;)"
+msgstr "Libprefix for generated DART-File (library <prefix>.locale;)"
+
+#: bin/mkl10nlocale.dart:251
+msgid "Defines where to place your locale-Dir"
+msgstr "Defines where to place your locale-Dir"
+
+#: bin/mkl10nlocale.dart:252
+msgid "Where should the DART-File go? (<path>/locale/messages.dart)"
+msgstr "Where should the DART-File go? (<path>/locale/messages.dart)"
+
+#: bin/mkl10nlocale.dart:421
+msgid "Dirs to scan"
+msgstr "Dirs to scan"
