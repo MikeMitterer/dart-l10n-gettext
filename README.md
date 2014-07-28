@@ -2,6 +2,8 @@ l10n / (gettext-oriented) PO-File Generator
 -------------------------------------------
 ####Helps to localize your application####
 
+<iframe width="560" height="315" src="//www.youtube.com/embed/vPfl-xPTjs0" frameborder="0" allowfullscreen></iframe>
+
 ###How to use it###
 ```dart
 import 'package:intl/intl.dart';
