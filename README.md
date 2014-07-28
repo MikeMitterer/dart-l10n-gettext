@@ -9,6 +9,7 @@ If Dart 1.6 is out then
 ```bash
 $ pub global activate mkl10nlocale.dart
 ```
+should work...
 
 You can run the script from any local directory.
 ```bash
@@ -39,23 +40,31 @@ void main(List<String> arguments) {
         // translate.locale = Intl.shortLocale(locale);
 
         // Step 1 - sourround your text with l10n(...)
-        print(l10n("This is a test"));  // Try this: print(l10n("This is a test").message);
+        // Try this: print(l10n("This is a test").message);
+        print(l10n("This is a test"));  
                
         // Step 2 - run mkl10nlocale -l de,en example/
         
-        // Step 3 - add the import-statement for locale/messages.dart + set the locale
+        // Step 3 - add the import-statement for locale/messages.dart
+        // + set the locale
         
         // Step 4 - add 'translate' to your print statement
         print(translate(l10n("This is a test")));  
         
-        // Step 5 - Translate the entry in your PO (for example local/de/messages.po
+        // Step 5 - Translate the entry in your 
+        // PO (for example local/de/messages.po
         
         // Step 6 - run mkl10nlocale -l de,en
         
         // Step 7 - run your program 
     });
 }
+```
 
+```bash
+$ dart mini.dart 
+SystemLocale: de_AT
+Dies ist ein TEST!
 ```
 
 ###System requirements###
