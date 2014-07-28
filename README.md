@@ -24,13 +24,13 @@ In Dart(-sdk) 1.6
 ```bash
 $ pub global activate l10n
 ```
-should works... - <strong>BUT DOES NOT!!!!</strong>
+should works... - <b>BUT DOES NOT!!!!</b>
 
 You can run the script from any local directory.
 ```bash
 $ pub global run l10n:mkl10nlocale --help
 ```
-<strong>pub global activate + run is not ready!</strong>
+<b>pub global activate + run seams not ready!</b> As said - make a symlink and you are done!
 
 ###How to use it###
 
