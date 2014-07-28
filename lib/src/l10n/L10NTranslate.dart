@@ -104,7 +104,7 @@ class L10NTranslate {
 
         bool _isKeyInTranslationTable(final String key,final String locale) {
             if(_translations.containsKey(locale)) {
-                if(_translations[locale] != null && _translations[locale].containsKey(key)) {
+                if(_translations[locale] != null && _translations[locale].containsKey(key) && _translations[locale][key].isNotEmpty) {
                     return true;
                 }
             }

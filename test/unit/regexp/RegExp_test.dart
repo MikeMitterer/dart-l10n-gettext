@@ -18,6 +18,19 @@ testRegExp() {
 
         }); // end of 'Locale' test
 
+        test('> Packages', () {
+            final RegExp regexp = new RegExp("^/*packages/*");
+
+            expect(regexp.hasMatch("/packages/noch/ein"),isTrue);
+            expect(regexp.hasMatch("packages/noch/ein"),isTrue);
+            expect(regexp.hasMatch("/packages/test.dart"),isTrue);
+            expect(regexp.hasMatch("packages/test.dart"),isTrue);
+
+            expect(regexp.hasMatch("hallo/packages/test.dart"),isFalse);
+            expect(regexp.hasMatch("/hallo/packages"),isFalse);
+
+
+        }); // end of 'Packages' test
 
     });
     // end 'RegExp' group
