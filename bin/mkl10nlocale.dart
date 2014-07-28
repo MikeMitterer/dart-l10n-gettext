@@ -30,7 +30,7 @@ class Application {
     static const _ARG_LOCALE_DIR    = 'localedir';
     static const _ARG_DART_PATH     = 'dartpath';
 
-    final ArgParser _parser;
+    ArgParser _parser;
 
     Application() : _parser = Application._createOptions();
 
@@ -39,7 +39,6 @@ class Application {
             final ArgResults argResults = _parser.parse(args);
             final Config config = new Config(argResults,locale);
 
-            translate.locale = config.systemLocale;
             _configLogging(config.loglevel);
 
             if (argResults[_ARG_HELP] || (config.dirstoscan.length == 0 && args.length == 0)) {
@@ -211,7 +210,7 @@ class Application {
     }
 
     void _showUsage() {
-        print("Usage: mkl10nlocale [options] <dir(s) to scan>");
+        print(translate(l10n("Usage: mkl10nlocale [options] <dir(s) to scan>")));
         _parser.getUsage().split("\n").forEach((final String line) {
             print("    $line");
         });
@@ -233,7 +232,7 @@ class Application {
             return "${key[0].toUpperCase()}${key.substring(1)}:".padRight(maxKeyLeght + 1);
         }
 
-        print("Settings:");
+        print(translate(l10n("Settings:")));
         settings.forEach((final String key,final String value) {
             print("    ${prepareKey(key)} $value");
         });
@@ -461,10 +460,12 @@ class Config {
 }
 
 void main(List<String> arguments) {
-    final Application application = new Application();
 
     findSystemLocale().then((final String locale) {
-        application.run(arguments,locale);
+        translate.locale = locale;
+
+        final Application application = new Application();
+        application.run(arguments, Intl.shortLocale(locale));
     });
 }
 
