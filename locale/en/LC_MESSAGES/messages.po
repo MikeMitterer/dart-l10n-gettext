@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: L 10N\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-28 16:54+0200\n"
+"POT-Creation-Date: 2014-07-28 18:44+0200\n"
 "PO-Revision-Date: 2014-07-28 16:54+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,38 +17,38 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: bin/mkl10nlocale.dart:214
+#: bin/mkl10nlocale.dart:214 lib/bin/mkl10nlocale.dart:213
 msgid "Usage: mkl10nlocale [options] <dir(s) to scan>"
 msgstr "Usage: mkl10nlocale [options] <dir(s) to scan>"
 
-#: bin/mkl10nlocale.dart:236
+#: bin/mkl10nlocale.dart:236 lib/bin/mkl10nlocale.dart:235
 msgid "Settings:"
 msgstr "Settings:"
 
-#: bin/mkl10nlocale.dart:245
+#: bin/mkl10nlocale.dart:245 lib/bin/mkl10nlocale.dart:244
 msgid "Shows this message"
 msgstr "Shows this message"
 
-#: bin/mkl10nlocale.dart:246
+#: bin/mkl10nlocale.dart:246 lib/bin/mkl10nlocale.dart:245
 msgid "Prints settings"
 msgstr "Prints settings"
 
-#: bin/mkl10nlocale.dart:248
+#: bin/mkl10nlocale.dart:248 lib/bin/mkl10nlocale.dart:247
 msgid "locales - separated by colon, Sample: --locales en,de,es"
 msgstr "locales - separated by colon, Sample: --locales en,de,es"
 
-#: bin/mkl10nlocale.dart:250
+#: bin/mkl10nlocale.dart:250 lib/bin/mkl10nlocale.dart:249
 msgid "Libprefix for generated DART-File (library <prefix>.locale;)"
 msgstr "Libprefix for generated DART-File (library <prefix>.locale;)"
 
-#: bin/mkl10nlocale.dart:251
+#: bin/mkl10nlocale.dart:251 lib/bin/mkl10nlocale.dart:250
 msgid "Defines where to place your locale-Dir"
 msgstr "Defines where to place your locale-Dir"
 
-#: bin/mkl10nlocale.dart:252
+#: bin/mkl10nlocale.dart:252 lib/bin/mkl10nlocale.dart:251
 msgid "Where should the DART-File go? (<path>/locale/messages.dart)"
 msgstr "Where should the DART-File go? (<path>/locale/messages.dart)"
 
-#: bin/mkl10nlocale.dart:421
+#: bin/mkl10nlocale.dart:421 lib/bin/mkl10nlocale.dart:420
 msgid "Dirs to scan"
 msgstr "Dirs to scan"
