@@ -109,14 +109,15 @@ locale/en/.../messages.po:
     expect(translate(l),"Fehlerhafte Anfrage");
     
     /* 
-    Subtranslation: 
+    Internal way of sub-translation: 
         Replace vars in L10N message -> Servermessage {{statuscode-400}}.
         Check if there is a translation - return it, if not, return the msgid
     */
 ```
 
-<b>Drawback</b>
-You have to add the msgid "Servermessage {{statuscode-400}}." by hand to your <strong>POT</strong>-File.
+<b>Drawback</b><br>
+You have to add the msgid "Servermessage {{statuscode-400}}." by hand to your <strong>POT</strong>-File.<br>
+The rest is done be the nice merging-feature of l10n/msgmerge 
 
 ###System requirements###
 * xgettext
