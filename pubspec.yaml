@@ -10,5 +10,9 @@ dependencies:
   intl: any
   validate: any
   args: any
+
+#dependency_overrides:
+#  analyzer: ">=0.21.1 <0.22.0"
+
 dev_dependencies:
   unittest: any
