@@ -109,6 +109,18 @@ testL10NTranslation() {
             expect((l10n("Test1").message),"Test1");
         }); // end of 'for mkl10nlocale' test
 
+        test('> SubTranslation', () {
+            final int major = 400;
+            final L10N l = new L10N(
+                """
+                    Der Server meldet {{status}} bei der API-Key Anforderung.
+                    """, {
+                    "status"     : "{{statuscode-${major}}}"
+                });
+
+            expect(l.message,"Der Server meldet {{statuscode-400}} bei der API-Key Anforderung.");
+        }); // end of 'SubTranslation' test
+
     });
     // end 'L10NTranslation' group
 }

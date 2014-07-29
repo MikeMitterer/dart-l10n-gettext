@@ -101,19 +101,6 @@ testL10N() {
             expect(name.l10n.message,"My name is Mike");
         }); // end of 'Translatable' test
 
-        test('> SubTranslation', () {
-            final int major = 400;
-            final L10N l = new L10N(
-                """
-                    Der Server meldet {{status}} bei der API-Key Anforderung.
-                    """, {
-                    "status"     : "{{statuscode-${major}}}"
-                });
-
-            _logger.info(l.message);
-        }); // end of 'SubTranslation' test
-
-
     });
     // end 'L10NMessage' group
 }

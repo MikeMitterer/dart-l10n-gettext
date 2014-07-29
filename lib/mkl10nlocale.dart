@@ -128,7 +128,7 @@ class Application {
     void _mergePO(final File pofile,final File potfile) {
         final ProcessResult result = Process.runSync('msgmerge', ['-U', pofile.path, potfile.path]);
         if(result.exitCode != 0) {
-            _logger.fine(result.stderr);
+            _logger.severe(result.stderr);
         }
         _logger.fine("${pofile.path} merged!");
     }
@@ -138,9 +138,13 @@ class Application {
         final File pofile = new File(pofilename);
         if(!pofile.existsSync()) {
             pofile.createSync(recursive: true);
-            final ProcessResult result = Process.runSync('msginit', ['--no-translator','--input', potfile.path, '--output', pofile.path, '-l', locale]);
+            final ProcessResult result = Process.runSync('msginit', ['--no-translator','--input', potfile.path, '--output', pofile.path, '-l', locale ]);
             if(result.exitCode != 0) {
-                _logger.fine(result.stderr);
+                _logger.severe(result.stderr);
+            } else {
+                String contents = pofile.readAsStringSync();
+                contents = contents.replaceFirst("Content-Type: text/plain; charset=ASCII","Content-Type: text/plain; charset=UTF-8");
+                pofile.writeAsStringSync(contents);
             }
         }
         return pofile;
@@ -158,10 +162,12 @@ class Application {
             for (final String dir in dirstoscan) {
                 _iterateThroughDirSync(dir, (final File file) {
                     _logger.fine(" -> ${file.path}");
-                    final ProcessResult result = Process.runSync('xgettext', ['-kl10n', '-kL10N', '-j', '-o', "$potfile", '-L', 'JavaScript', file.path ]);
+
+                    // --from-code ... iconv -l shows all the available codes!
+                    final ProcessResult result = Process.runSync('xgettext', ['-kl10n', '-kL10N', '-j', '-o', "$potfile", '-L', 'JavaScript','--from-code=utf-8', file.path ]);
 
                     if (result.exitCode != 0) {
-                        _logger.fine("${result.stderr}");
+                        _logger.severe("${result.stderr}");
                     }
                 });
             }
@@ -376,7 +382,7 @@ class Config {
         _settings[_KEY_DART_PATH]       = 'lib';
 
         _settings[_KEY_LOCALES]         = Intl.shortLocale(systemLocale);
-        _settings[_KEY_SYSTEM_LOCALE]   = Intl.shortLocale(systemLocale);
+        _settings[_KEY_SYSTEM_LOCALE]   = systemLocale;
 
         initializeDateFormatting(_settings[_KEY_SYSTEM_LOCALE],null);
 
@@ -459,7 +465,6 @@ class Config {
         if(_argResults[Application._ARG_DART_PATH] != null) {
             _settings[_KEY_DART_PATH] = checkPath(_argResults[Application._ARG_DART_PATH]);
         }
-
     }
 }
 
@@ -469,7 +474,10 @@ void main(List<String> arguments) {
         translate.locale = Intl.shortLocale(locale);
 
         final Application application = new Application();
-        application.run(arguments, translate.locale);
+        application.run( arguments, locale );
     });
+
+    /// only for testing
+    final L10N l1 = const L10N("Ein TEST - 290714 1648");
 }
 
