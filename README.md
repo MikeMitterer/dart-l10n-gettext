@@ -97,7 +97,8 @@ locale/en/.../messages.po:
 ```dart
     final int major = 400;
     
-    // This produces a msgid "Servermessage {{status}}." in your PO-File, you can translate it as usual 
+    // This produces a msgid "Servermessage {{status}}." in your PO-File.
+    // You can translate it as usual 
     final L10N l = new L10N( "Servermessage {{status}}.", { "status"  : "{{statuscode-${major}}}" });
     expect(l.message,"Servermessage {{statuscode-400}}.");
 
@@ -110,8 +111,8 @@ locale/en/.../messages.po:
     
     /* 
     Internal way of sub-translation: 
-        Replace vars in L10N message -> Servermessage {{statuscode-400}}.
-        Check if there is a translation - return it, if not, return the msgid
+      Replace vars in L10N message -> Servermessage {{statuscode-400}}.
+      Check if there is a translation - return it, if not, return the msgid
     */
 ```
 
