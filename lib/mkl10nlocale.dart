@@ -36,6 +36,8 @@ class Application {
     Application() : _parser = Application._createOptions();
 
     void run(List<String> args,final String locale) {
+        Validate.notBlank(locale);
+
         try {
             final ArgResults argResults = _parser.parse(args);
             final Config config = new Config(argResults,locale);
@@ -330,7 +332,7 @@ class Application {
                 Logger.root.level = Level.INFO;
         }
 
-        Logger.root.onRecord.listen(new LogPrintHandler(messageFormat: "%m"/*,timestampFormat: ""*/));
+        Logger.root.onRecord.listen(new LogPrintHandler());
     }
 }
 
@@ -467,7 +469,7 @@ void main(List<String> arguments) {
         translate.locale = Intl.shortLocale(locale);
 
         final Application application = new Application();
-        application.run(arguments, Intl.shortLocale(translate.locale));
+        application.run(arguments, translate.locale);
     });
 }
 
