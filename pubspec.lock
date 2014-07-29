@@ -17,6 +17,10 @@ packages:
     description: collection
     source: hosted
     version: "0.9.4"
+  console_log_handler:
+    description: console_log_handler
+    source: hosted
+    version: "0.1.4"
   intl:
     description: intl
     source: hosted

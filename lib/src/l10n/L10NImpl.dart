@@ -42,11 +42,11 @@ class L10NImpl implements L10N {
 
     Map<String, dynamic> get vars => _vars;
 
-    String get msgid => _msgID;
+    String get msgid => _msgID.trim();
 
     /// Gives back the msgid with all the vars set
     String get message {
-        String message = _msgID.trim();
+        String message = msgid;
 
         _vars.forEach((final String key,final value) {
             message = message.replaceAll("{{$key}}",value.toString());

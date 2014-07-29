@@ -13,8 +13,15 @@ testL10NTranslation() {
         }
     };
 
+    String backupLocale = "";
+
     group('L10NTranslation', () {
         setUp(() {
+            backupLocale = translate.locale;
+        });
+
+        tearDown(() {
+            translate.locale = backupLocale;
         });
 
         test('> Translation', () {
@@ -109,6 +116,11 @@ testL10NTranslation() {
             expect((l10n("Test1").message),"Test1");
         }); // end of 'for mkl10nlocale' test
 
+        test('> Translate with locale/messages.dart', () {
+            translate.locale = "de";
+            expect(translate(l10n("Prints settings")),"Zeigt die aktuellen settings an");
+        }); // end of 'Translate with locale/messages.dart' test
+
         test('> SubTranslation', () {
             final int major = 400;
             final L10N l = new L10N(
@@ -119,6 +131,11 @@ testL10NTranslation() {
                 });
 
             expect(l.message,"Der Server meldet {{statuscode-400}} bei der API-Key Anforderung.");
+            expect(translate(l),"Der Server meldet {{statuscode-400}} bei der API-Key Anforderung.");
+
+            translate.locale = "de";
+            expect(translate(l),"Fehlerhafte Anfrage (400) bei der API-Key Anforderung!");
+
         }); // end of 'SubTranslation' test
 
     });

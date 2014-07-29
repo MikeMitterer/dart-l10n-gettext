@@ -63,8 +63,15 @@ class L10NTranslate {
             return translated;
         }
 
-        String message = _getMessage(l10n);
+        String message = _getMessage(l10n.msgid);
         message = _replaceVarsInMessage(l10n.vars,message);
+
+        // maybe _replaceVarsInMessage produced a new msgid...
+        // could be: Der Server meldet {{statuscode-400}} bei der API-Key Anforderung.
+        // If so - try to translate again!
+        if(message.contains(new RegExp("{{.*}}"))) {
+            message = _getMessage(message);
+        }
 
         return message;
     }
@@ -94,17 +101,15 @@ class L10NTranslate {
 
     /**
      * Looks for the current locale and the message-id first in the locale specific subtable
-     * (_translations[<current locale>] if it finds and entry it returns the entry, otherwise
-     * it tries verious fallbacks - for example ( de_DE -> de -> en (as default locale))
+     * (_translations[<current locale>] if it finds an entry it returns it, otherwise
+     * it tries various fallbacks - for example ( de_DE -> de -> en (as default locale))
      */
-    String _getMessage(final L10N l10n) {
-        Validate.notNull(l10n);
+    String _getMessage(final String msgid) {
+        Validate.notBlank(msgid);
 
-        final String key = l10n.msgid;
-
-        bool _isKeyInTranslationTable(final String key,final String locale) {
+        bool _isKeyInTranslationTable(final String msgid,final String locale) {
             if(_translations.containsKey(locale)) {
-                if(_translations[locale] != null && _translations[locale].containsKey(key) && _translations[locale][key].isNotEmpty) {
+                if(_translations[locale] != null && _translations[locale].containsKey(msgid) && _translations[locale][msgid].isNotEmpty) {
                     return true;
                 }
             }
@@ -114,17 +119,17 @@ class L10NTranslate {
         String message;
         try {
             final String verifiedLocale = Intl.verifiedLocale(locale,(final String testLocale) {
-                if(_isKeyInTranslationTable(key,testLocale)) {
-                    message = _translations[testLocale][key];
+                if(_isKeyInTranslationTable(msgid,testLocale)) {
+                    message = _translations[testLocale][msgid];
                     return true;
                 }
                 return false;
             });
         } on ArgumentError catch (error) {
-            if(_isKeyInTranslationTable(key,_DEFAULT_LOCALE)) {
-                message = _translations[_DEFAULT_LOCALE][key];
+            if(_isKeyInTranslationTable(msgid,_DEFAULT_LOCALE)) {
+                message = _translations[_DEFAULT_LOCALE][msgid];
             } else {
-                message = l10n.msgid;
+                message = msgid;
             }
         }
 

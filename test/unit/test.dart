@@ -18,6 +18,7 @@ import 'package:logging/logging.dart';
 //---------------------------------------------------------
 import 'package:console_log_handler/console_log_handler.dart';
 import 'package:l10n/l10n.dart';
+import 'package:l10n/locale/messages.dart';
 
 //---------------------------------------------------------
 // WebApp-Basis (piwab) - webapp_base_dart

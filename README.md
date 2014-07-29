@@ -80,6 +80,44 @@ SystemLocale: de_AT
 Dies ist ein TEST!
 ```
 
+####Sub-Translations###
+Since 0.11.0 Sub-Translations are possible - here is the explanation:
+ 
+```
+locale/de/.../messages.po: 
+    msgid: "Servermessage {{statuscode-400}}."
+    msgstr: "Fehlerhafte Anfrage"
+    
+locale/en/.../messages.po: 
+    msgid: "Servermessage {{statuscode-400}}."
+    msgstr: ""
+    
+```
+
+```dart
+    final int major = 400;
+    
+    // This produces a msgid "Servermessage {{status}}." in your PO-File, you can translate it as usual 
+    final L10N l = new L10N( "Servermessage {{status}}.", { "status"  : "{{statuscode-${major}}}" });
+    expect(l.message,"Servermessage {{statuscode-400}}.");
+
+    // No translation for en - so fallback to msgid
+    expect(translate(l),"Servermessage {{statuscode-400}}.");
+
+    // But what we really want is what I call Sub-Translation
+    translate.locale = "de";
+    expect(translate(l),"Fehlerhafte Anfrage");
+    
+    /* 
+    Subtranslation: 
+        Replace vars in L10N message -> Servermessage {{statuscode-400}}.
+        Check if there is a translation - return it, if not, return the msgid
+    */
+```
+
+<b>Drawback</b>
+You have to add the msgid "Servermessage {{statuscode-400}}." by hand to your <strong>POT</strong>-File.
+
 ###System requirements###
 * xgettext
 * msginit
@@ -94,6 +132,7 @@ These programs are on your system if you are working on Mac or Linux.
 
 ###History ###
 * 0.9.0 - Released on pub
+* 0.11.0 - Sub-Translations are possible, msginit gets initialized with utf-8 per default
 
 ###License###
 
