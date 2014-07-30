@@ -94,6 +94,16 @@ testL10N() {
             expect(l10n.vars.length,0);
         }); // end of 'from Json ohne Vars' test
 
+        test('> toJson (L10N)', () {
+            final L10N l10n = new L10N.fromJson(jsonToTestOhneVars);
+
+            expect(l10n,isNotNull);
+
+            expect(l10n.msgid,"Hallo {{name}}, du bist jetzt {{age}} Jahre alt");
+
+            expect(l10n.vars.length,0);
+        }); // end of 'toJson (L10N)' test
+
         test('> Translatable', () {
             final Name name = new Name("Mike");
 

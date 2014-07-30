@@ -11,6 +11,15 @@ abstract class L10N {
     String get message;
 
     const factory L10N(final String msgid,[ final Map<String, dynamic> vars ]) = L10NImpl;
+
+    factory L10N.fromJson(final data) = L10NImpl.fromJson;
+
+    /// Can be serialized to Json
+    Map<String, dynamic> toJson();
+
+    String toString();
+
+    String toPrettyString();
 }
 
 /// Interface für alle Klassen die übersetzt werden können
