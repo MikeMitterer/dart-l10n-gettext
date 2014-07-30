@@ -1,5 +1,5 @@
 /**
- * Important: You have to have at least on tag set with git - git tag v0.0.1
+ * Important: You have to have at least on tag set with git - git tag v0.1
  *
  * Follow these steps:
  *
@@ -20,7 +20,7 @@ ext.gitExtendedVersionX = {
         commandLine 'git', 'describe', '--tags'
         standardOutput = stdout
     }
-    return stdout.toString().trim().replaceFirst("v","").replaceFirst('-(?!.*-).*','');
+    return stdout.toString().trim().replaceFirst("v","").replaceFirst('-(?!.*-).*','').replaceFirst("-",".");
 }
 
 version = gitExtendedVersionX() // Sample: 0.5.4-19
