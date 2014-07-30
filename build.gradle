@@ -110,9 +110,11 @@ task setVersionInYaml << {
     yamlfile.write(contents, 'UTF-8')
 }
 
+/*
+// Maybe... in the future
 task pubPublish(dependsOn: [ writeChangeLog, setVersionInYaml ]) {
     exec {
         commandLine 'pub', 'publish'
         standardInput = System.in
     }
-}
+}*/
