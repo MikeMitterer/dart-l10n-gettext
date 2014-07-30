@@ -143,6 +143,8 @@ class Application {
                 _logger.severe(result.stderr);
             } else {
                 String contents = pofile.readAsStringSync();
+
+                // msginit tries to find out the content-type with the according locale - today, I think, it's much better to set it to utf-8
                 contents = contents.replaceFirst("Content-Type: text/plain; charset=ASCII","Content-Type: text/plain; charset=UTF-8");
                 pofile.writeAsStringSync(contents);
             }
@@ -183,7 +185,6 @@ class Application {
     void _iterateThroughDir(final String dir, void callback(final File file)) {
         _logger.info("Scanning: $dir");
 
-
         // its OK if the path starts with packages but not if the path contains packages (avoid recursion)
         final RegExp regexp = new RegExp("^/*packages/*");
 
@@ -206,14 +207,29 @@ class Application {
     void _iterateThroughDirSync(final String dir, void callback(final File file)) {
         _logger.info("Scanning: $dir");
 
+        // its OK if the path starts with packages but not if the path contains packages (avoid recursion)
+        final RegExp regexp = new RegExp("^/*packages/*");
+
         final Directory directory = new Directory(dir);
         if (directory.existsSync()) {
             directory.listSync(recursive: true).where((final FileSystemEntity entity) {
-                print(entity);
-                return (entity != null && FileSystemEntity.isFileSync(entity.path) && entity.path.contains("packages") == false && ( entity.path.endsWith(".dart") || entity.path.endsWith(".DART")));
+                _logger.fine("Entity: ${entity}");
+
+                bool isUsableFile = (entity != null && FileSystemEntity.isFileSync(entity.path) &&
+                    ( entity.path.endsWith(".dart") || entity.path.endsWith(".DART")) || entity.path.endsWith(".html") );
+
+                if(!isUsableFile) {
+                    return false;
+                }
+                if(entity.path.contains("packages")) {
+                    // return only true if the path starts!!!!! with packages
+                    return entity.path.contains(regexp);
+                }
+
+                return true;
 
             }).any((final File file) {
-                print(file);
+                //_logger.fine("  Found: ${file}");
                 callback(file);
             });
         }
@@ -338,7 +354,7 @@ class Application {
                 Logger.root.level = Level.INFO;
         }
 
-        Logger.root.onRecord.listen(new LogPrintHandler());
+        Logger.root.onRecord.listen(new LogPrintHandler(messageFormat: "%m"));
     }
 }
 

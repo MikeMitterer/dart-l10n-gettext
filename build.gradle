@@ -62,13 +62,6 @@ task showVersion() << {
     print version
 }
 
-task showTags() << {
-    def tags = readTags()
-    for (int i = 0; i < tags.size - 1; i++) {
-        print tags[i]
-    }
-}
-
 task writeChangeLog {
     def linksForChangeLog = "";
     def tags = readTags();
@@ -117,7 +110,9 @@ task setVersionInYaml << {
     yamlfile.write(contents, 'UTF-8')
 }
 
-// maybe in the future...
-//task pubPublish << {
-//
-//}
+task pubPublish(dependsOn: [ writeChangeLog, setVersionInYaml ]) {
+    exec {
+        commandLine 'pub', 'publish'
+        standardInput = System.in
+    }
+}

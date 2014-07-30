@@ -1,4 +1,6 @@
-###v0.15.5###
+###v0.15.7###
+* Downgraded intl to make it compatible with angular [e2164da](http://github.com/MikeMitterer/dart-l10n-gettext/commit/e2164da20e794102ac61f6e7fd9cf45c30807210)
+* Removed 'Changes' from changelog [ac14cd7](http://github.com/MikeMitterer/dart-l10n-gettext/commit/ac14cd719e6c8b472e3b2d1d63e235ed95a8a1bc)
 * Again - changelog optimisation [623e62c](http://github.com/MikeMitterer/dart-l10n-gettext/commit/623e62ca98ea6c4cd13c726b45ae34c459f86948)
 * Writing nicer changelog with build.gradle [fee5561](http://github.com/MikeMitterer/dart-l10n-gettext/commit/fee5561e7f36053c30a6cd880564c34be0c96ac1)
 * Changed version-number-generation for yaml-file [48fc3c8](http://github.com/MikeMitterer/dart-l10n-gettext/commit/48fc3c8c9c4e3e0de86862e8267f2359d354a42e)
