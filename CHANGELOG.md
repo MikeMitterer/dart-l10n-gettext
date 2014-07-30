@@ -1,4 +1,5 @@
 ###Changes:###
+* Forgot that pub.dartlang.org is not able to interpret hrefs in .md files - changed the changelog format [deea108](http://github.com/MikeMitterer/dart-l10n-gettext/commit/deea10866b6d847253aad1752a5fe55203ccf027)
 * Short documentation for 'how to use' the gradle tasks [d76e5c6](http://github.com/MikeMitterer/dart-l10n-gettext/commit/d76e5c6756aee8c91bc9525f0b29f849fa422695)
 * Forgot to write the CL [f068808](http://github.com/MikeMitterer/dart-l10n-gettext/commit/f0688086821ee062880df547809faf1c10c4cf23)
 * Gradle can update the version in pubspec.yaml and can write a CHANGELOG.md [e3a5709](http://github.com/MikeMitterer/dart-l10n-gettext/commit/e3a5709cef1e170b1804e48f57458d5c8181672c)
