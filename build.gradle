@@ -1,3 +1,19 @@
+/**
+ * Important: You have to have at least on tag set with git - git tag v0.0.1
+ *
+ * Follow these steps:
+ *
+ *  git commit -am "Whatever..."
+ *  git push origin
+ *  gradle sVIY wC && pub publish
+ *
+ * Git commands should be clear
+ *
+ * gradle sVIY - is a shortcut to "gradle setVersionInYaml"
+ * gradle wC - ist a shortcut to "gradel writeChangeLog"
+ *
+ * The && means if everything went OK with the gradle tasks execute pub publish
+ */
 ext.gitExtendedVersionX = {
     def stdout = new ByteArrayOutputStream()
     exec {
