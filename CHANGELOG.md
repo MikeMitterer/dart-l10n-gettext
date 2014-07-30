@@ -1,44 +1,45 @@
 ###Changes:###
-<ul><li>Forgot to write the CL (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/f0688086821ee062880df547809faf1c10c4cf23">f068808</a>)</li>
-<li>Gradle can update the version in pubspec.yaml and can write a CHANGELOG.md (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/e3a5709cef1e170b1804e48f57458d5c8181672c">e3a5709</a>)</li>
-<li>build.gradle added (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/c0d4c60360cd54fd767778582c8c04f5a06c41e8">c0d4c60</a>)</li>
-<li>JSON-Capabilities for L10N (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/8e9b363e80cc72d2e0ca8e22f2c713b34c67b75c">8e9b363</a>)</li>
-<li>README updated (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/dd078a6dfdf0c9bab42be17665975cadf031141c">dd078a6</a>)</li>
-<li>README updated (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/648494b9ce926bd6eb2446c97a68f48c6832067d">648494b</a>)</li>
-<li>README updated (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/0e33ee80609725902c0a57e88710d51af422d076">0e33ee8</a>)</li>
-<li>Subtranslations are possible (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/8fb2868ae6ae4bf06a06005fac5fe440c5edaf55">8fb2868</a>)</li>
-<li>PO-File gets initialize with utf-8 per default (not the case with original msginit) (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/a6539ceeaa4dae2b113e72de5287789199367f58">a6539ce</a>)</li>
-<li>Set constraint for intl (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/de67f7489079ed9d2fb0d25d2f891da7d72a07c3">de67f74</a>)</li>
-<li>Removed dependency_override (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/d9a051aa8a7232172430f3d96c3a012d480e542d">d9a051a</a>)</li>
-<li>README updated (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/cf0d7fdd0b55459763e22665dd18daa1f1a7f5ef">cf0d7fd</a>)</li>
-<li>Gave up with 'pub global..., added a working solution to README' (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/a27fd93149e605e41760eaeddde201fdd08dfde7">a27fd93</a>)</li>
-<li>pub update takes quite long - searching for the problem (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/65e6b15f17d581aeb8e50044e9ba1ca54a98dede">65e6b15</a>)</li>
-<li>Playing with sdk 1.6 (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/e37b4fc639b0a4ef001e373190350c81a07b3e20">e37b4fc</a>)</li>
-<li>README updated (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/d79d784f200adfeb3084d1038a2a592b2c32f330">d79d784</a>)</li>
-<li>Wrong locale in Application... (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/73781ea5a66b84b180cd58a16a25b4f196c23bd6">73781ea</a>)</li>
-<li>'locale-dir' was not in git (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/39c80c0f45eb0ea8df9b8b54f58fcd25ef7b0cc8">39c80c0</a>)</li>
-<li>README (Typo) (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/54511681330e4f138100d1d844863e16ec168fca">5451168</a>)</li>
-<li>README again (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/9bf3e812eeae3e4dd35325e5640b9eea2412f341">9bf3e81</a>)</li>
-<li>Install added to README (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/92ae57c8c96fbd7c1b682ad01c8d57b911de07d4">92ae57c</a>)</li>
-<li>Install added to README (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/c6513eee318f789669d1a33c3df57a2ea5cfdb34">c6513ee</a>)</li>
-<li>Install added to README (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/f02b841cd3ff3be6f24b3e6d4c82ace6fe4f4b25">f02b841</a>)</li>
-<li>Screenshot (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/b4158fa25577ea9dcded642755966feeb0fceb35">b4158fa</a>)</li>
-<li>Screenshot (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/01a0c2d7af92771f72688edc69acfb9862f9d3ea">01a0c2d</a>)</li>
-<li>Screenshot (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/fb1a8f595b1a9bd21e43c11f508b0e670531ed88">fb1a8f5</a>)</li>
-<li>mini-Sample and README changed (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/e0a6d0410b86820a24f0b244226ff7f9cac74595">e0a6d04</a>)</li>
-<li>mini-Sample and README changed (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/25c7b20fa6aab711fb539d9c937ad714f3c3346b">25c7b20</a>)</li>
-<li>mini-Sample and README changed (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/d60861f88d7a456eb7ee864214e727a1ed5a4ccf">d60861f</a>)</li>
-<li>Some more tests (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/55a90ccf834fa42dfae4381517f39098bb7324af">55a90cc</a>)</li>
-<li>Added some comments... (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/e212f452ca9d07e7786efc4d5ce45ffa9251377e">e212f45</a>)</li>
-<li>Dart-File creation works (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/b53806575d75ad557d3ca2056b7e91685caef428">b538065</a>)</li>
-<li>Test for merge (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/c4e3b6a3370dff5ef128a3b013aa2e15689603fb">c4e3b6a</a>)</li>
-<li>Remove locale from git (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/6efa4bdb6cef830ee186e98f840946f346b50519">6efa4bd</a>)</li>
-<li>Tests... (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/ec29f92f433a7a2f1353cb92eee0bc9edb3edb95">ec29f92</a>)</li>
-<li>Nice... (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/8a21605e6e11ca5291fa52ec0088926825206965">8a21605</a>)</li>
-<li>Creation of JSON-File works (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/a5c7d9f90425f9ce3fb91452f9e23e3e595b9489">a5c7d9f</a>)</li>
-<li>Mit extract-pot gestartet (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/af92982429a206c4cf9c3a4cf5c8a972fe1db6c6">af92982</a>)</li>
-<li>Umstellung von variables auf vars (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/40b585f6b61625ac2dfb80083d76b025d6ceaf9a">40b585f</a>)</li>
-<li>funkt mit const L10 (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/cfedc915c4092ea2bb51b0f51e9c985792b5edb2">cfedc91</a>)</li>
-<li>Tests mit const-Konstruktor (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/c0e21808abda2da10da0d6f40215a76349806794">c0e2180</a>)</li>
-<li>fromJson construktor umgebaut - zum Testen von const-Konstruktor (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/391ebabe7f6f1183113b01f5b627a87ab0e88e0f">391ebab</a>)</li>
-<li>Initial release (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/733b7f49242f2e01fabc85af13ee42c8a16ae7d3">733b7f4</a>)</li></ul>
+* Short documentation for 'how to use' the gradle tasks [d76e5c6](http://github.com/MikeMitterer/dart-l10n-gettext/commit/d76e5c6756aee8c91bc9525f0b29f849fa422695)
+* Forgot to write the CL [f068808](http://github.com/MikeMitterer/dart-l10n-gettext/commit/f0688086821ee062880df547809faf1c10c4cf23)
+* Gradle can update the version in pubspec.yaml and can write a CHANGELOG.md [e3a5709](http://github.com/MikeMitterer/dart-l10n-gettext/commit/e3a5709cef1e170b1804e48f57458d5c8181672c)
+* build.gradle added [c0d4c60](http://github.com/MikeMitterer/dart-l10n-gettext/commit/c0d4c60360cd54fd767778582c8c04f5a06c41e8)
+* JSON-Capabilities for L10N [8e9b363](http://github.com/MikeMitterer/dart-l10n-gettext/commit/8e9b363e80cc72d2e0ca8e22f2c713b34c67b75c)
+* README updated [dd078a6](http://github.com/MikeMitterer/dart-l10n-gettext/commit/dd078a6dfdf0c9bab42be17665975cadf031141c)
+* README updated [648494b](http://github.com/MikeMitterer/dart-l10n-gettext/commit/648494b9ce926bd6eb2446c97a68f48c6832067d)
+* README updated [0e33ee8](http://github.com/MikeMitterer/dart-l10n-gettext/commit/0e33ee80609725902c0a57e88710d51af422d076)
+* Subtranslations are possible [8fb2868](http://github.com/MikeMitterer/dart-l10n-gettext/commit/8fb2868ae6ae4bf06a06005fac5fe440c5edaf55)
+* PO-File gets initialize with utf-8 per default (not the case with original msginit) [a6539ce](http://github.com/MikeMitterer/dart-l10n-gettext/commit/a6539ceeaa4dae2b113e72de5287789199367f58)
+* Set constraint for intl [de67f74](http://github.com/MikeMitterer/dart-l10n-gettext/commit/de67f7489079ed9d2fb0d25d2f891da7d72a07c3)
+* Removed dependency_override [d9a051a](http://github.com/MikeMitterer/dart-l10n-gettext/commit/d9a051aa8a7232172430f3d96c3a012d480e542d)
+* README updated [cf0d7fd](http://github.com/MikeMitterer/dart-l10n-gettext/commit/cf0d7fdd0b55459763e22665dd18daa1f1a7f5ef)
+* Gave up with 'pub global..., added a working solution to README' [a27fd93](http://github.com/MikeMitterer/dart-l10n-gettext/commit/a27fd93149e605e41760eaeddde201fdd08dfde7)
+* pub update takes quite long - searching for the problem [65e6b15](http://github.com/MikeMitterer/dart-l10n-gettext/commit/65e6b15f17d581aeb8e50044e9ba1ca54a98dede)
+* Playing with sdk 1.6 [e37b4fc](http://github.com/MikeMitterer/dart-l10n-gettext/commit/e37b4fc639b0a4ef001e373190350c81a07b3e20)
+* README updated [d79d784](http://github.com/MikeMitterer/dart-l10n-gettext/commit/d79d784f200adfeb3084d1038a2a592b2c32f330)
+* Wrong locale in Application... [73781ea](http://github.com/MikeMitterer/dart-l10n-gettext/commit/73781ea5a66b84b180cd58a16a25b4f196c23bd6)
+* 'locale-dir' was not in git [39c80c0](http://github.com/MikeMitterer/dart-l10n-gettext/commit/39c80c0f45eb0ea8df9b8b54f58fcd25ef7b0cc8)
+* README (Typo) [5451168](http://github.com/MikeMitterer/dart-l10n-gettext/commit/54511681330e4f138100d1d844863e16ec168fca)
+* README again [9bf3e81](http://github.com/MikeMitterer/dart-l10n-gettext/commit/9bf3e812eeae3e4dd35325e5640b9eea2412f341)
+* Install added to README [92ae57c](http://github.com/MikeMitterer/dart-l10n-gettext/commit/92ae57c8c96fbd7c1b682ad01c8d57b911de07d4)
+* Install added to README [c6513ee](http://github.com/MikeMitterer/dart-l10n-gettext/commit/c6513eee318f789669d1a33c3df57a2ea5cfdb34)
+* Install added to README [f02b841](http://github.com/MikeMitterer/dart-l10n-gettext/commit/f02b841cd3ff3be6f24b3e6d4c82ace6fe4f4b25)
+* Screenshot [b4158fa](http://github.com/MikeMitterer/dart-l10n-gettext/commit/b4158fa25577ea9dcded642755966feeb0fceb35)
+* Screenshot [01a0c2d](http://github.com/MikeMitterer/dart-l10n-gettext/commit/01a0c2d7af92771f72688edc69acfb9862f9d3ea)
+* Screenshot [fb1a8f5](http://github.com/MikeMitterer/dart-l10n-gettext/commit/fb1a8f595b1a9bd21e43c11f508b0e670531ed88)
+* mini-Sample and README changed [e0a6d04](http://github.com/MikeMitterer/dart-l10n-gettext/commit/e0a6d0410b86820a24f0b244226ff7f9cac74595)
+* mini-Sample and README changed [25c7b20](http://github.com/MikeMitterer/dart-l10n-gettext/commit/25c7b20fa6aab711fb539d9c937ad714f3c3346b)
+* mini-Sample and README changed [d60861f](http://github.com/MikeMitterer/dart-l10n-gettext/commit/d60861f88d7a456eb7ee864214e727a1ed5a4ccf)
+* Some more tests [55a90cc](http://github.com/MikeMitterer/dart-l10n-gettext/commit/55a90ccf834fa42dfae4381517f39098bb7324af)
+* Added some comments... [e212f45](http://github.com/MikeMitterer/dart-l10n-gettext/commit/e212f452ca9d07e7786efc4d5ce45ffa9251377e)
+* Dart-File creation works [b538065](http://github.com/MikeMitterer/dart-l10n-gettext/commit/b53806575d75ad557d3ca2056b7e91685caef428)
+* Test for merge [c4e3b6a](http://github.com/MikeMitterer/dart-l10n-gettext/commit/c4e3b6a3370dff5ef128a3b013aa2e15689603fb)
+* Remove locale from git [6efa4bd](http://github.com/MikeMitterer/dart-l10n-gettext/commit/6efa4bdb6cef830ee186e98f840946f346b50519)
+* Tests... [ec29f92](http://github.com/MikeMitterer/dart-l10n-gettext/commit/ec29f92f433a7a2f1353cb92eee0bc9edb3edb95)
+* Nice... [8a21605](http://github.com/MikeMitterer/dart-l10n-gettext/commit/8a21605e6e11ca5291fa52ec0088926825206965)
+* Creation of JSON-File works [a5c7d9f](http://github.com/MikeMitterer/dart-l10n-gettext/commit/a5c7d9f90425f9ce3fb91452f9e23e3e595b9489)
+* Mit extract-pot gestartet [af92982](http://github.com/MikeMitterer/dart-l10n-gettext/commit/af92982429a206c4cf9c3a4cf5c8a972fe1db6c6)
+* Umstellung von variables auf vars [40b585f](http://github.com/MikeMitterer/dart-l10n-gettext/commit/40b585f6b61625ac2dfb80083d76b025d6ceaf9a)
+* funkt mit const L10 [cfedc91](http://github.com/MikeMitterer/dart-l10n-gettext/commit/cfedc915c4092ea2bb51b0f51e9c985792b5edb2)
+* Tests mit const-Konstruktor [c0e2180](http://github.com/MikeMitterer/dart-l10n-gettext/commit/c0e21808abda2da10da0d6f40215a76349806794)
+* fromJson construktor umgebaut - zum Testen von const-Konstruktor [391ebab](http://github.com/MikeMitterer/dart-l10n-gettext/commit/391ebabe7f6f1183113b01f5b627a87ab0e88e0f)
+* Initial release [733b7f4](http://github.com/MikeMitterer/dart-l10n-gettext/commit/733b7f49242f2e01fabc85af13ee42c8a16ae7d3)

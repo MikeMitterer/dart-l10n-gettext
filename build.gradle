@@ -30,7 +30,8 @@ ext {
     ghproject = "dart-l10n-gettext"
 
     // pretty-format: http://opensource.apple.com/source/Git/Git-19/src/git-htmldocs/pretty-formats.txt
-    changelogformat = "<li>%s (<a href=\"http://github.com/$ghaccount/$ghproject/commit/%H\">%h</a>)</li>"
+    //changelogformat = "<li>%s (<a href=\"http://github.com/$ghaccount/$ghproject/commit/%H\">%h</a>)</li>"
+    changelogformat = "* %s [%h](http://github.com/$ghaccount/$ghproject/commit/%H)"
 
     yamlFilename = "pubspec.yaml"
 }
@@ -51,7 +52,7 @@ task writeChangeLog {
     doLast {
         final File configFile = file('CHANGELOG.md')
 
-        final String contents = "###Changes:###\n<ul>$linksForChangeLog</ul>"
+        final String contents = "###Changes:###\n$linksForChangeLog"
         configFile.write(contents, 'UTF-8')
     }
 }
