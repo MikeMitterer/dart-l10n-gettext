@@ -1,4 +1,7 @@
 ###Changes:###
+* Changed version-number-generation for yaml-file [a35dbcd](http://github.com/MikeMitterer/dart-l10n-gettext/commit/a35dbcd36528140f248774c298a3637d89c01d18)
+* Testing the version... [659d77d](http://github.com/MikeMitterer/dart-l10n-gettext/commit/659d77d9c6a122a8b1b49635b94828b276d6492a)
+* Forgot that pub.dartlang.org is not able to interpret hrefs in .md files - changed the changelog format [f68f56f](http://github.com/MikeMitterer/dart-l10n-gettext/commit/f68f56f7ae0a4c742be1011438830f732292b555)
 * Forgot that pub.dartlang.org is not able to interpret hrefs in .md files - changed the changelog format [deea108](http://github.com/MikeMitterer/dart-l10n-gettext/commit/deea10866b6d847253aad1752a5fe55203ccf027)
 * Short documentation for 'how to use' the gradle tasks [d76e5c6](http://github.com/MikeMitterer/dart-l10n-gettext/commit/d76e5c6756aee8c91bc9525f0b29f849fa422695)
 * Forgot to write the CL [f068808](http://github.com/MikeMitterer/dart-l10n-gettext/commit/f0688086821ee062880df547809faf1c10c4cf23)
