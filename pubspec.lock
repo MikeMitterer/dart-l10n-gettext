@@ -24,7 +24,7 @@ packages:
   intl:
     description: intl
     source: hosted
-    version: "0.11.3"
+    version: "0.9.10"
   logging:
     description: logging
     source: hosted

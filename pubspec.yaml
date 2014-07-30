@@ -7,7 +7,10 @@ dependencies:
   browser: any
   logging: any
   logging_handlers: any
-  intl: ">=0.11.3 <0.12.0"
+
+  intl: ">=0.8.7 <0.10.0"
+    #">=0.11.3 <0.12.0"
+
   validate: any
   args: any
 

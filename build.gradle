@@ -1,0 +1,5 @@
+version = gitExtendedVersion() // Sample: 0.5.4-19
+
+task showVersion() << {
+    print version
+}
