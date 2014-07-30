@@ -1,5 +1,5 @@
-###Changes:###
-###v0.15.4###
+###v0.15.5###
+* Again - changelog optimisation [623e62c](http://github.com/MikeMitterer/dart-l10n-gettext/commit/623e62ca98ea6c4cd13c726b45ae34c459f86948)
 * Writing nicer changelog with build.gradle [fee5561](http://github.com/MikeMitterer/dart-l10n-gettext/commit/fee5561e7f36053c30a6cd880564c34be0c96ac1)
 * Changed version-number-generation for yaml-file [48fc3c8](http://github.com/MikeMitterer/dart-l10n-gettext/commit/48fc3c8c9c4e3e0de86862e8267f2359d354a42e)
 * Changed version-number-generation for yaml-file [a35dbcd](http://github.com/MikeMitterer/dart-l10n-gettext/commit/a35dbcd36528140f248774c298a3637d89c01d18)

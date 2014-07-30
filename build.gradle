@@ -102,8 +102,8 @@ task writeChangeLog {
     doLast {
         final File configFile = file('CHANGELOG.md')
 
-        final String contents = "###Changes:###\n$linksForChangeLog"
-        configFile.write(contents, 'UTF-8')
+        //final String contents = "###Changes:###\n$linksForChangeLog"
+        configFile.write(linksForChangeLog, 'UTF-8')
         //print contents
     }
 }
