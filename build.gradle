@@ -1,5 +1,55 @@
-version = gitExtendedVersion() // Sample: 0.5.4-19
+ext.gitExtendedVersionX = {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe', '--tags'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim().replaceFirst("v","").replaceFirst('-(?!.*-).*','');
+}
+
+version = gitExtendedVersionX() // Sample: 0.5.4-19
+
+ext {
+    ghaccount = "MikeMitterer"
+    ghproject = "dart-l10n-gettext"
+
+    // pretty-format: http://opensource.apple.com/source/Git/Git-19/src/git-htmldocs/pretty-formats.txt
+    changelogformat = "<li>%s (<a href=\"http://github.com/$ghaccount/$ghproject/commit/%H\">%h</a>)</li>"
+
+    yamlFilename = "pubspec.yaml"
+}
 
 task showVersion() << {
     print version
 }
+
+task writeChangeLog {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'log', "--pretty=format:$changelogformat"
+        standardOutput = stdout
+    }
+
+    def linksForChangeLog = stdout.toString();
+
+    doLast {
+        final File configFile = file('CHANGELOG.md')
+
+        final String contents = "###Changes:###\n<ul>$linksForChangeLog</ul>"
+        configFile.write(contents, 'UTF-8')
+    }
+}
+
+task setVersionInYaml << {
+    final File yamlfile = file(yamlFilename)
+
+    String contents = yamlfile.text;
+    contents = contents.replaceFirst(/version: .*/,"version: $version");
+
+    yamlfile.write(contents, 'UTF-8')
+}
+
+// maybe in the future...
+//task pubPublish << {
+//
+//}
