@@ -1,4 +1,10 @@
 ###Changes:###
+###v0.15.4###
+* Writing nicer changelog with build.gradle [fee5561](http://github.com/MikeMitterer/dart-l10n-gettext/commit/fee5561e7f36053c30a6cd880564c34be0c96ac1)
+* Changed version-number-generation for yaml-file [48fc3c8](http://github.com/MikeMitterer/dart-l10n-gettext/commit/48fc3c8c9c4e3e0de86862e8267f2359d354a42e)
+* Changed version-number-generation for yaml-file [a35dbcd](http://github.com/MikeMitterer/dart-l10n-gettext/commit/a35dbcd36528140f248774c298a3637d89c01d18)
+* Testing the version... [659d77d](http://github.com/MikeMitterer/dart-l10n-gettext/commit/659d77d9c6a122a8b1b49635b94828b276d6492a)
+
 ###v0.15###
 * Forgot that pub.dartlang.org is not able to interpret hrefs in .md files - changed the changelog format [f68f56f](http://github.com/MikeMitterer/dart-l10n-gettext/commit/f68f56f7ae0a4c742be1011438830f732292b555)
 * Forgot that pub.dartlang.org is not able to interpret hrefs in .md files - changed the changelog format [deea108](http://github.com/MikeMitterer/dart-l10n-gettext/commit/deea10866b6d847253aad1752a5fe55203ccf027)
