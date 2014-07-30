@@ -1,5 +1,6 @@
 ###Changes:###
-<ul><li>build.gradle added (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/c0d4c60360cd54fd767778582c8c04f5a06c41e8">c0d4c60</a>)</li>
+<ul><li>Gradle can update the version in pubspec.yaml and can write a CHANGELOG.md (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/e3a5709cef1e170b1804e48f57458d5c8181672c">e3a5709</a>)</li>
+<li>build.gradle added (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/c0d4c60360cd54fd767778582c8c04f5a06c41e8">c0d4c60</a>)</li>
 <li>JSON-Capabilities for L10N (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/8e9b363e80cc72d2e0ca8e22f2c713b34c67b75c">8e9b363</a>)</li>
 <li>README updated (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/dd078a6dfdf0c9bab42be17665975cadf031141c">dd078a6</a>)</li>
 <li>README updated (<a href="http://github.com/MikeMitterer/dart-l10n-gettext/commit/648494b9ce926bd6eb2446c97a68f48c6832067d">648494b</a>)</li>
