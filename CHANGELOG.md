@@ -1,4 +1,6 @@
-###v0.15.7###
+###v0.15.9###
+* packages are scannable now [f003f9b](http://github.com/MikeMitterer/dart-l10n-gettext/commit/f003f9b26cb7cb8a89b45b25eef85502a4f0ed41)
+* packages are scannable now [f07f9bf](http://github.com/MikeMitterer/dart-l10n-gettext/commit/f07f9bfd55597e340b0f73712545698cdef545ce)
 * Downgraded intl to make it compatible with angular [e2164da](http://github.com/MikeMitterer/dart-l10n-gettext/commit/e2164da20e794102ac61f6e7fd9cf45c30807210)
 * Removed 'Changes' from changelog [ac14cd7](http://github.com/MikeMitterer/dart-l10n-gettext/commit/ac14cd719e6c8b472e3b2d1d63e235ed95a8a1bc)
 * Again - changelog optimisation [623e62c](http://github.com/MikeMitterer/dart-l10n-gettext/commit/623e62ca98ea6c4cd13c726b45ae34c459f86948)

@@ -80,6 +80,84 @@ SystemLocale: de_AT
 Dies ist ein TEST!
 ```
 
+###How to use it with AngularDart###
+- Write your Filter for Angular
+
+```dart
+library your.lib;
+
+import 'package:logging/logging.dart';
+
+import "package:angular/angular.dart";
+import 'package:angular/core/annotation_src.dart';
+
+import 'package:l10n/l10n.dart';
+
+/// Filter for L10N
+@Formatter(name: "translate")
+class TranslateFilter implements Function {
+    final _logger = new Logger('your.lib.TranslateFilter');
+
+    final L10NTranslate _translator;
+
+    TranslateFilter(this._translator) {
+        Validate.notNull(_translator);
+    }
+
+    dynamic call(l10n) {
+        if (l10n is L10N) {
+            return _translator(l10n);
+        }
+        else {
+            return l10n;
+        }
+    }
+}
+```
+
+- Implement it into your main.dart
+
+```dart
+library your.main.lib
+
+import 'package:angular/angular.dart';
+import 'package:angular/application_factory.dart';
+import 'package:l10n/l10n.dart';
+
+//---------------------------------------------------------
+// Filter
+import 'package:webapp_base_ui/angular/filter/TranslateFilter.dart';
+
+/// Entry point into app.
+main() {
+    applicationFactory().addModule(new SampleModule()).run();
+}
+
+/// only for this sample - git the Map from lib/locale/messages.dart
+final L10NTranslate _translater = new L10NTranslate.withTranslation( {
+    "Could not find Job-ID: {{jobid}}" : "Konnte die JOB-ID {{jobid}} nicht finden..."
+});
+
+class SampleModule extends Module {
+    SampleModule() {
+
+        // -- filter
+        bind(TranslateFilter,toValue: new TranslateFilter(_translater));
+    }
+}
+```
+
+- Your HTML-Template (Component in this case) in Angular
+```html
+<!DOCTYPE html>
+<div ng-if="cmp.job != null">
+    ID: {{cmp.id}}  {{cmp.job.description}}
+</div>
+<div ng-if="cmp.job == null">
+    {{cmp.lasterror | translate}}
+</div>
+```
+
 ####Sub-Translations###
 Since 0.11.0 Sub-Translations are possible - here is the explanation:
  
