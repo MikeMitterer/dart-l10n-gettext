@@ -1,4 +1,5 @@
-###v0.15.9###
+###v0.15.10###
+* Updated documentation - How to use L10N with Angular [5aa703e](http://github.com/MikeMitterer/dart-l10n-gettext/commit/5aa703e3346eb1f6febbdfbe11a87381e773ed51)
 * packages are scannable now [f003f9b](http://github.com/MikeMitterer/dart-l10n-gettext/commit/f003f9b26cb7cb8a89b45b25eef85502a4f0ed41)
 * packages are scannable now [f07f9bf](http://github.com/MikeMitterer/dart-l10n-gettext/commit/f07f9bfd55597e340b0f73712545698cdef545ce)
 * Downgraded intl to make it compatible with angular [e2164da](http://github.com/MikeMitterer/dart-l10n-gettext/commit/e2164da20e794102ac61f6e7fd9cf45c30807210)

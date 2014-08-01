@@ -133,7 +133,7 @@ main() {
     applicationFactory().addModule(new SampleModule()).run();
 }
 
-/// only for this sample - git the Map from lib/locale/messages.dart
+/// only for this sample - usually use the Map from lib/locale/messages.dart
 final L10NTranslate _translater = new L10NTranslate.withTranslation( {
     "Could not find Job-ID: {{jobid}}" : "Konnte die JOB-ID {{jobid}} nicht finden..."
 });
