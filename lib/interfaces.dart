@@ -27,6 +27,16 @@ abstract class Translatable {
     L10N get l10n;
 }
 
+/// Basisklasse / Interface für den Translator.
+/// call wird gleich hier implementiert.
+abstract class Translator {
+    String translate(final L10N l10n);
+
+    String call(final L10N l10n) {
+        return translate(l10n);
+    }
+}
+
 abstract class TranslationProvider {
 
 }

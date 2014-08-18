@@ -33,6 +33,15 @@ testL10NTranslation() {
             expect(translator.translate(l10n("Hallo {{name}}",{ "name" : "Mike"})), "Mike, Welcome in ...");
         }); // end of 'Translation' test
 
+        test('> Translation mit Translator', () {
+            final Translator translator = new L10NTranslate.withTranslation(
+                {
+                    "Hallo {{name}}" : "{{name}}, Welcome in ..."
+                });
+
+            expect(translator.translate(l10n("Hallo {{name}}",{ "name" : "Mike"})), "Mike, Welcome in ...");
+        }); // end of 'Translation mit Translator' test
+
         test('> Translate with call-function', () {
             final L10NTranslate translate = new L10NTranslate.withTranslation(
                 {
