@@ -58,8 +58,21 @@ class L10NImpl implements L10N {
     Map<String, dynamic> toJson() {
         final Map map = new Map<String, dynamic>();
 
+        Map<String,dynamic> convertVarsToEncodableValues(final Map<String,dynamic> vars) {
+            final Map<String,dynamic> encodableVars = new Map<String, dynamic>();
+
+            vars.forEach((final String key,final value) {
+                if(value == null || value is num || value is String || value is bool) {
+                    encodableVars[key] = value;
+                } else {
+                    encodableVars[key] = value.toString();
+                }
+            });
+            return encodableVars;
+        }
+
         map['msgid'] = _msgID;
-        map['vars'] = _vars;
+        map['vars'] = convertVarsToEncodableValues(_vars);
 
         return map;
     }

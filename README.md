@@ -211,6 +211,7 @@ These programs are on your system if you are working on Mac or Linux.
 * [Issues][2]
 
 ###History ###
+* 0.15.12 - toJson converts vars not to "encodable" values
 * 0.11.0 - Sub-Translations are possible, msginit gets initialized with utf-8 per default
 * 0.9.0 - Released on pub
 
