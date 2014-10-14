@@ -4,11 +4,11 @@ packages:
   analyzer:
     description: analyzer
     source: hosted
-    version: "0.15.7"
+    version: "0.22.4"
   args:
     description: args
     source: hosted
-    version: "0.11.0+1"
+    version: "0.12.0+2"
   browser:
     description: browser
     source: hosted
@@ -16,7 +16,7 @@ packages:
   collection:
     description: collection
     source: hosted
-    version: "0.9.4"
+    version: "1.0.0"
   console_log_handler:
     description: console_log_handler
     source: hosted
@@ -24,7 +24,7 @@ packages:
   intl:
     description: intl
     source: hosted
-    version: "0.9.10"
+    version: "0.11.9"
   logging:
     description: logging
     source: hosted
@@ -40,6 +40,10 @@ packages:
   path:
     description: path
     source: hosted
+    version: "1.3.0"
+  petitparser:
+    description: petitparser
+    source: hosted
     version: "1.2.2"
   stack_trace:
     description: stack_trace
@@ -48,8 +52,12 @@ packages:
   unittest:
     description: unittest
     source: hosted
-    version: "0.11.0+3"
+    version: "0.11.0+5"
   validate:
     description: validate
     source: hosted
     version: "1.3.1"
+  watcher:
+    description: watcher
+    source: hosted
+    version: "0.9.3"

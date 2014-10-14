@@ -1,4 +1,8 @@
-###v0.15.10###
+###v0.15.14###
+* toJson converts vars not to 'encodable' values [a1018b6](http://github.com/MikeMitterer/dart-l10n-gettext/commit/a1018b6826e4cec61ca4cd9731a4ee939ded8cb5)
+* Translator-Interface eingebaut [93d1066](http://github.com/MikeMitterer/dart-l10n-gettext/commit/93d10665e778e035e96be5ac5ccd1de6418223ce)
+* Versionupdate in pubspec [b8b80be](http://github.com/MikeMitterer/dart-l10n-gettext/commit/b8b80be7be30338dea33ab081c214fdaaa6343d8)
+* Typo [b26e227](http://github.com/MikeMitterer/dart-l10n-gettext/commit/b26e22720b52609897bd9400aeb8fceec057d3ea)
 * Updated documentation - How to use L10N with Angular [5aa703e](http://github.com/MikeMitterer/dart-l10n-gettext/commit/5aa703e3346eb1f6febbdfbe11a87381e773ed51)
 * packages are scannable now [f003f9b](http://github.com/MikeMitterer/dart-l10n-gettext/commit/f003f9b26cb7cb8a89b45b25eef85502a4f0ed41)
 * packages are scannable now [f07f9bf](http://github.com/MikeMitterer/dart-l10n-gettext/commit/f07f9bfd55597e340b0f73712545698cdef545ce)
