@@ -240,6 +240,7 @@ class Application {
         _parser.getUsage().split("\n").forEach((final String line) {
             print("    $line");
         });
+
         print("");
     }
 

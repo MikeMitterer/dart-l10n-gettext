@@ -4,17 +4,18 @@ author: Mike Mitterer  <office@mikemitterer.at>
 description: Creates translatable PO-Files, strong orientation to xgettext
 homepage: https://github.com/MikeMitterer/dart-l10n-gettext
 dependencies:
-  browser: any
-  logging: any
-  logging_handlers: any
+  browser: ^0.10.0
 
-  intl: ">=0.11.9 <0.12.0"
-    #">=0.11.9 <0.12.0"
-    #">=0.8.7 <0.10.0"
-    #">=0.11.3 <0.12.0"
+  logging: ^0.11.0
+  logging_handlers: ^0.8.0
+  console_log_handler: ^0.1.0
+    # path: /Volumes/Daten/DevLocal/DevDart/ConsoleLogHandler
 
-  validate: any
-  args: any
+  intl: ^0.12.0
+
+  validate: ^1.0.0
+
+  args: ^0.13.0
 
 #dependency_overrides:
 #  analyzer: ">=0.21.1 <0.22.0"
@@ -22,4 +23,3 @@ dependencies:
 dev_dependencies:
   unittest: any
 
-  console_log_handler: any

@@ -19,7 +19,13 @@ L10N l10n(final String msgid, [final Map<String, dynamic> vars = const {} ]) {
     return new L10N(msgid,vars);
 }
 
+/// Shortcut to get a L10N object
 L10N gettext(final String msgid, [final Map<String, dynamic> vars = const {} ]) {
+    return l10n(msgid,vars);
+}
+
+/// Shortcut to get a L10N object
+L10N tr(final String msgid, [final Map<String, dynamic> vars = const {} ]) {
     return l10n(msgid,vars);
 }
 
