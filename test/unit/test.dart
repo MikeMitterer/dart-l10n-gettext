@@ -1,22 +1,29 @@
+// ----------------------------------------------------------------------------
+// Start der Tests mit:
+//      pub run test -p content-shell test/unit/test.dart
+//
+
+@TestOn("content-shell")
+
 library unit.test;
 
-import 'package:unittest/html_enhanced_config.dart';
 
 //-----------------------------------------------------------------------------
 // Notwendige externe includes
 
-import 'package:unittest/unittest.dart';
+import 'package:test/test.dart';
 import 'package:intl/intl.dart';
 
 //-----------------------------------------------------------------------------
 // Logging
 
 import 'package:logging/logging.dart';
+import 'package:logging_handlers/logging_handlers_shared.dart';
 
 //---------------------------------------------------------
 // Extra packages (piepag) (http_utils, validate, signer)
 //---------------------------------------------------------
-import 'package:console_log_handler/console_log_handler.dart';
+
 import 'package:l10n/l10n.dart';
 import 'package:l10n/locale/messages.dart';
 
@@ -58,7 +65,6 @@ part "regexp/RegExp_test.dart";
 void main() {
     final Logger logger = new Logger("test");
 
-    useHtmlEnhancedConfiguration();
     configLogging();
 
     testL10N();
@@ -75,5 +81,5 @@ void configLogging() {
     // now control the logging.
     // Turn off all logging first
     Logger.root.level = Level.INFO;
-    Logger.root.onRecord.listen(new LogConsoleHandler());
+    Logger.root.onRecord.listen(new LogPrintHandler());
 }

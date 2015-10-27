@@ -77,7 +77,7 @@ testL10NTranslation() {
             expect(translator(l10n),"Willkommen in Australien Sarah");
         }); // end of 'Translate with Table' test
 
-        skip_test('> Locale', () {
+        test('> Locale', () {
             final Intl intl = new Intl();
             _logger.info(intl.locale);
             _logger.info(Intl.shortLocale(intl.locale));
@@ -94,7 +94,7 @@ testL10NTranslation() {
             }
 
 
-        }); // end of 'Locale' test
+        }, skip: "Nur für Output interessant"); // end of 'Locale' test
 
         test('> With external table', () {
             final L10NTranslate translate = new L10NTranslate.withTranslation(translationTable["en"]);

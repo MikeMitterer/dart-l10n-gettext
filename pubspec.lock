@@ -4,7 +4,7 @@ packages:
   analyzer:
     description: analyzer
     source: hosted
-    version: "0.26.1+14"
+    version: "0.26.1+16"
   args:
     description: args
     source: hosted
@@ -108,7 +108,7 @@ packages:
   shelf:
     description: shelf
     source: hosted
-    version: "0.6.3+1"
+    version: "0.6.4"
   shelf_static:
     description: shelf_static
     source: hosted
@@ -140,15 +140,11 @@ packages:
   test:
     description: test
     source: hosted
-    version: "0.12.4+9"
+    version: "0.12.5+1"
   typed_data:
     description: typed_data
     source: hosted
     version: "1.0.0"
-  unittest:
-    description: unittest
-    source: hosted
-    version: "0.12.4"
   utf:
     description: utf
     source: hosted
