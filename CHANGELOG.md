@@ -1,7 +1,7 @@
 # Change Log for l10n
 Creates translatable PO-Files, strong orientation to xgettext
 
-## [Unreleased](http://github.com/mikemitterer/dart-l10n-gettext/compare/v0.16...HEAD)
+## [v0.16.1](http://github.com/mikemitterer/dart-l10n-gettext/compare/v0.16...v0.16.1) - 2015-12-04
 
 ### Docs
 * Grinder + new test-format [f0fbeff](https://github.com/mikemitterer/dart-l10n-gettext/commit/f0fbeff3f2b5e24ffccdb077bd2cef75bfee3418)
