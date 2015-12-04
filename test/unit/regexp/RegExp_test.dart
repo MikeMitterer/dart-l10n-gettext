@@ -1,7 +1,12 @@
-part of unit.test;
+@TestOn("content-shell")
+import 'package:test/test.dart';
 
-testRegExp() {
-    final Logger _logger = new Logger("unit.test.RegExp");
+import 'package:logging/logging.dart';
+import 'package:logging_handlers/logging_handlers_shared.dart';
+
+main() {
+    // final Logger _logger = new Logger("unit.test.RegExp");
+    configLogging();
 
     group('RegExp', () {
         setUp(() {
@@ -36,6 +41,8 @@ testRegExp() {
     // end 'RegExp' group
 }
 
-//------------------------------------------------------------------------------------------------
-// Helper
-//------------------------------------------------------------------------------------------------
+void configLogging() {
+    hierarchicalLoggingEnabled = false;
+    Logger.root.level = Level.INFO;
+    Logger.root.onRecord.listen(new LogPrintHandler());
+}

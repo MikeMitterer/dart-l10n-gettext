@@ -118,14 +118,14 @@ class L10NTranslate extends Translator {
 
         String message;
         try {
-            final String verifiedLocale = Intl.verifiedLocale(locale,(final String testLocale) {
+            Intl.verifiedLocale(locale,(final String testLocale) {
                 if(_isKeyInTranslationTable(msgid,testLocale)) {
                     message = _translations[testLocale][msgid];
                     return true;
                 }
                 return false;
             });
-        } on ArgumentError catch (error) {
+        } on ArgumentError {
             if(_isKeyInTranslationTable(msgid,_DEFAULT_LOCALE)) {
                 message = _translations[_DEFAULT_LOCALE][msgid];
             } else {

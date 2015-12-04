@@ -1,4 +1,7 @@
-part of unit.test;
+@TestOn("content-shell")
+import 'package:test/test.dart';
+
+import 'package:l10n/l10n.dart';
 
 class Name implements Translatable {
     final String firstname;
@@ -10,9 +13,7 @@ class Name implements Translatable {
     }
 }
 
-testL10N() {
-    final Logger _logger = new Logger("test.L10NMessage");
-
+main() {
     final String jsonToTest = "{\n" +
         "   \"msgid\" : \"Hallo {{name}}, du bist jetzt {{age}} Jahre alt\",\n" +
         "   \"vars\" :\n" +
@@ -114,7 +115,3 @@ testL10N() {
     });
     // end 'L10NMessage' group
 }
-
-//------------------------------------------------------------------------------------------------
-// Helper
-//------------------------------------------------------------------------------------------------

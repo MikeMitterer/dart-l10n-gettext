@@ -78,8 +78,7 @@ class Application {
             }
         }
 
-        on FormatException
-        catch (error) {
+        on FormatException {
             _showUsage();
         }
     }
@@ -179,30 +178,6 @@ class Application {
         return future;
     }
 
-    /**
-     * Only for testing - I'm using the SYNC-Version because otherwise it bring xgettext into trouble
-     */
-    void _iterateThroughDir(final String dir, void callback(final File file)) {
-        _logger.info("Scanning: $dir");
-
-        // its OK if the path starts with packages but not if the path contains packages (avoid recursion)
-        final RegExp regexp = new RegExp("^/*packages/*");
-
-        final Directory directory = new Directory(dir);
-        directory.exists().then((_) {
-            directory.list(recursive: true).where((final FileSystemEntity entity) {
-                return (FileSystemEntity.isFileSync(entity.path) && entity.path.contains(regexp) == false &&
-                    ( entity.path.endsWith(".dart") || entity.path.endsWith(".DART") || entity.path.endsWith(".html"))
-                );
-
-            }).any((final File file) {
-                callback(file);
-            });
-        }).catchError((final dynamic error, final StackTrace stacktrace) {
-            _logger.fine(error);
-        });
-    }
-
     /// Goes through the files
     void _iterateThroughDirSync(final String dir, void callback(final File file)) {
         _logger.info("Scanning: $dir");
@@ -237,7 +212,7 @@ class Application {
 
     void _showUsage() {
         print(translate(l10n("Usage: mkl10nlocale [options] <dir(s) to scan>")));
-        _parser.getUsage().split("\n").forEach((final String line) {
+        _parser.usage.split("\n").forEach((final String line) {
             print("    $line");
         });
 
@@ -495,6 +470,6 @@ void main(List<String> arguments) {
     });
 
     /// only for testing
-    final L10N l1 = const L10N("Ein TEST - 290714 1648");
+    // final L10N l1 = const L10N("Ein TEST - 290714 1648");
 }
 

@@ -1,7 +1,15 @@
-part of unit.test;
+@TestOn("content-shell")
+import 'package:test/test.dart';
 
-testL10NTranslation() {
-    final Logger _logger = new Logger("unit.test.L10NTranslation");
+import 'package:logging/logging.dart';
+import 'package:logging_handlers/logging_handlers_shared.dart';
+
+import 'package:l10n/l10n.dart';
+import 'package:l10n/locale/messages.dart';
+
+main() {
+    // final Logger _logger = new Logger("unit.test.L10NTranslation");
+    configLogging();
 
     final Map<String,Map<String,String>> translationTable = {
         "en" : {
@@ -77,24 +85,24 @@ testL10NTranslation() {
             expect(translator(l10n),"Willkommen in Australien Sarah");
         }); // end of 'Translate with Table' test
 
-        test('> Locale', () {
-            final Intl intl = new Intl();
-            _logger.info(intl.locale);
-            _logger.info(Intl.shortLocale(intl.locale));
-
-            String result;
-
-            try {
-                result = Intl.verifiedLocale('ysdex',(final String testLocale) {
-                    _logger.info("VL: $testLocale");
-                    return false;
-                });
-            } on ArgumentError catch (error) {
-                result = "en";
-            }
-
-
-        }, skip: "Nur für Output interessant"); // end of 'Locale' test
+//        test('> Locale', () {
+//            final Intl intl = new Intl();
+//            _logger.info(intl.locale);
+//            _logger.info(Intl.shortLocale(intl.locale));
+//
+//            String result;
+//
+//            try {
+//                result = Intl.verifiedLocale('ysdex',(final String testLocale) {
+//                    _logger.info("VL: $testLocale");
+//                    return false;
+//                });
+//            } on ArgumentError {
+//                result = "en";
+//            }
+//
+//
+//        }, skip: "Nur für Output interessant"); // end of 'Locale' test
 
         test('> With external table', () {
             final L10NTranslate translate = new L10NTranslate.withTranslation(translationTable["en"]);
@@ -151,6 +159,8 @@ testL10NTranslation() {
     // end 'L10NTranslation' group
 }
 
-//------------------------------------------------------------------------------------------------
-// Helper
-//------------------------------------------------------------------------------------------------
+void configLogging() {
+    hierarchicalLoggingEnabled = false;
+    Logger.root.level = Level.INFO;
+    Logger.root.onRecord.listen(new LogPrintHandler());
+}
