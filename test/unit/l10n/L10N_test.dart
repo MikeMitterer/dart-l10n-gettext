@@ -1,4 +1,3 @@
-@TestOn("content-shell")
 import 'package:test/test.dart';
 
 import 'package:l10n/l10n.dart';

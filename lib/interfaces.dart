@@ -29,6 +29,22 @@ abstract class Translatable {
 
 /// Basisklasse / Interface für den Translator.
 /// call wird gleich hier implementiert.
+///
+///     final L10NTranslate _translator = new L10NTranslate.withTranslations( <String,Map<String,String>> {
+///         "en" : {
+///             "Could not find Job-ID: {{jobid}}" : "Could not find Job-ID: {{jobid}}"
+///         },
+///
+///         "de" : {
+///             "Could not find Job-ID: {{jobid}}" : "Konnte die JOB-ID {{jobid}} nicht finden..."
+///         }
+///     });
+///
+///     class SampleModule extends di.Module {
+///         SampleModule() {
+///             bind(Translator, toValue: _translator);
+///         }
+///     }
 abstract class Translator {
     String translate(final L10N l10n);
 

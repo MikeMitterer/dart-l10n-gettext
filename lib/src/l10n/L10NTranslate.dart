@@ -51,11 +51,42 @@ class L10NTranslate extends Translator {
 
     /// Wenn es einen Eintrag für message.key in der _locale Tabelle gibt wir
     /// ein String.replaceAll auf die Variablen in der message ausgeführt
+    /// 
+    ///     final int status = 400;
+    ///     final L10N l = new L10N(
+    ///         """
+    ///                     Der Server meldet {{status}} bei der API-Key Anforderung.
+    ///                     """, {
+    ///         "status"     : "{{statuscode-${status}}}"
+    ///     });
+    ///
+    ///     Result:
+    ///
+    ///     expect(l.message,"Der Server meldet {{statuscode-400}} bei der API-Key Anforderung.");
+    ///     expect(translate(l),"Der Server meldet {{statuscode-400}} bei der API-Key Anforderung.");
+    ///
+    ///     translate.locale = "de";
+    ///     expect(translate(l),"Fehlerhafte Anfrage (400) bei der API-Key Anforderung!");
+    ///
     String translate(final L10N l10n) {
         Validate.notNull(l10n);
 
-        String _replaceVarsInMessage(final Map<String,dynamic> vars,final String msgid) {
+        /// From the above sample this translates {{status}} -> {{statuscode-400}} which results
+        /// in 'Der Server meldet {{statuscode-400}} bei der API-Key Anforderung.'
+        String _replaceSubVarsInMessage(final Map<String,dynamic> vars,final String msgid) {
             String translated = msgid;
+
+            vars.forEach((final String key,final value) {
+                if(value is String && value.startsWith("{{") && value.endsWith("}}")) {
+                    translated = translated.replaceAll("{{$key}}",value.toString());
+                }
+            });
+            return translated;
+        }
+
+        /// Translates all vars ({{varname}}) in message
+        String _replaceVarsInMessage(final Map<String,dynamic> vars,final String message) {
+            String translated = message;
 
             vars.forEach((final String key,final value) {
                 translated = translated.replaceAll("{{$key}}",value.toString());
@@ -63,17 +94,11 @@ class L10NTranslate extends Translator {
             return translated;
         }
 
-        String message = _getMessage(l10n.msgid);
-        message = _replaceVarsInMessage(l10n.vars,message);
+        // Translate e.g. 'Der Server meldet {{statuscode-400}} bei der API-Key Anforderung.'
+        // to 'The server response with {{statuscode-400}} on the API-Key request.'
+        final String message = _getMessage(_replaceSubVarsInMessage(l10n.vars,l10n.msgid));
 
-        // maybe _replaceVarsInMessage produced a new msgid...
-        // could be: Der Server meldet {{statuscode-400}} bei der API-Key Anforderung.
-        // If so - try to translate again!
-        if(message.contains(new RegExp("{{.*}}"))) {
-            message = _getMessage(message);
-        }
-
-        return message;
+        return _replaceVarsInMessage(l10n.vars,message);
     }
 
     String get locale => _locale;
@@ -123,6 +148,7 @@ class L10NTranslate extends Translator {
                     message = _translations[testLocale][msgid];
                     return true;
                 }
+                _logger.warning("No translation found for (locale: '$testLocale'): $msgid");
                 return false;
             });
         } on ArgumentError {
