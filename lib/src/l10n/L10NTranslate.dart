@@ -84,7 +84,7 @@ class L10NTranslate extends Translator {
             return translated;
         }
 
-        /// Translates all vars ({{varname}}) in message
+        /// Translates all vars in message
         String _replaceVarsInMessage(final Map<String,dynamic> vars,final String message) {
             String translated = message;
 
