@@ -148,7 +148,7 @@ class L10NTranslate extends Translator {
                     message = _translations[testLocale][msgid];
                     return true;
                 }
-                _logger.warning("No translation found for (locale: '$testLocale'): $msgid");
+                _logger.fine("No translation found for (locale: '$testLocale'): $msgid");
                 return false;
             });
         } on ArgumentError {
