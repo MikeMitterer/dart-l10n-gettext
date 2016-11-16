@@ -1,6 +1,11 @@
 # Change Log for l10n
 Creates translatable PO-Files, strong orientation to xgettext
 
+## [v0.16.4](http://github.com/mikemitterer/dart-l10n-gettext/compare/v0.16.3...v0.16.4) - 2016-11-16
+
+### Docs
+* Strong-Mode support, README improved [5532669](https://github.com/mikemitterer/dart-l10n-gettext/commit/5532669a19e08d9ec71f5280975be2f847ba1403)
+
 ## [v0.16.2](http://github.com/mikemitterer/dart-l10n-gettext/compare/v0.16.1...v0.16.2) - 2015-12-16
 
 ### Docs
