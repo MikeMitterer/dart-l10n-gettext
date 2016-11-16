@@ -8,6 +8,13 @@ homepage: https://github.com/MikeMitterer/dart-l10n-gettext
 environment:
   sdk: '>=1.12.0 <2.0.0'
 
+# Add the bin/mkl10nlocale.dart script to the scripts pub installs.
+# Activate local repo:
+#   pub global activate --source path .
+#
+executables:
+  mkl10nlocale:
+
 dependencies:
   browser: ^0.10.0
 

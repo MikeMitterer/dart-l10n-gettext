@@ -56,7 +56,7 @@ class L10NImpl implements L10N {
     }
 
     Map<String, dynamic> toJson() {
-        final Map map = new Map<String, dynamic>();
+        final Map<String, dynamic> map = new Map<String, dynamic>();
 
         Map<String,dynamic> convertVarsToEncodableValues(final Map<String,dynamic> vars) {
             final Map<String,dynamic> encodableVars = new Map<String, dynamic>();
@@ -95,10 +95,10 @@ class L10NImpl implements L10N {
         Validate.notNull(data);
 
         if(data is Map) {
-            return data;
+            return data as Map<String, dynamic>;
 
         } else if(data is String) {
-            return JSON.decode(data);
+            return JSON.decode(data) as Map<String, dynamic>;
         }
 
         throw new ArgumentError("$data is not a valid basis for a JSON-Map. Data should be either a String or a Map but was ${data.runtimeType}");

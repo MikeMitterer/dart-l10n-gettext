@@ -203,8 +203,9 @@ class Application {
 
                 return true;
 
-            }).any((final File file) {
-                //_logger.fine("  Found: ${file}");
+            }).map((final FileSystemEntity entity) => new File(entity.path))
+                .forEach((final File file) {
+                _logger.fine("  Found: ${file}");
                 callback(file);
             });
         }

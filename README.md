@@ -1,39 +1,45 @@
 l10n / (gettext-oriented) PO-File Generator
 -------------------------------------------
-####Helps to localize your application####
+> Helps to localize your application
 
-[![Screenshot][1])](http://www.youtube.com/watch?v=vPfl-xPTjs0)
-
-###Install - WORKS###
-
-```yaml
-dependencies:
-  ...  
-  l10n: any
-```
-    
-```bash
-pub update
-ln -s packages/l10n/mkl10nlocale.dart mkl10nlocale
-
-mkl10nlocale --help
-```
-
-####Install (should work)####
-In Dart(-sdk) 1.6 
+#### Install 
 ```bash
 $ pub global activate l10n
 ```
-should works... - <b>BUT DOES NOT!!!!</b>
 
-You can run the script from any local directory.
+### System requirements
+* xgettext
+* msginit
+* msgmerge
+
+(only if you want to generate PO/POT files)
+
+To verify it they are on your system type:
 ```bash
-$ pub global run l10n:mkl10nlocale --help
+    $ type xgettext 
 ```
-<b>pub global activate + run seams not ready!</b> As said - make a symlink and you are done!
+If you get an error message - do the following:
+```bash
+    $ brew install gettext
+    # on Linux: apt-get install gettext
+```
 
-###How to use it###
+Edit ~/.bashrc and add:
+```bash
+    # mkl10nlocale
+    export PATH=${PATH}:/usr/local/opt/gettext/bin
+```
 
+To activate your settings:
+```bash
+    $ source ~/.bashrc
+```
+
+### How to use it
+[![Screenshot][1])](http://www.youtube.com/watch?v=vPfl-xPTjs0)  
+(You have to watch it in 1080p - sorry! Better screencast will follow)
+
+**Sample code**
 ```dart
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
@@ -80,7 +86,7 @@ SystemLocale: de_AT
 Dies ist ein TEST!
 ```
 
-###How to use it with AngularDart###
+### How to use it with AngularDart
 - Write your Filter for Angular
 
 ```dart
@@ -158,7 +164,7 @@ class SampleModule extends Module {
 </div>
 ```
 
-####Sub-Translations###
+#### Sub-Translations
 Since 0.11.0 Sub-Translations are possible - here is the explanation:
  
 ```
@@ -198,26 +204,18 @@ locale/en/.../messages.po:
 You have to add the msgid "Servermessage {{statuscode-400}}." by hand to your <strong>POT</strong>-File.<br>
 The rest is done be the nice merging-feature of l10n/msgmerge 
 
-###System requirements###
-* xgettext
-* msginit
-* msgmerge
 
-These programs are on your system if you are working on Mac or Linux.
-
-(only if you want to generate PO/POT files)
-
-###If you have problems###
+### If you have problems
 * [Issues][2]
 
-###History ###
+### History 
 * 0.15.12 - toJson converts vars not to "encodable" values
 * 0.11.0 - Sub-Translations are possible, msginit gets initialized with utf-8 per default
 * 0.9.0 - Released on pub
 
-###License###
+### License
 
-    Copyright 2014 Michael Mitterer (office@mikemitterer.at), 
+    Copyright 2016 Michael Mitterer (office@mikemitterer.at), 
     IT-Consulting and Development Limited, Austrian Branch
 
     Licensed under the Apache License, Version 2.0 (the "License");
