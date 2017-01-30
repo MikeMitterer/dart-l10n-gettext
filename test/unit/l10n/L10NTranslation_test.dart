@@ -16,7 +16,7 @@ main() {
         },
 
         "de" : {
-            "Hallo, dies ist ein {{what}}" : "Hallo, dies ist ein {{what}}"
+            "Hallo, dies ist ein {{what}}" : "Hallo,\n dies ist ein {{what}}"
         }
     };
 
@@ -116,7 +116,9 @@ main() {
             expect(translate(l10n("Hallo, dies ist ein {{what}}",{ "what" : "Test"})),"Hello, this is a Test");
 
             translate.locale = "de";
-            expect(translate(l10n("Hallo, dies ist ein {{what}}",{ "what" : "Test"})),"Hallo, dies ist ein Test");
+            // Im deutschen wird bei der Übersetzung ein \n eingefügt.
+            // Ob der Key (msgid) ein \n enthält oder nicht ist egal
+            expect(translate(l10n("Hallo,\n dies ist ein {{what}}",{ "what" : "Test"})),"Hallo,\n dies ist ein Test");
 
             // does not exist
             translate.locale = "ru";
@@ -153,6 +155,10 @@ main() {
             expect(translate(l),"Fehlerhafte Anfrage (400) bei der API-Key Anforderung!");
 
         }); // end of 'SubTranslation' test
+
+        test('> MessageID with newline', () {
+            expect(l10n("Hallo\nTest").msgid, "HalloTest");
+        }); // end of 'MessageID with newline' test
 
     });
     // end 'L10NTranslation' group

@@ -73,7 +73,7 @@ class L10NTranslate extends Translator {
 
         /// From the above sample this translates {{status}} -> {{statuscode-400}} which results
         /// in 'Der Server meldet {{statuscode-400}} bei der API-Key Anforderung.'
-        String _replaceSubVarsInMessage(final Map<String,dynamic> vars,final String msgid) {
+        String _replaceSubVarsInMessageID(final String msgid, final Map<String,dynamic> vars) {
             String translated = msgid;
 
             vars.forEach((final String key,final value) {
@@ -96,7 +96,9 @@ class L10NTranslate extends Translator {
 
         // Translate e.g. 'Der Server meldet {{statuscode-400}} bei der API-Key Anforderung.'
         // to 'The server response with {{statuscode-400}} on the API-Key request.'
-        final String message = _getMessage(_replaceSubVarsInMessage(l10n.vars,l10n.msgid));
+        var messageID = _replaceSubVarsInMessageID(l10n.msgid, l10n.vars);
+
+        final String message = _getMessage(messageID, l10n.message);
 
         return _replaceVarsInMessage(l10n.vars,message);
     }
@@ -129,7 +131,7 @@ class L10NTranslate extends Translator {
      * (_translations[<current locale>] if it finds an entry it returns it, otherwise
      * it tries various fallbacks - for example ( de_DE -> de -> en (as default locale))
      */
-    String _getMessage(final String msgid) {
+    String _getMessage(final String msgid, final String defaultMessage) {
         Validate.notBlank(msgid);
 
         bool _isKeyInTranslationTable(final String msgid,final String locale) {
@@ -155,7 +157,7 @@ class L10NTranslate extends Translator {
             if(_isKeyInTranslationTable(msgid,_DEFAULT_LOCALE)) {
                 message = _translations[_DEFAULT_LOCALE][msgid];
             } else {
-                message = msgid;
+                message = defaultMessage;
             }
         }
 

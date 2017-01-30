@@ -1,8 +1,14 @@
 part of l10n;
 
-String _sanitizeMessage(final String translatedMessage) {
+/**
+ * Die MessageID darf kein \n, \r oder mehrere Spaces enthalten.
+ */
+String _sanitizeMessageID(final String translatedMessage) {
     Validate.notBlank(translatedMessage);
-    return translatedMessage.replaceAll(new RegExp(r'(\.\n)'),". ").replaceAll(new RegExp(r'(\n|\r|\s{2,})')," ").trim();
+    return translatedMessage
+        .replaceAll(new RegExp(r'(\.\n)'),". ")
+        .replaceAll(new RegExp(r'(\n|\r)'),"")
+        .replaceAll(new RegExp(r'\s{2,}')," ").trim();
 }
 
 /**
@@ -42,7 +48,7 @@ class L10NImpl implements L10N {
 
     Map<String, dynamic> get vars => _vars;
 
-    String get msgid => _msgID.trim();
+    String get msgid => _sanitizeMessageID(_msgID);
 
     /// Gives back the msgid with all the vars set
     String get message {
@@ -52,7 +58,7 @@ class L10NImpl implements L10N {
             message = message.replaceAll("{{$key}}",value.toString());
         });
 
-        return _sanitizeMessage(message);
+        return message;
     }
 
     Map<String, dynamic> toJson() {
@@ -71,7 +77,7 @@ class L10NImpl implements L10N {
             return encodableVars;
         }
 
-        map['msgid'] = _msgID;
+        map['msgid'] = msgid;
         map['vars'] = convertVarsToEncodableValues(_vars);
 
         return map;
