@@ -12,6 +12,8 @@ $ pub global activate l10n
 * msginit
 * msgmerge
 
+You can see the external commands with `mkl10nlocale -s`
+
 (only if you want to generate PO/POT files)
 
 To verify it they are on your system type:
@@ -24,7 +26,7 @@ If you get an error message - do the following:
     # on Linux: apt-get install gettext
 ```
 
-Edit ~/.bashrc and add:
+Esurroundhrc and add:
 ```bash
     # mkl10nlocale
     export PATH=${PATH}:/usr/local/opt/gettext/bin
@@ -58,7 +60,7 @@ void main(List<String> arguments) {
         // Uncomment in Step 3
         // translate.locale = Intl.shortLocale(locale);
 
-        // Step 1 - sourround your text with l10n(...)
+        // Step 1 - surround your text with l10n(...)
         // Try this: print(l10n("This is a test").message);
         print(l10n("This is a test"));  
                

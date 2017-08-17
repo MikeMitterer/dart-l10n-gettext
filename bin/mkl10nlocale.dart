@@ -1,4 +1,4 @@
-#!/usr/bin/env dart
+library l10n.app;
 
 import 'dart:io';
 import 'dart:async';
@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:args/args.dart';
+import 'package:which/which.dart';
 
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
@@ -19,6 +20,9 @@ import 'package:validate/validate.dart';
 
 import 'package:l10n/l10n.dart';
 import 'package:l10n/locale/messages.dart';
+
+part 'commands/ShellCommand.dart';
+part 'commands/commands.dart';
 
 class Application {
     final Logger _logger = new Logger("mkl10llocale.Application");
@@ -67,7 +71,7 @@ class Application {
                             final File pofile = _preparePOFile(locale, potfile,config.getPOFile(locale));
 
                             _mergePO(pofile,potfile);
-                            futuresForJson.add( _creatJson(locale,pofile).then((final Map<String,String> jsonForLocale) => json[locale] = jsonForLocale));
+                            futuresForJson.add( _createJson(locale,pofile).then((final Map<String,String> jsonForLocale) => json[locale] = jsonForLocale));
                         });
                         Future.wait(futuresForJson).then((_) {
                             _createMergedJson(json,config.jsonfile);
@@ -123,9 +127,9 @@ class Application {
         _logger.info("Merged-Json (${jsonFile.path}) created");
     }
 
-    /// Updates your translated PO with new entries from .pot-File
+    /// Updates your translated PO with new records from .pot-File
     void _mergePO(final File pofile,final File potfile) {
-        final ProcessResult result = Process.runSync('msgmerge', ['-U', pofile.path, potfile.path]);
+        final ProcessResult result = msgmerge.runSync(['-U', pofile.path, potfile.path]);
         if(result.exitCode != 0) {
             _logger.severe(result.stderr);
         }
@@ -137,7 +141,7 @@ class Application {
         final File pofile = new File(pofilename);
         if(!pofile.existsSync()) {
             pofile.createSync(recursive: true);
-            final ProcessResult result = Process.runSync('msginit', ['--no-translator','--input', potfile.path, '--output', pofile.path, '-l', locale ]);
+            final ProcessResult result = msginit.runSync(['--no-translator','--input', potfile.path, '--output', pofile.path, '-l', locale ]);
             if(result.exitCode != 0) {
                 _logger.severe(result.stderr);
             } else {
@@ -165,7 +169,7 @@ class Application {
                     _logger.fine(" -> ${file.path}");
 
                     // --from-code ... iconv -l shows all the available codes!
-                    final ProcessResult result = Process.runSync('xgettext', ['-kl10n', '-kL10N', '-j', '-o', "$potfile", '-L', 'JavaScript','--from-code=utf-8', file.path ]);
+                    final ProcessResult result = xgettext.runSync(['-kl10n', '-kL10N', '-j', '-o', "$potfile", '-L', 'JavaScript','--from-code=utf-8', file.path ]);
 
                     if (result.exitCode != 0) {
                         _logger.severe("${result.stderr}");
@@ -239,6 +243,18 @@ class Application {
         settings.forEach((final String key,final String value) {
             print("    ${prepareKey(key)} $value");
         });
+
+        print("");
+        print(translate(l10n("External commands:")));
+        [ msgmerge, msginit, xgettext].forEach((final ShellCommand command) {
+            String exe = translate(l10n("not installed!"));
+            try {
+                exe = command.executable;
+
+            } on StateError catch(_) {}
+
+            print("    ${(command.name + ':').padRight(maxKeyLeght + 1)} ${exe}");
+        });
     }
 
     static ArgParser _createOptions() {
@@ -257,8 +273,8 @@ class Application {
     }
 
     /// Creates .json-File in the same location where the .po file is
-    Future<HashMap<String,String>> _creatJson(final String locale,final File pofile) {
-        final Completer<HashMap<String,String>> completer = new Completer<HashMap<String,String>>();
+    Future<HashMap<String,String>> _createJson(final String locale,final File pofile) {
+        final Completer<Map<String,String>> completer = new Completer<Map<String,String>>();
 
         final Map<String,Map<String,String>> json = new HashMap<String,Map<String,String>>();
         json[locale] = new HashMap<String,String>();
@@ -275,7 +291,7 @@ class Application {
                 // There is always a newline between the msg-blocks, so split there
                 final List<String> msgblocks = content.split(new RegExp("(\r\n|\n){2}"));
 
-                String _sanityze(final String value) {
+                String _sanitize(final String value) {
                     return value.replaceFirst("msgid","").trim().replaceFirst(new RegExp("^\""),"").replaceFirst(new RegExp('"\$'),"").trim();
                 }
                 // If there is a header - skip it!
@@ -284,8 +300,8 @@ class Application {
                     final String withoutcomment = block.replaceAll(new RegExp("#.*(\r\n|\n)"),"");
                     final List<String> message = withoutcomment.split("msgstr");
 
-                    final String key = _sanityze(message[0].replaceFirst("msgid",""));
-                    final String value = _sanityze(message[1]);
+                    final String key = _sanitize(message[0].replaceFirst("msgid",""));
+                    final String value = _sanitize(message[1]);
 
                     json[locale][key] = value;
                 });

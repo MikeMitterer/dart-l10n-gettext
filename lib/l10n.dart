@@ -4,13 +4,14 @@ import "dart:collection";
 import 'package:logging/logging.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
+import 'package:dice/dice.dart' as di;
 
 import "package:validate/validate.dart";
 
 part "interfaces.dart";
 
-part 'src/l10n/L10NImpl.dart';
-part 'src/l10n/L10NTranslate.dart';
+part 'l10n/L10NImpl.dart';
+part 'l10n/L10NTranslate.dart';
 
 final L10NTranslate TRANSLATOR = new L10NTranslate();
 
