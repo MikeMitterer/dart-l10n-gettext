@@ -1,6 +1,11 @@
 # Change Log for l10n
 Creates translatable PO-Files, strong orientation to xgettext
 
+## [v0.17.0](http://github.com/mikemitterer/dart-l10n-gettext/compare/v0.16.4...v0.17.0) - 2017-08-17
+
+### Feature
+* External programs are now a subclass of ShellCommand, structure improved [3fc1c82](https://github.com/mikemitterer/dart-l10n-gettext/commit/3fc1c82104ea967fbd45a13ec0192405159d8941)
+
 ## [v0.16.4](http://github.com/mikemitterer/dart-l10n-gettext/compare/v0.16.3...v0.16.4) - 2016-11-16
 
 ### Docs
