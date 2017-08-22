@@ -103,8 +103,8 @@ class Application {
 
         buffer.writeln("library $libPrefix.locale;\n");
         buffer.writeln('/**');
-        buffer.writeln('* DO NOT EDIT. This is code generated via pkg/l10n/bin/mkl10llocale.dart');
-        buffer.writeln('* This is a library that provides messages for all your locales.');
+        buffer.writeln('* DO NOT EDIT. This is code generated with:');
+        buffer.writeln('*     projectdir \$ mkl10llocale .');
         buffer.writeln('*/');
         buffer.writeln("");
         buffer.writeln("import 'package:l10n/l10n.dart';");
@@ -169,7 +169,8 @@ class Application {
                     _logger.fine(" -> ${file.path}");
 
                     // --from-code ... iconv -l shows all the available codes!
-                    final ProcessResult result = xgettext.runSync(['-kl10n', '-kL10N', '-j', '-o', "$potfile", '-L', 'JavaScript','--from-code=utf-8', file.path ]);
+                    String language = 'JavaScript';
+                    final ProcessResult result = xgettext.runSync(['-kl10n', '-kL10N', '-k_', '-c' , '-j', '-o', "$potfile", '-L', language ,'--from-code=utf-8', '-s', file.path ]);
 
                     if (result.exitCode != 0) {
                         _logger.severe("${result.stderr}");
@@ -205,6 +206,11 @@ class Application {
                     return entity.path.contains(regexp);
                 }
 
+                if(entity.path.startsWith(".pub/") || entity.path.startsWith("./.pub/") ||
+                   entity.path.startsWith("build/") || entity.path.startsWith("./build/")){
+                    return false;
+                }
+
                 return true;
 
             }).map((final FileSystemEntity entity) => new File(entity.path))
@@ -221,6 +227,10 @@ class Application {
             print("    $line");
         });
 
+        print("");
+        print(translate(l10n("Example:")));
+        print("    " + translate(l10n("mkl10nlocale . - Generates lib/locale/messages.dart")));
+        print("    " + translate(l10n("mkl10nlocale -l en,de . - Generates translation for en + de")));
         print("");
     }
 
@@ -245,8 +255,10 @@ class Application {
         });
 
         print("");
+
+        // You will see this comment in the .po/.pot-File
         print(translate(l10n("External commands:")));
-        [ msgmerge, msginit, xgettext].forEach((final ShellCommand command) {
+        [ xgettext, msginit, msgmerge ].forEach((final ShellCommand command) {
             String exe = translate(l10n("not installed!"));
             try {
                 exe = command.executable;
@@ -277,7 +289,10 @@ class Application {
         final Completer<Map<String,String>> completer = new Completer<Map<String,String>>();
 
         final Map<String,Map<String,String>> json = new HashMap<String,Map<String,String>>();
-        json[locale] = new HashMap<String,String>();
+        json[locale] = new SplayTreeMap<String,String>((final String key1,final String key2) {
+            // sort case insensitive
+            return key1.toLowerCase().compareTo(key2.toLowerCase());
+        });
 
         if(pofile.existsSync()) {
             final File jsonFile = new File(pofile.path.replaceFirst(new RegExp("\.po"),".json"));
@@ -296,15 +311,19 @@ class Application {
                 }
                 // If there is a header - skip it!
                 final bool skipHeader = content.contains("Project-Id-Version");
-                msgblocks.skip(skipHeader ? 1 : 0).forEach((final String block) {
+                msgblocks.skip(skipHeader ? 1 : 0).where((final String block) => block.trim().isNotEmpty)
+                        .forEach((final String block) {
                     final String withoutcomment = block.replaceAll(new RegExp("#.*(\r\n|\n)"),"");
                     final List<String> message = withoutcomment.split("msgstr");
 
-                    final String key = _sanitize(message[0].replaceFirst("msgid",""));
-                    final String value = _sanitize(message[1]);
+                    if(withoutcomment.isNotEmpty) {
+                        final String key = _sanitize(message[0].replaceFirst("msgid", ""));
+                        final String value = _sanitize(message[1]);
 
-                    json[locale][key] = value;
+                        json[locale][key] = value;
+                    }
                 });
+
 
                 jsonFile.writeAsString(_makePrettyJsonString(json)).then((final File file) {
                     _logger.fine("${file.path} created!");

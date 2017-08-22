@@ -8,113 +8,54 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-17 14:48+0200\n"
+"POT-Creation-Date: 2017-08-22 16:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: bin/mkl10nlocale.dart:214 lib/bin/mkl10nlocale.dart:213
-#: bin/mkl10nlocale.dart:213 lib/mkl10nlocale.dart:214
-#: lib/mkl10nlocale.dart:217 lib/mkl10nlocale.dart:219
-#: lib/mkl10nlocale.dart:223 bin/mkl10nlocale.dart:215
-#: bin/mkl10nlocale.dart:219
-msgid "Usage: mkl10nlocale [options] <dir(s) to scan>"
+#: example/index.html:9 example/index.html:11
+msgid "Angular way7"
 msgstr ""
 
-#: bin/mkl10nlocale.dart:236 lib/bin/mkl10nlocale.dart:235
-#: bin/mkl10nlocale.dart:235 lib/mkl10nlocale.dart:236
-#: lib/mkl10nlocale.dart:239 lib/mkl10nlocale.dart:241
-#: lib/mkl10nlocale.dart:245 bin/mkl10nlocale.dart:238
-#: bin/mkl10nlocale.dart:242
-msgid "Settings:"
+#. Hallo Kommentar aus HTML1
+#. Hallo Kommentar aus HTML
+#: example/index.html:11
+msgid "Angular way8"
 msgstr ""
 
-#: bin/mkl10nlocale.dart:245 lib/bin/mkl10nlocale.dart:244
-#: bin/mkl10nlocale.dart:244 lib/mkl10nlocale.dart:245
-#: lib/mkl10nlocale.dart:248 lib/mkl10nlocale.dart:250
-#: lib/mkl10nlocale.dart:254 bin/mkl10nlocale.dart:247
-#: bin/mkl10nlocale.dart:251 bin/mkl10nlocale.dart:263
-msgid "Shows this message"
-msgstr ""
-
-#: bin/mkl10nlocale.dart:246 lib/bin/mkl10nlocale.dart:245
-#: bin/mkl10nlocale.dart:245 lib/mkl10nlocale.dart:246
-#: lib/mkl10nlocale.dart:249 lib/mkl10nlocale.dart:251
-#: lib/mkl10nlocale.dart:255 bin/mkl10nlocale.dart:248
-#: test/unit/l10n/L10NTranslation_test.dart:139 bin/mkl10nlocale.dart:252
-#: bin/mkl10nlocale.dart:264
-msgid "Prints settings"
-msgstr ""
-
-#: bin/mkl10nlocale.dart:248 lib/bin/mkl10nlocale.dart:247
-#: bin/mkl10nlocale.dart:247 lib/mkl10nlocale.dart:248
-#: lib/mkl10nlocale.dart:251 lib/mkl10nlocale.dart:253
-#: lib/mkl10nlocale.dart:257 bin/mkl10nlocale.dart:250
-#: bin/mkl10nlocale.dart:254 bin/mkl10nlocale.dart:266
-msgid "locales - separated by colon, Sample: --locales en,de,es"
-msgstr ""
-
-#: bin/mkl10nlocale.dart:250 lib/bin/mkl10nlocale.dart:249
-#: bin/mkl10nlocale.dart:249 lib/mkl10nlocale.dart:250
-#: lib/mkl10nlocale.dart:253 lib/mkl10nlocale.dart:255
-#: lib/mkl10nlocale.dart:259 bin/mkl10nlocale.dart:252
-#: bin/mkl10nlocale.dart:256 bin/mkl10nlocale.dart:268
-msgid "Libprefix for generated DART-File (library <prefix>.locale;)"
-msgstr ""
-
-#: bin/mkl10nlocale.dart:251 lib/bin/mkl10nlocale.dart:250
-#: bin/mkl10nlocale.dart:250 lib/mkl10nlocale.dart:251
-#: lib/mkl10nlocale.dart:254 lib/mkl10nlocale.dart:256
-#: lib/mkl10nlocale.dart:260 bin/mkl10nlocale.dart:253
-#: bin/mkl10nlocale.dart:257 bin/mkl10nlocale.dart:269
+#: bin/mkl10nlocale.dart:273 bin/mkl10nlocale.dart:277
+#: bin/mkl10nlocale.dart:274 bin/mkl10nlocale.dart:279
+#: bin/mkl10nlocale.dart:281
 msgid "Defines where to place your locale-Dir"
 msgstr ""
 
-#: bin/mkl10nlocale.dart:252 lib/bin/mkl10nlocale.dart:251
-#: bin/mkl10nlocale.dart:251 lib/mkl10nlocale.dart:252
-#: lib/mkl10nlocale.dart:255 lib/mkl10nlocale.dart:257
-#: lib/mkl10nlocale.dart:261 bin/mkl10nlocale.dart:254
-#: bin/mkl10nlocale.dart:258 bin/mkl10nlocale.dart:270
-msgid "Where should the DART-File go? (<path>/locale/messages.dart)"
-msgstr ""
-
-#: bin/mkl10nlocale.dart:421 lib/bin/mkl10nlocale.dart:420
-#: bin/mkl10nlocale.dart:420 lib/mkl10nlocale.dart:421
-#: lib/mkl10nlocale.dart:424 lib/mkl10nlocale.dart:426
-#: lib/mkl10nlocale.dart:430 bin/mkl10nlocale.dart:423
-#: bin/mkl10nlocale.dart:427 bin/mkl10nlocale.dart:439
+#: bin/mkl10nlocale.dart:443 bin/mkl10nlocale.dart:447
+#: bin/mkl10nlocale.dart:444 bin/mkl10nlocale.dart:450
+#: bin/mkl10nlocale.dart:452 bin/mkl10nlocale.dart:454
+#: bin/mkl10nlocale.dart:455 bin/mkl10nlocale.dart:457
 msgid "Dirs to scan"
 msgstr ""
 
-msgid "Der Server meldet {{statuscode-400}} bei der API-Key Anforderung."
+#: bin/mkl10nlocale.dart:231
+msgid "Example:"
 msgstr ""
 
-msgid "Der Server meldet {{statuscode-401}} bei der API-Key Anforderung."
+#. You will see this comment in the according .po/.pot-File
+#. You will see this comment in the .po/.pot-File
+#: bin/mkl10nlocale.dart:252 bin/mkl10nlocale.dart:256
+#: bin/mkl10nlocale.dart:253 bin/mkl10nlocale.dart:258
+#: bin/mkl10nlocale.dart:260
+msgid "External commands:"
 msgstr ""
 
-#: lib/mkl10nlocale.dart:475 lib/mkl10nlocale.dart:477
-#: lib/mkl10nlocale.dart:481
-msgid "Ein TEST - 290714 1648"
-msgstr ""
-
-#: .pub/deps/debug/intl/lib/src/intl/bidi_utils.dart:24
-msgid "LTR"
-msgstr ""
-
-#: .pub/deps/debug/intl/lib/src/intl/bidi_utils.dart:25
-msgid "RTL"
-msgstr ""
-
-#: .pub/deps/debug/intl/lib/src/intl/bidi_utils.dart:29
-msgid "UNKNOWN"
-msgstr ""
-
-#: example/mini.dart:16
-msgid "This is a test"
+#: test/unit/l10n/L10NTranslation_test.dart:160
+msgid ""
+"Hallo\n"
+"Test"
 msgstr ""
 
 #: test/unit/l10n/L10N_test.dart:35
@@ -129,12 +70,9 @@ msgstr ""
 msgid "Hallo {{?}}"
 msgstr ""
 
-#: test/unit/l10n/L10N_test.dart:61
-msgid "Hello {{what}}"
-msgstr ""
-
-#: test/unit/l10n/L10N_test.dart:65
-msgid "Hallo {{name}}, du bist jetzt {{age}} Jahre alt"
+#: test/unit/l10n/L10NTranslation_test.dart:63
+#: test/unit/l10n/L10NTranslation_test.dart:78
+msgid "Hallo {{l10n}}"
 msgstr ""
 
 #: test/unit/l10n/L10NTranslation_test.dart:40
@@ -143,47 +81,206 @@ msgstr ""
 msgid "Hallo {{name}}"
 msgstr ""
 
-#: test/unit/l10n/L10NTranslation_test.dart:64
-#: test/unit/l10n/L10NTranslation_test.dart:79
-#: test/unit/l10n/L10NTranslation_test.dart:83
-msgid "Mike + {{name}}"
+#: test/unit/l10n/L10N_test.dart:65
+msgid "Hallo {{name}}, du bist jetzt {{age}} Jahre alt"
 msgstr ""
 
-#: test/unit/l10n/L10NTranslation_test.dart:63
-#: test/unit/l10n/L10NTranslation_test.dart:78
-msgid "Hallo {{l10n}}"
-msgstr ""
-
-#: test/unit/l10n/L10NTranslation_test.dart:109
-#: test/unit/l10n/L10NTranslation_test.dart:116
-#: test/unit/l10n/L10NTranslation_test.dart:127
-msgid "Hallo, dies ist ein {{what}}"
-msgstr ""
-
+#. Im deutschen wird bei der Übersetzung ein \n eingefügt.
+#. Ob der Key (msgid) ein \n enthält oder nicht ist egal
 #: test/unit/l10n/L10NTranslation_test.dart:121
 msgid ""
 "Hallo,\n"
 " dies ist ein {{what}}"
 msgstr ""
 
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#: test/unit/l10n/L10NTranslation_test.dart:109
+#: test/unit/l10n/L10NTranslation_test.dart:116
+#: test/unit/l10n/L10NTranslation_test.dart:127
+msgid "Hallo, dies ist ein {{what}}"
+msgstr ""
+
+#. Does not exist at all - brings back default message
 #: test/unit/l10n/L10NTranslation_test.dart:130
 msgid "Hallo, {{name}}"
+msgstr ""
+
+#: test/unit/l10n/L10N_test.dart:61
+msgid "Hello {{what}}"
+msgstr ""
+
+#: bin/mkl10nlocale.dart:272 bin/mkl10nlocale.dart:276
+#: bin/mkl10nlocale.dart:273 bin/mkl10nlocale.dart:278
+#: bin/mkl10nlocale.dart:280
+msgid "Libprefix for generated DART-File (library <prefix>.locale;)"
+msgstr ""
+
+#: test/unit/l10n/L10NTranslation_test.dart:64
+#: test/unit/l10n/L10NTranslation_test.dart:79
+#: test/unit/l10n/L10NTranslation_test.dart:83
+msgid "Mike + {{name}}"
+msgstr ""
+
+#: bin/mkl10nlocale.dart:268 test/unit/l10n/L10NTranslation_test.dart:139
+#: bin/mkl10nlocale.dart:272 bin/mkl10nlocale.dart:269
+#: bin/mkl10nlocale.dart:274 bin/mkl10nlocale.dart:276
+msgid "Prints settings"
+msgstr ""
+
+#: bin/mkl10nlocale.dart:246 bin/mkl10nlocale.dart:250
+#: bin/mkl10nlocale.dart:247 bin/mkl10nlocale.dart:252
+msgid "Settings:"
+msgstr ""
+
+#: bin/mkl10nlocale.dart:267 bin/mkl10nlocale.dart:271
+#: bin/mkl10nlocale.dart:268 bin/mkl10nlocale.dart:273
+#: bin/mkl10nlocale.dart:275
+msgid "Shows this message"
 msgstr ""
 
 #: test/unit/l10n/L10NTranslation_test.dart:134
 msgid "Test1"
 msgstr ""
 
-#: test/unit/l10n/L10NTranslation_test.dart:160
-msgid ""
-"Hallo\n"
-"Test"
+#. print((l10n("This is a test").message));
+#: example/mini.dart:16
+msgid "This is a test"
 msgstr ""
 
-#: bin/mkl10nlocale.dart:248
-msgid "External commands:"
+#: bin/mkl10nlocale.dart:223 bin/mkl10nlocale.dart:227
+#: bin/mkl10nlocale.dart:224 bin/mkl10nlocale.dart:225
+msgid "Usage: mkl10nlocale [options] <dir(s) to scan>"
 msgstr ""
 
-#: bin/mkl10nlocale.dart:250
+#: bin/mkl10nlocale.dart:274 bin/mkl10nlocale.dart:278
+#: bin/mkl10nlocale.dart:275 bin/mkl10nlocale.dart:280
+#: bin/mkl10nlocale.dart:282
+msgid "Where should the DART-File go? (<path>/locale/messages.dart)"
+msgstr ""
+
+#: bin/mkl10nlocale.dart:270 bin/mkl10nlocale.dart:274
+#: bin/mkl10nlocale.dart:271 bin/mkl10nlocale.dart:276
+#: bin/mkl10nlocale.dart:278
+msgid "locales - separated by colon, Sample: --locales en,de,es"
+msgstr ""
+
+#: bin/mkl10nlocale.dart:233
+msgid "mkl10nlocale -l en,de . - Generates translation for en + de"
+msgstr ""
+
+#: bin/mkl10nlocale.dart:232
+msgid "mkl10nlocale . - Generates lib/locale/messages.dart"
+msgstr ""
+
+#: bin/mkl10nlocale.dart:254 bin/mkl10nlocale.dart:258
+#: bin/mkl10nlocale.dart:255 bin/mkl10nlocale.dart:260
+#: bin/mkl10nlocale.dart:262
 msgid "not installed!"
 msgstr ""

@@ -2,6 +2,9 @@ l10n / (gettext-oriented) PO-File Generator
 -------------------------------------------
 > Helps to localize your application
 
+Before your start:
+   - [A Quick Gettext Tutorial](http://www.labri.fr/perso/fleury/posts/programming/a-quick-gettext-tutorial.html)
+
 #### Install 
 ```bash
 $ pub global activate l10n
@@ -215,6 +218,9 @@ The rest is done be the nice merging-feature of l10n/msgmerge
 * 0.11.0 - Sub-Translations are possible, msginit gets initialized with utf-8 per default
 * 0.9.0 - Released on pub
 
+## Links
+   - [GNU gettext utilities](https://www.gnu.org/software/gettext/manual/gettext.html)
+   
 ### License
 
     Copyright 2016 Michael Mitterer (office@mikemitterer.at), 
