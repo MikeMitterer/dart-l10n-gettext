@@ -1,6 +1,11 @@
 # Change Log for l10n
 Creates translatable PO-Files, strong orientation to xgettext
 
+## [v0.19.0](http://github.com/mikemitterer/dart-l10n-gettext/compare/v0.18.0...v0.19.0) - 2017-08-23
+
+### Feature
+* Define settings in Settings-File (.mkl10n.yaml), Sort output by file location [1e18a7e](https://github.com/mikemitterer/dart-l10n-gettext/commit/1e18a7e159b1b9c86b4fee43f7c3b0bffffe9ca0)
+
 ## [v0.18.0](http://github.com/mikemitterer/dart-l10n-gettext/compare/v0.17.0...v0.18.0) - 2017-08-22
 
 ### Docs
