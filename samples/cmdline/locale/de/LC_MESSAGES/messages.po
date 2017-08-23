@@ -1,0 +1,38 @@
+# German translations for L package.
+# Copyright (C) 2017 THE L'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the L package.
+# Automatically generated, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: L 10N4Dart\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-23 11:55+0200\n"
+"PO-Revision-Date: 2017-08-23 11:13+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: lib/cmdline/Config.dart:34 lib/cmdline/Config.dart:39
+msgid "loglevel"
+msgstr ""
+
+#: lib/cmdline/Config.dart:36 lib/cmdline/Config.dart:41
+msgid "Config folder"
+msgstr "Konfigurationsordner"
+
+#: lib/cmdline/Config.dart:37 lib/cmdline/Config.dart:42
+msgid "Config file"
+msgstr "Konfigurationsfile"
+
+#: lib/cmdline/Config.dart:41 lib/cmdline/Config.dart:47
+msgid "Dirs to scan"
+msgstr "Scan-Directories "
+
+#: lib/cmdline/Config.dart:43
+msgid "Locale"
+msgstr ""

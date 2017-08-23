@@ -1,2 +1,2 @@
 # Ignore these dirs
-# exclude_dirs: example, test
+exclude_dirs: samples

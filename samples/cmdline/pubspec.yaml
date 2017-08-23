@@ -1,0 +1,37 @@
+name: l10n_sample_cmdline
+description: Add your description for cmdline
+author: Mike Mitterer <office@mikemitterer.at>
+homepage: https://github.com/Mike Mitterer/dart-cmdline
+
+version: 1.0.0
+
+environment:
+  sdk: '>=1.0.0 <2.0.0'
+
+# Add the bin/cmdline.dart script to the scripts pub installs.
+# Activate local repo:
+#   pub global activate --source path .
+# Decativate local repo:
+#   pub global deactivate cmdline
+#
+executables:
+  cmdline:
+
+dependencies:
+  browser: any
+
+  logging: any
+  logging_handlers: any
+  console_log_handler: any
+
+  validate: any
+
+  args: any
+  yaml: any
+
+  l10n:
+    path: ../..
+
+dev_dependencies:
+  test: any
+  grinder: any

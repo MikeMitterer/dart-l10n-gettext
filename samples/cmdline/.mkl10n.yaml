@@ -1,0 +1,2 @@
+# Ignore these dirs
+exclude_dirs: example, test, samples

@@ -1,0 +1,38 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-23 11:56+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: lib/cmdline/Config.dart:34 lib/cmdline/Config.dart:39
+msgid "loglevel"
+msgstr ""
+
+#: lib/cmdline/Config.dart:36 lib/cmdline/Config.dart:41
+msgid "Config folder"
+msgstr ""
+
+#: lib/cmdline/Config.dart:37 lib/cmdline/Config.dart:42
+msgid "Config file"
+msgstr ""
+
+#: lib/cmdline/Config.dart:41 lib/cmdline/Config.dart:47
+msgid "Dirs to scan"
+msgstr ""
+
+#: lib/cmdline/Config.dart:43
+msgid "Locale"
+msgstr ""
