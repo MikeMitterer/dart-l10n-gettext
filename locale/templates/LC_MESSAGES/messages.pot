@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 16:55+0200\n"
+"POT-Creation-Date: 2017-08-23 10:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,28 +27,44 @@ msgstr ""
 msgid "Angular way8"
 msgstr ""
 
+#: bin/mkl10n.dart:460 bin/mkl10n.dart:467 bin/mkl10n.dart:468
+msgid "Config-File"
+msgstr ""
+
 #: bin/mkl10nlocale.dart:273 bin/mkl10nlocale.dart:277
 #: bin/mkl10nlocale.dart:274 bin/mkl10nlocale.dart:279
-#: bin/mkl10nlocale.dart:281
+#: bin/mkl10nlocale.dart:281 bin/mkl10n.dart:283 bin/mkl10n.dart:290
+#: bin/mkl10n.dart:291
 msgid "Defines where to place your locale-Dir"
+msgstr ""
+
+#: bin/mkl10n.dart:474 bin/mkl10n.dart:481 bin/mkl10n.dart:482
+msgid "Dirs to exclude"
 msgstr ""
 
 #: bin/mkl10nlocale.dart:443 bin/mkl10nlocale.dart:447
 #: bin/mkl10nlocale.dart:444 bin/mkl10nlocale.dart:450
 #: bin/mkl10nlocale.dart:452 bin/mkl10nlocale.dart:454
-#: bin/mkl10nlocale.dart:455 bin/mkl10nlocale.dart:457
+#: bin/mkl10nlocale.dart:455 bin/mkl10nlocale.dart:457 bin/mkl10n.dart:472
+#: bin/mkl10n.dart:479 bin/mkl10n.dart:480
 msgid "Dirs to scan"
 msgstr ""
 
-#: bin/mkl10nlocale.dart:231
+#: bin/mkl10nlocale.dart:231 bin/mkl10n.dart:233 bin/mkl10n.dart:240
+#: bin/mkl10n.dart:241
 msgid "Example:"
+msgstr ""
+
+#: bin/mkl10n.dart:285 bin/mkl10n.dart:292 bin/mkl10n.dart:293
+msgid "Exclude folders from scaning"
 msgstr ""
 
 #. You will see this comment in the according .po/.pot-File
 #. You will see this comment in the .po/.pot-File
 #: bin/mkl10nlocale.dart:252 bin/mkl10nlocale.dart:256
 #: bin/mkl10nlocale.dart:253 bin/mkl10nlocale.dart:258
-#: bin/mkl10nlocale.dart:260
+#: bin/mkl10nlocale.dart:260 bin/mkl10n.dart:262 bin/mkl10n.dart:269
+#: bin/mkl10n.dart:270
 msgid "External commands:"
 msgstr ""
 
@@ -97,110 +113,6 @@ msgstr ""
 #. - Fallback to EN
 #. default locale is en
 #. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
-#. default locale is en
-#. - Fallback to EN
 #: test/unit/l10n/L10NTranslation_test.dart:109
 #: test/unit/l10n/L10NTranslation_test.dart:116
 #: test/unit/l10n/L10NTranslation_test.dart:127
@@ -218,7 +130,8 @@ msgstr ""
 
 #: bin/mkl10nlocale.dart:272 bin/mkl10nlocale.dart:276
 #: bin/mkl10nlocale.dart:273 bin/mkl10nlocale.dart:278
-#: bin/mkl10nlocale.dart:280
+#: bin/mkl10nlocale.dart:280 bin/mkl10n.dart:282 bin/mkl10n.dart:289
+#: bin/mkl10n.dart:290
 msgid "Libprefix for generated DART-File (library <prefix>.locale;)"
 msgstr ""
 
@@ -230,18 +143,21 @@ msgstr ""
 
 #: bin/mkl10nlocale.dart:268 test/unit/l10n/L10NTranslation_test.dart:139
 #: bin/mkl10nlocale.dart:272 bin/mkl10nlocale.dart:269
-#: bin/mkl10nlocale.dart:274 bin/mkl10nlocale.dart:276
+#: bin/mkl10nlocale.dart:274 bin/mkl10nlocale.dart:276 bin/mkl10n.dart:278
+#: bin/mkl10n.dart:285 bin/mkl10n.dart:286
 msgid "Prints settings"
 msgstr ""
 
 #: bin/mkl10nlocale.dart:246 bin/mkl10nlocale.dart:250
-#: bin/mkl10nlocale.dart:247 bin/mkl10nlocale.dart:252
+#: bin/mkl10nlocale.dart:247 bin/mkl10nlocale.dart:252 bin/mkl10n.dart:254
+#: bin/mkl10n.dart:261 bin/mkl10n.dart:262
 msgid "Settings:"
 msgstr ""
 
 #: bin/mkl10nlocale.dart:267 bin/mkl10nlocale.dart:271
 #: bin/mkl10nlocale.dart:268 bin/mkl10nlocale.dart:273
-#: bin/mkl10nlocale.dart:275
+#: bin/mkl10nlocale.dart:275 bin/mkl10n.dart:277 bin/mkl10n.dart:284
+#: bin/mkl10n.dart:285
 msgid "Shows this message"
 msgstr ""
 
@@ -254,6 +170,10 @@ msgstr ""
 msgid "This is a test"
 msgstr ""
 
+#: bin/mkl10n.dart:227 bin/mkl10n.dart:234 bin/mkl10n.dart:235
+msgid "Usage: mkl10n [options] <dir(s) to scan>"
+msgstr ""
+
 #: bin/mkl10nlocale.dart:223 bin/mkl10nlocale.dart:227
 #: bin/mkl10nlocale.dart:224 bin/mkl10nlocale.dart:225
 msgid "Usage: mkl10nlocale [options] <dir(s) to scan>"
@@ -261,14 +181,24 @@ msgstr ""
 
 #: bin/mkl10nlocale.dart:274 bin/mkl10nlocale.dart:278
 #: bin/mkl10nlocale.dart:275 bin/mkl10nlocale.dart:280
-#: bin/mkl10nlocale.dart:282
+#: bin/mkl10nlocale.dart:282 bin/mkl10n.dart:284 bin/mkl10n.dart:291
+#: bin/mkl10n.dart:292
 msgid "Where should the DART-File go? (<path>/locale/messages.dart)"
 msgstr ""
 
 #: bin/mkl10nlocale.dart:270 bin/mkl10nlocale.dart:274
 #: bin/mkl10nlocale.dart:271 bin/mkl10nlocale.dart:276
-#: bin/mkl10nlocale.dart:278
+#: bin/mkl10nlocale.dart:278 bin/mkl10n.dart:280 bin/mkl10n.dart:287
+#: bin/mkl10n.dart:288
 msgid "locales - separated by colon, Sample: --locales en,de,es"
+msgstr ""
+
+#: bin/mkl10n.dart:235 bin/mkl10n.dart:242 bin/mkl10n.dart:243
+msgid "mkl10n -l en,de . - Generates translation for en + de"
+msgstr ""
+
+#: bin/mkl10n.dart:234 bin/mkl10n.dart:241 bin/mkl10n.dart:242
+msgid "mkl10n . - Generates lib/locale/messages.dart"
 msgstr ""
 
 #: bin/mkl10nlocale.dart:233
@@ -281,6 +211,7 @@ msgstr ""
 
 #: bin/mkl10nlocale.dart:254 bin/mkl10nlocale.dart:258
 #: bin/mkl10nlocale.dart:255 bin/mkl10nlocale.dart:260
-#: bin/mkl10nlocale.dart:262
+#: bin/mkl10nlocale.dart:262 bin/mkl10n.dart:264 bin/mkl10n.dart:271
+#: bin/mkl10n.dart:272
 msgid "not installed!"
 msgstr ""

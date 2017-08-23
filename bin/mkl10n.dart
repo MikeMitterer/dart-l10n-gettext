@@ -8,6 +8,7 @@ import 'dart:math';
 
 import 'package:args/args.dart';
 import 'package:which/which.dart';
+import 'package:yaml/yaml.dart' as yaml;
 
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
@@ -34,6 +35,7 @@ class Application {
     static const _ARG_LIB_PREFIX    = 'libprefix';
     static const _ARG_LOCALE_DIR    = 'localedir';
     static const _ARG_DART_PATH     = 'dartpath';
+    static const _ARG_EXCLUDE       = 'exclude';
 
     ArgParser _parser;
 
@@ -58,7 +60,7 @@ class Application {
             else {
                 _createPOTFile(config.potfile).then((final File potfile) {
 
-                    _scanDirsAndFillPOT(config.dirstoscan,config.potfile).then((_) {
+                    _scanDirsAndFillPOT(config.dirstoscan,config.potfile, config.excludeDirs).then((_) {
 
                         final List<String> locales = config.locales.split(',');
 
@@ -104,7 +106,7 @@ class Application {
         buffer.writeln("library $libPrefix.locale;\n");
         buffer.writeln('/**');
         buffer.writeln('* DO NOT EDIT. This is code generated with:');
-        buffer.writeln('*     projectdir \$ mkl10llocale .');
+        buffer.writeln('*     projectdir \$ mkl10n .');
         buffer.writeln('*/');
         buffer.writeln("");
         buffer.writeln("import 'package:l10n/l10n.dart';");
@@ -161,16 +163,18 @@ class Application {
         return file.create(recursive: true);
     }
 
-    /// Itarees through dirs and adds the result to the POT-File
-    Future<bool> _scanDirsAndFillPOT(final List<String> dirstoscan, final String potfile) {
+    /// Iterates through dirs and adds the result to the POT-File
+    Future<bool> _scanDirsAndFillPOT(final List<String> dirstoscan, final String potfile, final List<String> dirsToExclude) {
         final Future<bool> future = new Future<bool>(() {
             for (final String dir in dirstoscan) {
-                _iterateThroughDirSync(dir, (final File file) {
+                _iterateThroughDirSync(dir, dirsToExclude, (final File file) {
                     _logger.fine(" -> ${file.path}");
 
                     // --from-code ... iconv -l shows all the available codes!
                     String language = 'JavaScript';
-                    final ProcessResult result = xgettext.runSync(['-kl10n', '-kL10N', '-k_', '-c' , '-j', '-o', "$potfile", '-L', language ,'--from-code=utf-8', '-s', file.path ]);
+                    final ProcessResult result = xgettext.runSync(['-kl10n', '-kL10N', '-k_', '-c' ,
+                        '-j', '-o', "$potfile", '-L', language ,
+                        '--from-code=utf-8', '--sort-by-file', file.path ]);
 
                     if (result.exitCode != 0) {
                         _logger.severe("${result.stderr}");
@@ -184,7 +188,7 @@ class Application {
     }
 
     /// Goes through the files
-    void _iterateThroughDirSync(final String dir, void callback(final File file)) {
+    void _iterateThroughDirSync(final String dir, final List<String> dirsToExclude, void callback(final File file)) {
         _logger.info("Scanning: $dir");
 
         // its OK if the path starts with packages but not if the path contains packages (avoid recursion)
@@ -211,6 +215,13 @@ class Application {
                     return false;
                 }
 
+                for(final String dirToExclude in dirsToExclude) {
+                    final String dir = dirToExclude.trim();
+                    if(entity.path.startsWith("${dir}/") || entity.path.startsWith("./${dir}/")) {
+                        return false;
+                    }
+                }
+
                 return true;
 
             }).map((final FileSystemEntity entity) => new File(entity.path))
@@ -222,15 +233,15 @@ class Application {
     }
 
     void _showUsage() {
-        print(translate(l10n("Usage: mkl10nlocale [options] <dir(s) to scan>")));
+        print(translate(l10n("Usage: mkl10n [options] <dir(s) to scan>")));
         _parser.usage.split("\n").forEach((final String line) {
             print("    $line");
         });
 
         print("");
         print(translate(l10n("Example:")));
-        print("    " + translate(l10n("mkl10nlocale . - Generates lib/locale/messages.dart")));
-        print("    " + translate(l10n("mkl10nlocale -l en,de . - Generates translation for en + de")));
+        print("    " + translate(l10n("mkl10n . - Generates lib/locale/messages.dart")));
+        print("    " + translate(l10n("mkl10n -l en,de . - Generates translation for en + de")));
         print("");
     }
 
@@ -243,10 +254,10 @@ class Application {
             return length;
         }
 
-        final int maxKeyLeght = getMaxKeyLength();
+        final int maxKeyLength = getMaxKeyLength();
 
         String prepareKey(final String key) {
-            return "${key[0].toUpperCase()}${key.substring(1)}:".padRight(maxKeyLeght + 1);
+            return "${key[0].toUpperCase()}${key.substring(1)}:".padRight(maxKeyLength + 1);
         }
 
         print(translate(l10n("Settings:")));
@@ -265,7 +276,7 @@ class Application {
 
             } on StateError catch(_) {}
 
-            print("    ${(command.name + ':').padRight(maxKeyLeght + 1)} ${exe}");
+            print("    ${(command.name + ':').padRight(maxKeyLength + 1)} ${exe}");
         });
     }
 
@@ -279,7 +290,9 @@ class Application {
             ..addOption(_ARG_LOGLEVEL,      abbr: 'v', help: "[ info | debug | warning ]")
             ..addOption(_ARG_LIB_PREFIX,    abbr: 'p', help: translate(l10n("Libprefix for generated DART-File (library <prefix>.locale;)")))
             ..addOption(_ARG_LOCALE_DIR,    abbr: 'd', help: translate(l10n("Defines where to place your locale-Dir")))
-            ..addOption(_ARG_DART_PATH,     abbr: 'a', help: translate(l10n("Where should the DART-File go? (<path>/locale/messages.dart)")));
+            ..addOption(_ARG_DART_PATH,     abbr: 'a', help: translate(l10n("Where should the DART-File go? (<path>/locale/messages.dart)")))
+            ..addOption(_ARG_EXCLUDE,       abbr: 'x', help: translate(l10n("Exclude folders from scaning")))
+        ;
 
         return parser;
     }
@@ -388,9 +401,10 @@ class Config {
     static const String _KEY_LOCALES        = "locales";
     static const String _KEY_DART_PATH      = "dartpath";
     static const String _KEY_SYSTEM_LOCALE  = "systemlocale";
+    static const String _KEY_EXCLUDE_DIRS   = "exclude_dirs";
 
     final ArgResults _argResults;
-    final Map<String,dynamic> _settings = new Map<String,dynamic>();
+    final Map<String,String> _settings = new Map<String,String>();
 
     Config(this._argResults,final String systemLocale) {
 
@@ -411,9 +425,12 @@ class Config {
 
         _settings[_KEY_LOCALES]         = Intl.shortLocale(systemLocale);
         _settings[_KEY_SYSTEM_LOCALE]   = systemLocale;
+        
+        _settings[_KEY_EXCLUDE_DIRS]    = '';
 
         initializeDateFormatting(_settings[_KEY_SYSTEM_LOCALE],null);
 
+        _overwriteSettingsWithConfigFile();
         _overwriteSettingsWithArgResults();
     }
 
@@ -441,22 +458,30 @@ class Config {
     String get locales => _settings[_KEY_LOCALES];
 
     String get systemLocale => _settings[_KEY_SYSTEM_LOCALE];
+    
+    List<String> get excludeDirs => _settings[_KEY_EXCLUDE_DIRS].split(new RegExp(r",\s*"));
+
+    String get configfile => ".mkl10n.yaml";
 
     Map<String,String> get settings {
         final Map<String,String> settings = new Map<String,String>();
 
-        settings["POT-File"]        = potfile;
-        settings["PO-File"]         = getPOFile("<locale>");
-        settings["JSON-File"]       = jsonfile;
-        settings["DART-File"]       = dartfile;
-        settings["libprefix"]       = libprefix;
-        settings["loglevel"]        = loglevel;
-        settings["locales"]         = locales;
-        settings["System-Locale"]   = systemLocale;
+        settings[translate(l10n("Config-File"))]  = configfile;
+
+        settings["POT-File"]                                    = potfile;
+        settings["PO-File"]                                     = getPOFile("<locale>");
+        settings["JSON-File"]                                   = jsonfile;
+        settings["DART-File"]                                   = dartfile;
+        settings["libprefix (${Config._KEY_LIB_PREFIX})"]       = libprefix;
+        settings["loglevel"]                                    = loglevel;
+        settings["locales"]                                     = locales;
+        settings["System-Locale"]                               = systemLocale;
 
         if(dirstoscan.length > 0) {
             settings[translate(l10n("Dirs to scan"))] = dirstoscan.join(", ");
         }
+        settings[translate(l10n("Dirs to exclude"))
+            + " (${Config._KEY_EXCLUDE_DIRS})"]  = excludeDirs.join(", ");
 
         return settings;
     }
@@ -493,7 +518,31 @@ class Config {
         if(_argResults[Application._ARG_DART_PATH] != null) {
             _settings[_KEY_DART_PATH] = checkPath(_argResults[Application._ARG_DART_PATH]);
         }
+
+        if(_argResults[Application._ARG_DART_PATH] != null) {
+            _settings[_KEY_DART_PATH] = checkPath(_argResults[Application._ARG_DART_PATH]);
+        }
+
+        if(_argResults[Application._ARG_EXCLUDE] != null) {
+            _settings[_KEY_EXCLUDE_DIRS] = checkPath(_argResults[Application._ARG_EXCLUDE]);
+        }
     }
+
+    void _overwriteSettingsWithConfigFile() {
+        final File file = new File(configfile);
+        if(!file.existsSync()) {
+            return;
+        }
+        final yaml.YamlMap map = yaml.loadYaml(file.readAsStringSync());
+        _settings.keys.forEach((final String key) {
+            if(map != null && map.containsKey(key)) {
+                _settings[key] = map[key];
+                print("Found $key in $configfile: ${map[key]}");
+            }
+        });
+    }
+
+
 }
 
 void main(List<String> arguments) {
