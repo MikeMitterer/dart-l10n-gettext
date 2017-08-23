@@ -27,7 +27,7 @@ If you get an error message - do the following:
 ```
 
 ### How to use it
-[![Screenshot][1])](http://www.youtube.com/watch?v=vPfl-xPTjs0)  
+[![Screenshot][1])](https://youtu.be/qj4W-iPKP7s)  
 (You have to watch it in 1080p - sorry! Better screencast will follow)
 
    - Download the example from `samples/cmdline`

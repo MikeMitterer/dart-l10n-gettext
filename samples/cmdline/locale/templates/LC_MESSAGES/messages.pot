@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 11:56+0200\n"
+"POT-Creation-Date: 2017-08-23 12:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,22 +17,24 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/cmdline/Config.dart:34 lib/cmdline/Config.dart:39
+#. Everything within l10n(...) will be in your .po File
+#: lib/cmdline/Config.dart:41
 msgid "loglevel"
 msgstr ""
 
-#: lib/cmdline/Config.dart:36 lib/cmdline/Config.dart:41
+#. 'translate' will translate your ID/String
+#: lib/cmdline/Config.dart:44
 msgid "Config folder"
 msgstr ""
 
-#: lib/cmdline/Config.dart:37 lib/cmdline/Config.dart:42
+#: lib/cmdline/Config.dart:45
 msgid "Config file"
 msgstr ""
 
-#: lib/cmdline/Config.dart:41 lib/cmdline/Config.dart:47
-msgid "Dirs to scan"
+#: lib/cmdline/Config.dart:46
+msgid "Locale"
 msgstr ""
 
-#: lib/cmdline/Config.dart:43
-msgid "Locale"
+#: lib/cmdline/Config.dart:49
+msgid "Dirs to scan"
 msgstr ""

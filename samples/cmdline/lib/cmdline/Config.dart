@@ -23,6 +23,7 @@ class Config {
         _overwriteSettingsWithArgResults();
     }
 
+
     String get configfolder => _CONFIG_FOLDER;
 
     String get configfile => "config.yaml";
@@ -44,14 +45,12 @@ class Config {
         settings[translate(l10n("Config file"))]           = configfile;
         settings[translate(l10n("Locale"))]                = locale;
 
-
         if(dirstoscan.length > 0) {
             settings[translate(l10n("Dirs to scan"))]      = dirstoscan.join(", ");
         }
 
         return settings;
     }
-
 
     void printSettings() {
 
