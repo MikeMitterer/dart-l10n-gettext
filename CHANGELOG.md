@@ -1,6 +1,12 @@
 # Change Log for l10n
 Creates translatable PO-Files, strong orientation to xgettext
 
+## [v0.19.1](http://github.com/mikemitterer/dart-l10n-gettext/compare/v0.19.0...v0.19.1) - 2017-08-23
+
+### Docs
+* New sample-video, better README [79f985d](https://github.com/mikemitterer/dart-l10n-gettext/commit/79f985d572985f11e1c32d7cbefdb5156a387af5)
+* cmdline-Sample added [406e9a5](https://github.com/mikemitterer/dart-l10n-gettext/commit/406e9a5870c6bb57b529073c46f6355713d2b4fc)
+
 ## [v0.19.0](http://github.com/mikemitterer/dart-l10n-gettext/compare/v0.18.0...v0.19.0) - 2017-08-23
 
 ### Feature
