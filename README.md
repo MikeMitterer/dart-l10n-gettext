@@ -4,13 +4,16 @@ l10n / (gettext-oriented) PO-File Generator
 
 Before your start:
    - [A Quick Gettext Tutorial](http://www.labri.fr/perso/fleury/posts/programming/a-quick-gettext-tutorial.html)
+   
+## Windows
+**Sorry guys** - this is App is tested under Mac-OSX but should work on Linux without problems.  
 
-#### Install 
+## Install 
 ```bash
 $ pub global activate l10n
 ```
 
-### System requirements
+## System requirements
 Install the following cmdline-Applications:
 * xgettext
 * msginit
@@ -26,7 +29,7 @@ If you get an error message - do the following:
     # on Linux: apt-get install gettext
 ```
 
-### How to use it
+## How to use it
 [![Screenshot][1])](https://youtu.be/qj4W-iPKP7s)  
 (You have to watch it in 1080p - sorry! Better screencast will follow)
 
@@ -79,7 +82,7 @@ HTML-Translation: (_index.html_)
     <span translate>_('Translate me')</span>
 ```
 
-#### Sub-Translations
+## Sub-Translations
 Since 0.11.0 Sub-Translations are possible - here is the explanation:
  
 ```
@@ -120,7 +123,7 @@ You have to add the msgid "Servermessage {{statuscode-400}}." by hand to your <s
 The rest is done be the nice merging-feature of l10n/msgmerge 
 
 
-### If you have problems
+## If you have problems
 * [Issues][2]
 
 ## Links
