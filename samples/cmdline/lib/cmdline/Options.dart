@@ -25,6 +25,9 @@ class Options {
             print("    $line");
         });
 
+        // Noch ein Kommentar
+        print(translate(l10n("loglevel")));
+
         //        print("");
         //        print("Sample:");
         //        print("");

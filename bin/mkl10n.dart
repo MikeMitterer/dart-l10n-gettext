@@ -9,6 +9,7 @@ import 'dart:math';
 import 'package:args/args.dart';
 import 'package:which/which.dart';
 import 'package:yaml/yaml.dart' as yaml;
+import 'package:validate/validate.dart';
 
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
@@ -16,8 +17,6 @@ import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:logging/logging.dart';
 import 'package:logging_handlers/logging_handlers_shared.dart';
-
-import 'package:validate/validate.dart';
 
 import 'package:l10n/l10n.dart';
 import 'package:l10n/locale/messages.dart';

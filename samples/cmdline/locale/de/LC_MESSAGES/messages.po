@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: L 10N4Dart\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 12:52+0200\n"
+"POT-Creation-Date: 2017-08-24 14:05+0200\n"
 "PO-Revision-Date: 2017-08-23 12:50+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -18,7 +18,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Everything within l10n(...) will be in your .po File
-#: lib/cmdline/Config.dart:41
+#. Noch ein Kommentar
+#: lib/cmdline/Config.dart:41 lib/cmdline/Options.dart:28
+#: lib/cmdline/Options.dart:29
 msgid "loglevel"
 msgstr ""
 

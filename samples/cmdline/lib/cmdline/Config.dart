@@ -42,7 +42,7 @@ class Config {
 
         // 'translate' will translate your ID/String
         settings[translate(l10n("Config folder"))]         = configfolder;
-        settings[translate(l10n("Config file"))]           = configfile;
+        settings[translate(l10n('Config file'))]           = configfile;
         settings[translate(l10n("Locale"))]                = locale;
 
         if(dirstoscan.length > 0) {
