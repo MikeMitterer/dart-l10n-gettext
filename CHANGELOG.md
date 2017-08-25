@@ -1,6 +1,11 @@
 # Change Log for l10n
 Creates translatable PO-Files, strong orientation to xgettext
 
+## [v1.0](http://github.com/mikemitterer/dart-l10n-gettext/compare/v0.19.2...v1.0) - 2017-08-25
+
+### Feature
+* xgettext is Depreciated - mkl10n writes the POT-File [8727b6e](https://github.com/mikemitterer/dart-l10n-gettext/commit/8727b6e6d083f3f9bad0f8043ecf97956ce6c386)
+
 ## [v0.19.2](http://github.com/mikemitterer/dart-l10n-gettext/compare/v0.19.1...v0.19.2) - 2017-08-23
 
 ### Docs
