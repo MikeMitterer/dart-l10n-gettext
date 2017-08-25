@@ -1,10 +1,11 @@
 l10n / (gettext-oriented) PO-File Generator
 -------------------------------------------
-> Helps to localize your application
+> Translate With GetText PO and POT Files
 
 ## Important
 Since v1.x xgettext creates `locale/templates/LC_MESSAGES/messages.gettext.pot` for testing purposes only!!!  
-`mkl10n` doesnt use xgettext anymore - instead the `l10n.parser`-package creates it's own `.pot`-File!
+
+**`mkl10n` does'nt use xgettext anymore - instead the `l10n.parser`-package creates it's own `.pot`-File!**
 
 ## Before your start:
    - [A Quick Gettext Tutorial](http://www.labri.fr/perso/fleury/posts/programming/a-quick-gettext-tutorial.html)
@@ -12,6 +13,24 @@ Since v1.x xgettext creates `locale/templates/LC_MESSAGES/messages.gettext.pot` 
 ### Windows
 **Sorry guys** - this is App is tested under Mac-OSX but should work on Linux without problems.  
 
+## Supported syntax (.dart + .html)
+`.dart`-File:
+```dart
+    // Translator: Comment
+    _("String to translate");
+    l10n("String to translate");
+
+    // Translator: Comment
+    _("String to translate", "Plural form of String");
+    l10n("String to translate", "Plural form of String");
+    
+    <!-- Translator: Comment -->
+    _("String to translate", "Plural form of String");
+    l10n("String to translate", "Plural form of String");
+```
+
+The last option can be used in HTML-"String-Blocks" (`"""` | `'''`)
+    
 ## Install 
 ```bash
 $ pub global activate l10n
@@ -132,6 +151,7 @@ The rest is done be the nice merging-feature of l10n/msgmerge
 
 ## Links
    - [GNU gettext utilities](https://www.gnu.org/software/gettext/manual/gettext.html)
+   - [POEditor](https://poeditor.com/)
    
 ### License
 
