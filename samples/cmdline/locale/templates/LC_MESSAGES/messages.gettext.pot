@@ -3,39 +3,41 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 15:25\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI\n"
+"POT-Creation-Date: 2017-08-25 15:25+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"        
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #. Everything within l10n(...) will be in your .po File
-#: ./lib/cmdline/Config.dart:41
-#: ./lib/cmdline/Options.dart:32
+#. Noch ein Kommentar
+#. Everything within l10n(...) will be in your .po File
+#: lib/cmdline/Config.dart:41 lib/cmdline/Options.dart:29
+#: lib/cmdline/Options.dart:32 lib/cmdline/Options.dart:33
 msgid "loglevel"
 msgstr ""
 
 #. 'translate' will translate your ID/String
-#: ./lib/cmdline/Config.dart:44
+#: lib/cmdline/Config.dart:44
 msgid "Config folder"
 msgstr ""
 
-#: ./lib/cmdline/Config.dart:45
+#: lib/cmdline/Config.dart:45
 msgid "Config file"
 msgstr ""
 
-#: ./lib/cmdline/Config.dart:46
+#: lib/cmdline/Config.dart:46
 msgid "Locale"
 msgstr ""
 
-#: ./lib/cmdline/Config.dart:49
+#: lib/cmdline/Config.dart:49
 msgid "Dirs to scan"
 msgstr ""
-

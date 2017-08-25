@@ -48,17 +48,19 @@ class CommentStatement extends Statement {
 }
 
 class L10NStatement extends Statement {
-    final String msgid;
     final List<String> params;
     final String filename;
 
-    L10NStatement(this.filename, final int line, final String this.msgid)
-        : params = msgid.split(","), super(line);
+    L10NStatement(this.filename, final int line, final List<String> params)
+        : params = new List.from(params), super(line);
 
     @override
     void accept(final Visitor visitor) {
         visitor.visitL10n(this);
     }
+
+    /// First param is always the msgid
+    String get msgid => params.first;
 }
 
 class NewLineStatement extends Statement {

@@ -17,10 +17,21 @@
  * limitations under the License.
  */
 
+/**
+ * Parses .dart and HTML-Files for l10n translatable strings and comments
+ * to generate a POT-File
+ *
+ * More on POT Files:
+ *      https://www.crossdart.info/p/angular/1.1.2+2/application.dart.html
+ */
 library l10n.parser;
 
+import 'dart:async';
+import 'dart:io';
 import 'dart:math' as math;
+import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:optional/optional.dart';
 import 'package:validate/validate.dart';
 
 part 'parser/Lexer.dart';

@@ -89,8 +89,12 @@ List<POTBlock> collectPOTBlocks(final List<Statement> statements) {
     return blocks;
 }
 
+/// Creates the POT-File
 class POT {
+    final Logger _logger = new Logger('l10n.parser.POT');
+
     final Map<String,MergedPOTBlock> mergedBlocks = new Map<String,MergedPOTBlock>();
+
 
     void addBlocks(final List<POTBlock> blocks) {
         blocks.forEach((final POTBlock block) {
@@ -102,4 +106,113 @@ class POT {
             mergedPOTBlock.merge(block.comments, block.statement);
         });
     }
+
+    Future write(final String potFile, final String potTemplateHeader) async {
+        final String header = await _getHeader(potTemplateHeader);
+        final File file = new File(potFile);
+
+        if(await file.exists()) {
+            await file.delete();
+        }
+
+
+        _logger.fine(header);
+        _logger.fine("");
+
+        await file.writeAsString(header + "\n\n",flush: true);
+
+        mergedBlocks.values.forEach((final MergedPOTBlock block) {
+            // Shows its output only it the loglevel is set to Level.FINE
+            block.visit(WritePOTVisitor(_logger, file));
+        });
+
+    }
+
+    // - private -----------------------------------------------------------------------------------
+
+    /// Reads the template-Header and replaces {date} with the current date
+    Future<String> _getHeader(final String potTemplateHeader) async {
+        final File file = new File(potTemplateHeader);
+        Validate.isTrue(file.existsSync(),"${potTemplateHeader} does not exist!");
+
+        String template = await file.readAsString();
+        template = template.replaceAll("{date}",
+            new DateFormat("yyyy-MM-dd HH:mm").format(new DateTime.now()));
+
+        return template;
+    }
+}
+
+/// Writes the POT-File
+POTVisitor WritePOTVisitor(final Logger logger, final File file) {
+    return (final List<CommentStatement> comments,
+        final List<L10NStatement> statements) {
+
+        final StringBuffer buffer = new StringBuffer();
+
+        comments.forEach((final CommentStatement statement) {
+            final List<String> lines = statement.comment.split(new RegExp(r"\n"));
+            lines.forEach((final String line) {
+                buffer.writeln("#. ${line.trimLeft()}");
+            });
+        });
+        statements.forEach((final L10NStatement statement) {
+            buffer.writeln("#: ${statement.filename}:${statement.line}");
+        });
+
+        // All Statements have the same msgid - so we pick the first one
+        final L10NStatement statement = statements.first;
+
+        buffer.writeln('msgid "${statement.msgid}"');
+
+        if(statement.params.length > 1) {
+            buffer.writeln('msgid_plural "${statement.params[1]}"');
+        }
+
+        buffer.writeln('msgstr ""');
+        buffer.writeln();
+
+        logger.fine(buffer.toString().replaceFirst(new RegExp(r"\n$"), ""));
+        file.writeAsStringSync(buffer.toString(),mode: FileMode.WRITE_ONLY_APPEND,flush: true);
+        };
+    }
+
+/// Prints all the POT-Blocks
+/// 
+/// 
+///     final List<Token> tokens = lexer.scan(source);
+///     
+///     final List<Statement> statements = parser.parse(filename, tokens);
+///     final List<POTBlock> blocks = collectPOTBlocks(statements);
+///     
+///     pot.addBlocks(blocks);
+///     pot.addBlocks(blocks);
+///     
+///     pot.mergedBlocks.values.forEach((final MergedPOTBlock block) {
+///         block.visit(PrintPOTVisitor);
+///     });
+///     
+void LogPOTVisitor(
+    final List<CommentStatement> comments,
+    final List<L10NStatement> statements) {
+
+    final Logger _logger = new Logger("test.unit.parser._TestPrintPOTVisitor");
+
+    comments.forEach((final CommentStatement statement) {
+        final List<String> lines = statement.comment.split(new RegExp(r"\n"));
+        lines.forEach((final String line) => _logger.fine("#. ${line.trimLeft()}"));
+    });
+    statements.forEach((final L10NStatement statement) {
+        _logger.fine("#: ${statement.filename}:${statement.line}");
+    });
+
+    // All Statements have the same msgid - so we pick the first one
+    final L10NStatement statement = statements.first;
+
+    _logger.fine('msgid "${statement.msgid}"');
+    if(statement.params.length > 1) {
+        _logger.fine('msgid_plural "${statement.params[1]}"');
+    }
+    _logger.fine('msgstr ""');
+    _logger.fine('');
 }

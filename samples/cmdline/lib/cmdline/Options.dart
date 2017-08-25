@@ -25,14 +25,14 @@ class Options {
             print("    $line");
         });
 
-        // Noch ein Kommentar
-        print(translate(l10n("loglevel")));
-
-        //        print("");
-        //        print("Sample:");
-        //        print("");
-        //        print("    'Generates the static site in your 'web-folder':       '$APPNAME -g'");
-        //        print("");
+        print("");
+        print("Sample:");
+        print("");
+        print("    'Generates the static site in your 'web-folder':       '$APPNAME -g'");
+        print("    'Tests the loglevel-translation':                      '" +
+            translate(l10n("loglevel")) + "'");
+            
+        print("");
     }
 
     // -- private -------------------------------------------------------------

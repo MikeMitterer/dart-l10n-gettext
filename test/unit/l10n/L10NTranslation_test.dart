@@ -136,7 +136,7 @@ main() {
 
         test('> Translate with locale/messages.dart', () {
             translate.locale = "de";
-            expect(translate(l10n("Prints settings")),"Zeigt die aktuellen settings an");
+            expect(translate(l10n("Prints settings")),"Zeigt die Settings an");
         }); // end of 'Translate with locale/messages.dart' test
 
         test('> SubTranslation', () {

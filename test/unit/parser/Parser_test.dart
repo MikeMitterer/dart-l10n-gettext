@@ -24,34 +24,24 @@ class _TestPrintVisitor extends Visitor {
   @override
   void visitL10n(final L10NStatement statement) {
     _logger.fine("#: ${filename}:${statement.line}");
+    
     _logger.fine('msgid "${statement.msgid}"');
+    if(statement.params.length > 1) {
+        _logger.fine('msgid_plural "${statement.params[1]}"');
+    }
+
     _logger.fine('msgstr ""');
     _logger.fine('');
   }
 }
 
-void _TestPrintPOTVisitor(
-    final List<CommentStatement> comments,
-    final List<L10NStatement> statements) {
-
-    final Logger _logger = new Logger("test.unit.parser._TestPrintPOTVisitor");
-
-    comments.forEach((final CommentStatement statement) {
-        final List<String> lines = statement.comment.split(new RegExp(r"\n"));
-        lines.forEach((final String line) => _logger.fine("#. ${line.trimLeft()}"));
-    });
-    statements.forEach((final L10NStatement statement) {
-        _logger.fine("#: ${statement.filename}:${statement.line}");
-    });
-    _logger.fine('msgid "${statements.first.msgid}"');
-    _logger.fine('msgstr ""');
-    _logger.fine('');
-}
 
 main() async {
     //final Logger _logger = new Logger("test.unit.parser");
-    
-    configLogging();
+
+    // If you want to see some log outptut set "defaultLogLevel:"
+    // to Level.FINE or Level.FINER
+    configLogging(defaultLogLevel: Level.FINER);
 
     final String source = new File("test/unit/_resources/login.dart.txt").readAsStringSync();
 
@@ -69,7 +59,8 @@ main() async {
             final int nrOfFunctions = tokens.where((final Token token) =>
             token.type == TokenType.L10N).length;
 
-            expect(nrOfComments, equals(14));
+            // 14 - but one is a function declaration!
+            expect(nrOfComments, equals(15));
             expect(nrOfFunctions, equals(12));
         }); // end of 'Test' test
     });
@@ -84,11 +75,12 @@ main() async {
             final Parser parser = new Parser();
 
             final List<Token> tokens = lexer.scan(source);
-
+            // _logTokes(tokens);
+            
             final List<Statement> statements = parser.parse(filename, tokens);
             
             expect(statements.where((final Statement statement)
-                => !(statement is NewLineStatement)).length, equals(26));
+                => !(statement is NewLineStatement)).length, equals(27));
 
             final Visitor visitor = new _TestPrintVisitor(filename);
 
@@ -129,7 +121,8 @@ main() async {
             pot.addBlocks(blocks);
 
             pot.mergedBlocks.values.forEach((final MergedPOTBlock block) {
-                block.visit(_TestPrintPOTVisitor);
+                // Shows its output only it the loglevel is set to Level.FINE
+                block.visit(LogPOTVisitor);
             });
 
             expect(blocks.length, 12);

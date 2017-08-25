@@ -36,6 +36,8 @@ dependencies:
 
   yaml: ^2.1.0
 
+  optional: ^1.2.0
+
 dev_dependencies:
   grinder: any
   test: any

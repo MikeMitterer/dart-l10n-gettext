@@ -22,8 +22,6 @@ part of l10n.parser;
 const int _EOF = -1;
 
 class Lexer {
-    final Logger _logger = new Logger('l10n.parser.Lexer');
-
     /// Current position in source
     int _offset = 0;
 
@@ -43,7 +41,11 @@ class Lexer {
 
         final List<Token> tokens = new List<Token>();
 
+        // Reset everything in case of reusing the Lexer
         _source = source;
+        _offset = 0;
+        _character = '';
+
         if(_source.isEmpty) {
             _offset = _EOF;
         } else {
@@ -51,10 +53,11 @@ class Lexer {
         }
         
         // Many tokens are a single character, like operators and ().
-        final String charTokens = "\n()";
+        final String charTokens = "\n(),";
 
         final List<TokenType> tokenTypes = [
-            TokenType.LINE, TokenType.LEFT_PAREN, TokenType.RIGHT_PAREN
+            TokenType.LINE, TokenType.LEFT_BRACKET, TokenType.RIGHT_BRACKET,
+                TokenType.COLON
         ];
 
         String token = "";
@@ -101,15 +104,21 @@ class Lexer {
                     }
                     else if (_isNext('_(')) {
                         _skip('_(');
-                        state = TokenizeState.L10N;
+                        //state = TokenizeState.L10N;
+                        tokens.add(new Token("_(", TokenType.L10N));
+                        token = "";
                     }
                     else if (_isNext('l10n(')) {
                         _skip('l10n(');
-                        state = TokenizeState.L10N;
+                        //state = TokenizeState.L10N;
+                        tokens.add(new Token("l10(", TokenType.L10N));
+                        token = "";
                     }
                     else if (_isNext('gettext(')) {
                         _skip('gettext(');
-                        state = TokenizeState.L10N;
+                        //state = TokenizeState.L10N;
+                        tokens.add(new Token("gettext(", TokenType.L10N));
+                        token = "";
                     }
                     else if (charTokens.indexOf(c) != -1) {
                         tokens.add(new Token(c, tokenTypes[charTokens.indexOf(c)]));
@@ -160,7 +169,12 @@ class Lexer {
 
                 case TokenizeState.STRING_DOUBLE_QUOTE:
                 case TokenizeState.STRING_SINGLE_QUOTE:
-                    if (c == '"' || c == "'") {
+                    if (c == '"' && !_isPrev('\\')) {
+                        tokens.add(new Token(token, TokenType.STRING));
+                        token = "";
+                        state = TokenizeState.DEFAULT;
+                    }
+                    else if (c == "'" && !_isPrev('\\')) {
                         tokens.add(new Token(token, TokenType.STRING));
                         token = "";
                         state = TokenizeState.DEFAULT;
@@ -248,6 +262,17 @@ class Lexer {
         return _source.substring(tempOffset,tempOffset + nrOfCharacters) == expected;
     }
 
+    bool _isPrev(final String expected) {
+        final int nrOfCharacters = expected.length;
+        final int tempOffset = _offset - 1 - nrOfCharacters;
+
+        if(tempOffset < 0) {
+            return false;
+        }
+
+        return _source.substring(tempOffset,tempOffset + nrOfCharacters) == expected;
+    }
+
     String _readNext() {
         if(_offset == _EOF) {
             _character = '';
@@ -305,10 +330,15 @@ class Lexer {
                     if(_isNext("'''")) {
                         _skip("'''");
                         stringClosed = true;
-                    } else if(_isNext('"""')) {
+                    }
+                    else if(_isNext('"""')) {
                         _skip('"""');
                         stringClosed = true;
-                    }else if (c == '"' || c == "'") {
+                    }
+                    else if (c == '"' && _isPrev('\\') == false) {
+                        stringClosed = true;
+                    }
+                    else if (c == "'" && _isPrev('\\') == false) {
                         stringClosed = true;
                     }
                     else {

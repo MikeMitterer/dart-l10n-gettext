@@ -61,16 +61,21 @@ class LoginDialog extends MaterialDialog {
 
         print(translate(l10n("Test 1")));
 
-        // Dart Kommentar
-        print(translate(l10n("Test 2")));
+        // Plural-Test
+        print(translate(l10n("Test 2","Test 2 - Plural Name: {name}")));
 
         /// Dart Kommentar II
-        print(translate(_(   "Test 3" 'Test 3.1'  )));
+        print(translate(_( "Test 3" )));
 
         /* Dart Kommentar III */
-        print(translate(_("Test 4")));
+        print(translate(_("Test \"4\"")));
 
         print(translate(_("Test (5)")));
+    }
+
+    // Must not appear in scan
+    void l10n(final String fakeFunction) {
+        print(fakeFunction)
     }
 
     // - private ----------------------------------------------------------------------------------
@@ -98,7 +103,7 @@ class LoginDialog extends MaterialDialog {
                             <label class="mdl-textfield__label" for="password" translate='yes'>_('Test 9: Password')</label>
                             <span class="mdl-textfield__error" translate='yes'>
                                 <!-- HTML-Kommentar -->
-                                _('Test 10:' " " '12345678aA16#')
+                                _('Test 10: 12345678aA16#')
                             </span>    
                     </div>
                     <div class="mdl-form__hint">

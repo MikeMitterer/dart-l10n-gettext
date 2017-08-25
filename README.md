@@ -2,10 +2,14 @@ l10n / (gettext-oriented) PO-File Generator
 -------------------------------------------
 > Helps to localize your application
 
-Before your start:
+## Important
+Since v1.x xgettext creates `locale/templates/LC_MESSAGES/messages.gettext.pot` for testing purposes only!!!  
+`mkl10n` doesnt use xgettext anymore - instead the `l10n.parser`-package creates it's own `.pot`-File!
+
+## Before your start:
    - [A Quick Gettext Tutorial](http://www.labri.fr/perso/fleury/posts/programming/a-quick-gettext-tutorial.html)
    
-## Windows
+### Windows
 **Sorry guys** - this is App is tested under Mac-OSX but should work on Linux without problems.  
 
 ## Install 
@@ -15,7 +19,7 @@ $ pub global activate l10n
 
 ## System requirements
 Install the following cmdline-Applications:
-* xgettext
+* xgettext (**Depreciated** since 1.x!)
 * msginit
 * msgmerge
 

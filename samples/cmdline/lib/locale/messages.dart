@@ -14,7 +14,7 @@ final L10NTranslate translate = new L10NTranslate.withTranslations( {
       "Config folder": "Konfigurationsordner",
       "Dirs to scan": "Scan-Directories",
       "Locale": "",
-      "loglevel": ""
+      "loglevel": "LL Translated"
    }
 });
 
