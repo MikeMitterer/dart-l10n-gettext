@@ -24,12 +24,14 @@ Since v1.x xgettext creates `locale/templates/LC_MESSAGES/messages.gettext.pot` 
     _("String to translate", "Plural form of String");
     l10n("String to translate", "Plural form of String");
     
-    <!-- Translator: Comment -->
-    _("String to translate", "Plural form of String");
-    l10n("String to translate", "Plural form of String");
+    template = """
+        <!-- Translator: Comment -->
+        _("String to translate", "Plural form of String");
+        l10n("String to translate", "Plural form of String");
+    """
 ```
 
-The last option can be used in HTML-"String-Blocks" (`"""` | `'''`)
+The last option has to be used for HTML-"String-Blocks" (`"""` | `'''`)
     
 ## Install 
 ```bash
