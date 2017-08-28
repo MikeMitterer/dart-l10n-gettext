@@ -71,6 +71,8 @@ class LoginDialog extends MaterialDialog {
         print(translate(_("Test \"4\"")));
 
         print(translate(_("Test (5)")));
+
+        print("Hallo ${_('Test 6'} --!");
     }
 
     // Must not appear in scan
@@ -89,32 +91,32 @@ class LoginDialog extends MaterialDialog {
                 <h5 class="mdl-form__title" translate='yes'>
                 <!-- Multi line
                     HTML Kommentar -->
-                l10n('Test 6')</h5>
+                l10n('Test 7')</h5>
                 <div class="mdl-form__content">
                     <div class="mdl-textfield">
                         <input class="mdl-textfield__input" type="email" id="email" mdl-model="username" required autofocus>
-                        <label class="mdl-textfield__label" for="email" translate='yes'>_('Test 7')</label>
-                        <span class="mdl-textfield__error" translate='yes'>_('Test 8: This is not a valid eMail-Address')</span>
+                        <label class="mdl-textfield__label" for="email" translate='yes'>_('Test 8')</label>
+                        <span class="mdl-textfield__error" translate='yes'>_('Test 9: This is not a valid eMail-Address')</span>
                     </div>
                     <div class="mdl-textfield">
                         <input class="mdl-textfield__input" type=password id="password" mdl-model="password"
                                pattern="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%?]).{8,15})" required>
                                
-                            <label class="mdl-textfield__label" for="password" translate='yes'>_('Test 9: Password')</label>
+                            <label class="mdl-textfield__label" for="password" translate='yes'>_('Test 10: Password')</label>
                             <span class="mdl-textfield__error" translate='yes'>
                                 <!-- HTML-Kommentar -->
-                                _('Test 10: 12345678aA16#')
+                                _('Test 11: 12345678aA16#')
                             </span>    
                     </div>
                     <div class="mdl-form__hint">
-                        <a href="#" target="_blank" translate='yes'>_('Test 11: Forgot your password?')</a>
+                        <a href="#" target="_blank" translate='yes'>_('Test 12: Forgot your password?')</a>
                     </div>
                 </div>
                 <div class="mdl-form__actions">
                     <button id="submit" class="mdl-button mdl-button--submit
                         mdl-button--raised mdl-button--primary"
                         data-mdl-click="onLogin(\$event)" translate='yes'>
-                        _('Test 12: Sign in')
+                        _('Test 13: Sign in')
                     </button>
                 </div>
             </form>

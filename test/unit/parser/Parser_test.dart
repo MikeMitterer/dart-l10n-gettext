@@ -59,9 +59,9 @@ main() async {
             final int nrOfFunctions = tokens.where((final Token token) =>
             token.type == TokenType.L10N).length;
 
-            // 14 - but one is a function declaration!
             expect(nrOfComments, equals(15));
-            expect(nrOfFunctions, equals(12));
+            // 13 - but one is a function declaration!
+            expect(nrOfFunctions, equals(13));
         }); // end of 'Test' test
     });
     // End of 'Parser' group

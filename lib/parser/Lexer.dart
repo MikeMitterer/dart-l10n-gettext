@@ -104,19 +104,16 @@ class Lexer {
                     }
                     else if (_isNext('_(')) {
                         _skip('_(');
-                        //state = TokenizeState.L10N;
                         tokens.add(new Token("_(", TokenType.L10N));
                         token = "";
                     }
                     else if (_isNext('l10n(')) {
                         _skip('l10n(');
-                        //state = TokenizeState.L10N;
                         tokens.add(new Token("l10(", TokenType.L10N));
                         token = "";
                     }
                     else if (_isNext('gettext(')) {
                         _skip('gettext(');
-                        //state = TokenizeState.L10N;
                         tokens.add(new Token("gettext(", TokenType.L10N));
                         token = "";
                     }
@@ -168,13 +165,18 @@ class Lexer {
                     break;
 
                 case TokenizeState.STRING_DOUBLE_QUOTE:
-                case TokenizeState.STRING_SINGLE_QUOTE:
                     if (c == '"' && !_isPrev('\\')) {
                         tokens.add(new Token(token, TokenType.STRING));
                         token = "";
                         state = TokenizeState.DEFAULT;
                     }
-                    else if (c == "'" && !_isPrev('\\')) {
+                    else {
+                        token += c;
+                    }
+                    break;
+
+                case TokenizeState.STRING_SINGLE_QUOTE:
+                    if (c == "'" && !_isPrev('\\')) {
                         tokens.add(new Token(token, TokenType.STRING));
                         token = "";
                         state = TokenizeState.DEFAULT;
