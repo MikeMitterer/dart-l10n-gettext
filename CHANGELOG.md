@@ -1,6 +1,15 @@
 # Change Log for l10n
 Creates translatable PO-Files, strong orientation to xgettext
 
+## [v1.1.0](http://github.com/mikemitterer/dart-l10n-gettext/compare/v1.0.1...v1.1.0) - 2017-09-01
+
+### Feature
+* l10 in String interpolation [3a590dc](https://github.com/mikemitterer/dart-l10n-gettext/commit/3a590dc745f1f4e65f3eae384f811c22e049f479)
+
+### Docs
+* Usage in README [cb711d1](https://github.com/mikemitterer/dart-l10n-gettext/commit/cb711d143796a0ab12cf614438ebe7a8badf234a)
+* Cleanup + prepearing a new test-sample [7add301](https://github.com/mikemitterer/dart-l10n-gettext/commit/7add301d1a7278c15895197df4566aabbfb43ea8)
+
 ## [v1.0.1](http://github.com/mikemitterer/dart-l10n-gettext/compare/v1.0.0...v1.0.1) - 2017-08-25
 
 ### Docs
