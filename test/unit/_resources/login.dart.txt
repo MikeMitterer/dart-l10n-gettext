@@ -72,7 +72,7 @@ class LoginDialog extends MaterialDialog {
 
         print(translate(_("Test (5)")));
 
-        print("Hallo ${_('Test 6'} --!");
+        print("Hallo ${translate(_('Test 6'))} --!");
     }
 
     // Must not appear in scan

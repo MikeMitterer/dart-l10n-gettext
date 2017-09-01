@@ -37,7 +37,7 @@ class _TestPrintVisitor extends Visitor {
 
 
 main() async {
-    //final Logger _logger = new Logger("test.unit.parser");
+    final Logger _logger = new Logger("test.unit.parser");
 
     // If you want to see some log outptut set "defaultLogLevel:"
     // to Level.FINE or Level.FINER
@@ -60,8 +60,25 @@ main() async {
             token.type == TokenType.L10N).length;
 
             expect(nrOfComments, equals(15));
-            // 13 - but one is a function declaration!
-            expect(nrOfFunctions, equals(13));
+            // 14 - but one is a function declaration!
+            expect(nrOfFunctions, equals(14));
+
+            final int nrOfLeftBracket = tokens.where((final Token token) =>
+            token.type == TokenType.LEFT_BRACKET).length;
+
+            final int nrOfRightBracket = tokens.where((final Token token) =>
+            token.type == TokenType.RIGHT_BRACKET).length;
+
+            expect(nrOfLeftBracket, nrOfRightBracket);
+
+            final int nrOfScopeBegin = tokens.where((final Token token) =>
+            token.type == TokenType.SCOPE_BEGIN).length;
+
+            final int nrOfScopeEnd = tokens.where((final Token token) =>
+            token.type == TokenType.SCOPE_END).length;
+
+            expect(nrOfScopeBegin, nrOfScopeEnd);
+
         }); // end of 'Test' test
     });
     // End of 'Parser' group
@@ -78,9 +95,14 @@ main() async {
             // _logTokes(tokens);
             
             final List<Statement> statements = parser.parse(filename, tokens);
-            
+
+            // statements.where((final Statement statement)
+            //     => !(statement is NewLineStatement)).forEach( (final Statement statement) {
+            //         _logger.fine(statement);
+            // });
+
             expect(statements.where((final Statement statement)
-                => !(statement is NewLineStatement)).length, equals(27));
+                => !(statement is NewLineStatement)).length, equals(28));
 
             final Visitor visitor = new _TestPrintVisitor(filename);
 
@@ -91,7 +113,10 @@ main() async {
             // msgstr ""
             //
             final List<POTBlock> blocks = collectPOTBlocks(statements);
-            expect(blocks.length, 12);
+            expect(blocks.length, 13);
+
+            expect(blocks[12].comments.length, 0);
+            expect(blocks[12].statement.msgid, "Test 13: Sign in");
 
             // Prints all the blocks if logging is set to 'FINE'
             blocks.forEach((final POTBlock block) {
@@ -125,7 +150,12 @@ main() async {
                 block.visit(LogPOTVisitor);
             });
 
-            expect(blocks.length, 12);
+            expect(blocks.length, 13);
+
+            expect(pot.mergedBlocks.length, 13);
+            expect(pot.mergedBlocks.values.last.comments.length, 0);
+            expect(pot.mergedBlocks.values.last.statements.length, 2);
+            expect(pot.mergedBlocks.values.last.statements.first.msgid, "Test 13: Sign in");
 
         }); // end of 'Merge' test
 

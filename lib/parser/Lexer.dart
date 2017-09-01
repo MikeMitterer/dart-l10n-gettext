@@ -31,6 +31,19 @@ class Lexer {
     /// Source for the current scan
     String _source = '';
 
+    /// Many tokens are a single character, like operators and ().
+    final String _singleCharTokens = "(),{}";
+
+    /// These types are directly associated with [_singleCharTokens]
+    final List<TokenType> _tokenTypes = [
+        TokenType.LEFT_BRACKET, TokenType.RIGHT_BRACKET,
+        TokenType.COLON, TokenType.SCOPE_BEGIN, TokenType.SCOPE_END,
+    ];
+
+    int _lineCounter = 0;
+
+    final List<Token> _tokens = new List<Token>();
+
     /**
      * This function takes a script as a string of characters and chunks it into
      * a sequence of tokens. Each token is a meaningful unit of program, like a
@@ -39,12 +52,12 @@ class Lexer {
     List<Token> scan(final String source) {
         Validate.notNull(source);
 
-        final List<Token> tokens = new List<Token>();
-
         // Reset everything in case of reusing the Lexer
         _source = source;
         _offset = 0;
         _character = '';
+        _tokens.clear();
+        _lineCounter = 0;
 
         if(_source.isEmpty) {
             _offset = _EOF;
@@ -52,13 +65,6 @@ class Lexer {
             _character = _readNext();
         }
         
-        // Many tokens are a single character, like operators and ().
-        final String charTokens = "\n(),";
-
-        final List<TokenType> tokenTypes = [
-            TokenType.LINE, TokenType.LEFT_BRACKET, TokenType.RIGHT_BRACKET,
-                TokenType.COLON
-        ];
 
         String token = "";
         TokenizeState state = TokenizeState.DEFAULT;
@@ -66,15 +72,16 @@ class Lexer {
         // Scan through the code one character at a time, building up the list of tokens.
         for (String c = _peek(); _offset != _EOF; c = _readNext()) {
 
+            // ignore: missing_enum_constant_in_switch
             switch (state) {
                 case TokenizeState.DEFAULT:
                     if (_isNext('"""')) {
                         _skip('"""');
-                        tokens.add(new Token('"""', TokenType.STRING_BLOCK));
+                        _tokens.add(new Token('"""', TokenType.STRING_BLOCK));
                     }
                     else if (_isNext("'''")) {
                         _skip("'''");
-                        tokens.add(new Token("'''", TokenType.STRING_BLOCK));
+                        _tokens.add(new Token("'''", TokenType.STRING_BLOCK));
                     }
                     else if (c == '"') {
                         state = TokenizeState.STRING_DOUBLE_QUOTE;
@@ -102,23 +109,31 @@ class Lexer {
                         _skip('<!--');
                         state = TokenizeState.HTML_COMMENT;
                     }
+
+                    // Keywords
                     else if (_isNext('_(')) {
-                        _skip('_(');
-                        tokens.add(new Token("_(", TokenType.L10N));
+                        _skip('_');
+                        _tokens.add(new Token("_", TokenType.L10N));
                         token = "";
                     }
                     else if (_isNext('l10n(')) {
-                        _skip('l10n(');
-                        tokens.add(new Token("l10(", TokenType.L10N));
+                        _skip('l10n');
+                        _tokens.add(new Token("l10", TokenType.L10N));
                         token = "";
                     }
-                    else if (_isNext('gettext(')) {
-                        _skip('gettext(');
-                        tokens.add(new Token("gettext(", TokenType.L10N));
+                    else if (_isNext('gettext')) {
+                        _skip('gettext');
+                        _tokens.add(new Token("gettext", TokenType.L10N));
                         token = "";
                     }
-                    else if (charTokens.indexOf(c) != -1) {
-                        tokens.add(new Token(c, tokenTypes[charTokens.indexOf(c)]));
+
+                    // Single-Character-Tokens
+                    else if (_singleCharTokens.indexOf(c) != -1) {
+                        _tokens.add(new Token(c, _tokenTypes[_singleCharTokens.indexOf(c)]));
+                    }
+                    else if( c == '\n') {
+                        _tokens.add(new Token((_lineCounter).toString(), TokenType.LINE));
+                        _lineCounter++;
                     }
                     else if (CharacterType.isLetter(c)) {
                         token += c;
@@ -136,7 +151,7 @@ class Lexer {
                         token += c;
                     }
                     else {
-                        tokens.add(new Token(token, TokenType.WORD));
+                        _tokens.add(new Token(token, TokenType.WORD));
                         token = "";
                         state = TokenizeState.DEFAULT;
 
@@ -152,7 +167,7 @@ class Lexer {
                         token += c;
                     }
                     else {
-                        tokens.add(new Token(token, TokenType.NUMBER));
+                        _tokens.add(new Token(token, TokenType.NUMBER));
                         token = "";
                         state = TokenizeState.DEFAULT;
 
@@ -166,9 +181,21 @@ class Lexer {
 
                 case TokenizeState.STRING_DOUBLE_QUOTE:
                     if (c == '"' && !_isPrev('\\')) {
-                        tokens.add(new Token(token, TokenType.STRING));
+                        _tokens.add(new Token(token, TokenType.STRING));
+                        _lineCounter += math.max(0,token.split("\n").length - 1);
+
                         token = "";
                         state = TokenizeState.DEFAULT;
+                    }
+                    else if(_isNext("\${") && !_isPrev('\\')) {
+                        _tokens.add(new Token(token, TokenType.STRING));
+                        _lineCounter += math.max(0,token.split("\n").length - 1);
+
+                        token = "";
+
+                        _readStringInterpolation();
+
+                        state = TokenizeState.STRING_DOUBLE_QUOTE;
                     }
                     else {
                         token += c;
@@ -177,7 +204,7 @@ class Lexer {
 
                 case TokenizeState.STRING_SINGLE_QUOTE:
                     if (c == "'" && !_isPrev('\\')) {
-                        tokens.add(new Token(token, TokenType.STRING));
+                        _tokens.add(new Token(token, TokenType.STRING));
                         token = "";
                         state = TokenizeState.DEFAULT;
                     }
@@ -189,11 +216,13 @@ class Lexer {
                 case TokenizeState.COMMENT:
                     if (_isNext('*/')) {
                         _skip('*/');
-                        tokens.add(new Token(token.trimLeft()
-                                // Remove Asterisk in Block-Comments
-                                .replaceAll(new RegExp(r"^\s*\* *",multiLine: true), ""),
-                            TokenType.COMMENT));
-                        
+                        // Remove Asterisk in Block-Comments
+                        final String tempToken = token.trimLeft()
+                            .replaceAll(new RegExp(r"^\s*\* *",multiLine: true), "");
+
+                        _tokens.add(new Token(tempToken, TokenType.COMMENT));
+                        _lineCounter += token.split("\n").length;
+
                         token = "";
                         state = TokenizeState.DEFAULT;
                     } else {
@@ -204,7 +233,9 @@ class Lexer {
 
                 case TokenizeState.SLASH_COMMENT:
                     if (_isNext('\n')) {
-                        tokens.add(new Token(token.trimLeft(), TokenType.COMMENT));
+                        _tokens.add(new Token(token.trimLeft(), TokenType.COMMENT));
+                        _lineCounter++;
+                        
                         token = "";
                         state = TokenizeState.DEFAULT;
                     } else {
@@ -216,7 +247,7 @@ class Lexer {
                 case TokenizeState.HTML_COMMENT:
                     if (_isNext('-->')) {
                         _skip('-->');
-                        tokens.add(new Token(token.trimLeft(), TokenType.COMMENT));
+                        _tokens.add(new Token(token.trimLeft(), TokenType.COMMENT));
                         token = "";
                         state = TokenizeState.DEFAULT;
                     } else {
@@ -225,29 +256,29 @@ class Lexer {
 
                     break;
 
-                case TokenizeState.L10N:
-                    {
-                        final String param = _readStringParam();
-                        token += param;
-
-                        // c has changed in _readStringParam
-                        c = _peek();
-                        
-                        //_logger.warning("V $value C $c");
-                        if (c == ')') {
-                            tokens.add(new Token(token, TokenType.L10N));
-                            token = "";
-                            state = TokenizeState.DEFAULT;
-                        }
-                    }
-                    break;
+//                case TokenizeState.L10N:
+//                    {
+//                        final String param = _readStringParam();
+//                        token += param;
+//
+//                        // c has changed in _readStringParam
+//                        c = _peek();
+//
+//                        //_logger.warning("V $value C $c");
+//                        if (c == ')') {
+//                            _tokens.add(new Token(token, TokenType.L10N));
+//                            token = "";
+//                            state = TokenizeState.DEFAULT;
+//                        }
+//                    }
+//                    break;
             }
         }
 
         // HACK: Silently ignore any in-progress token when we run out of
         // characters. This means that, for example, if a script has a string
         // that's missing the closing ", it will just ditch it.
-        return tokens;
+        return _tokens;
     }
 
     //- private -----------------------------------------------------------------------------------
@@ -281,7 +312,7 @@ class Lexer {
             return _character;
         }
 
-        if(_offset + 1 >= _source.length) {
+        if(_offset >= _source.length) {
             _character = '';
             _offset = _EOF;
         } else {
@@ -357,6 +388,151 @@ class Lexer {
         while (_offset != _EOF && (!stringClosed && !functionClosed));
 
         return value;
+    }
+
+    void _readStringInterpolation() {
+        TokenizeState state = TokenizeState.DEFAULT;
+        String token = "";
+
+        if(_isNext("\${") && !_isPrev('\\')) {
+             _skip("\${");
+        }
+        else {
+            return;
+        }
+
+        _tokens.add(new Token("\${", TokenType.INTERPOLATION));
+        _tokens.add(new Token("{", TokenType.SCOPE_BEGIN));
+
+        String c = _peek();
+        do {
+            // ignore: missing_enum_constant_in_switch
+            switch(state) {
+                case TokenizeState.DEFAULT:
+                    if(_isNext("\${") && !_isPrev('\\')) {
+                        _skip("\${");
+                        state = TokenizeState.INTERPOLATION;
+                    }
+                    if (_isNext('"""')) {
+                        _skip('"""');
+                        state = TokenizeState.STRING_TRIPPLE_QUOTE;
+                    }
+                    else if (_isNext("'''")) {
+                        _skip("'''");
+                        state = TokenizeState.STRING_TRIPPLE_QUOTE;
+                    }
+                    else if (c == '"') {
+                        _skip('"');
+                        state = TokenizeState.STRING_DOUBLE_QUOTE;
+                    }
+                    else if (c == "'") {
+                        _skip("'");
+                        state = TokenizeState.STRING_SINGLE_QUOTE;
+                    }
+
+                    // Keywords
+                    else if (_isNext('_(')) {
+                        _skip('_');
+                        _tokens.add(new Token("_", TokenType.L10N));
+                        token = "";
+                    }
+                    else if (_isNext('l10n(')) {
+                        _skip('l10n');
+                        _tokens.add(new Token("l10", TokenType.L10N));
+                        token = "";
+                    }
+                    else if (_isNext('gettext(')) {
+                        _skip('gettext');
+                        _tokens.add(new Token("gettext", TokenType.L10N));
+                        token = "";
+                    }
+
+                    // Single-Character-Tokens
+                    else if (_singleCharTokens.indexOf(c) != -1) {
+                        _tokens.add(new Token(c, _tokenTypes[_singleCharTokens.indexOf(c)]));
+                    }
+                    else if( c == '\n') {
+                        _tokens.add(new Token((_lineCounter).toString(), TokenType.LINE));
+                        _lineCounter++;
+                    }
+                    else if (CharacterType.isLetter(c)) {
+                        token += c;
+                        state = TokenizeState.WORD;
+                    }
+                    else if (CharacterType.isDigit(c)) {
+                        token += c;
+                        state = TokenizeState.NUMBER;
+                    }
+
+                    break;
+
+                case TokenizeState.WORD:
+                    if (CharacterType.isLetterOrDigit(c)) {
+                        token += c;
+                    }
+                    else {
+                        _tokens.add(new Token(token, TokenType.WORD));
+                        token = "";
+                        state = TokenizeState.DEFAULT;
+
+                        _reprocess();
+                    }
+                    break;
+
+                case TokenizeState.NUMBER:
+                // HACK: Negative numbers and floating points aren't supported.
+                // To get a negative number, just do 0 - <your number>.
+                // To get a floating point, divide.
+                    if (CharacterType.isDigit(c)) {
+                        token += c;
+                    }
+                    else {
+                        _tokens.add(new Token(token, TokenType.NUMBER));
+                        token = "";
+                        state = TokenizeState.DEFAULT;
+
+                        _reprocess();
+                    }
+                    break;
+
+                case TokenizeState.STRING_TRIPPLE_QUOTE:
+                    if(_isNext("'''")) {
+                        _skip("'''");
+                    }
+                    break;
+
+                case TokenizeState.STRING_DOUBLE_QUOTE:
+                    if (c == '"' && !_isPrev('\\')) {
+                        _tokens.add(new Token(token, TokenType.STRING));
+                        _lineCounter += math.max(0,token.split("\n").length - 1);
+
+                        token = "";
+                        state = TokenizeState.DEFAULT;
+                    }
+                    else {
+                        token += c;
+                    }
+                    break;
+                case TokenizeState.STRING_SINGLE_QUOTE:
+                    if (c == "'" && !_isPrev('\\')) {
+                        _tokens.add(new Token(token, TokenType.STRING));
+                        _lineCounter += math.max(0,token.split("\n").length - 1);
+
+                        token = "";
+                        state = TokenizeState.DEFAULT;
+                    }
+                    else {
+                        token += c;
+                    }
+                    break;
+
+            }
+            c = _readNext();
+        }
+        while (_offset != _EOF && c != '}' && !_isPrev("\\"));
+
+        _tokens.add(new Token("}", TokenType.SCOPE_END));
+
     }
 
     /// Reprocess this character in the default state.

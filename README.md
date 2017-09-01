@@ -16,18 +16,26 @@ Since v1.x xgettext creates `locale/templates/LC_MESSAGES/messages.gettext.pot` 
 ## Supported syntax (.dart + .html)
 `.dart`-File:
 ```dart
-    // Translator: Comment
+    // Translator: Comment I
     _("String to translate");
     l10n("String to translate");
 
-    // Translator: Comment
+    // Translator: Comment II
     _("String to translate", "Plural form of String");
     l10n("String to translate", "Plural form of String");
     
+    // Translator: Comment III
+    print("Hallo ${_('world')}!");
+    
+    // Translator: Comment IV
+    print("Hallo ${translate(_('world'))}!");
+    
     template = """
-        <!-- Translator: Comment -->
-        _("String to translate", "Plural form of String");
-        l10n("String to translate", "Plural form of String");
+        <span translate='yes'>
+            <!-- Translator: Comment V -->
+            _("String to translate", "Plural form of String");
+            l10n("String to translate", "Plural form of String");
+        </span>
     """
 ```
 

@@ -58,16 +58,16 @@ class Parser {
 
                 case TokenType.L10N:
                     // Singular
-                    if(_isNext([TokenType.STRING, TokenType.RIGHT_BRACKET ])) {
-                        token = _read().value;
+                    if(_isNext([TokenType.LEFT_BRACKET, TokenType.STRING, TokenType.RIGHT_BRACKET ])) {
+                        token = _read(skip: 1).value;
                         statements.add(new L10NStatement(filename, line, [token.text]));
                     }
                     // Plural
-                    else if(_isNext([TokenType.STRING, TokenType.COLON, TokenType.STRING, TokenType.RIGHT_BRACKET ])) {
+                    else if(_isNext([TokenType.LEFT_BRACKET, TokenType.STRING, TokenType.COLON, TokenType.STRING, TokenType.RIGHT_BRACKET ])) {
                         final List<String> params = new List<String>();
 
                         // String, Colon, String
-                        params.add(_read().value.text);_read();params.add(_read().value.text);
+                        params.add(_read(skip: 1).value.text);_read();params.add(_read().value.text);
 
                         statements.add(
                             new L10NStatement(filename, line, params));
@@ -99,8 +99,8 @@ class Parser {
     /// Returns the next [Token]
     ///
     /// In case of EOF it returns an empty [Optional]
-    Optional<Token>  _read() {
-        _offset++;
+    Optional<Token>  _read({final int skip = 0}) {
+        _offset += 1 + skip;
         if (_offset < _tokens.length) {
             return new Optional.of(_tokens[_offset]);
         }
