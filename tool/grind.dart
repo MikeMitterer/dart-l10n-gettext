@@ -20,7 +20,8 @@ testUnit() {
 analyze() {
     final List<String> libs = [
         "lib/l10n.dart",
-        "lib/mkl10nlocale.dart"
+        "lib/parser.dart",
+        "bin/mkl10n.dart"
     ];
 
     libs.forEach((final String lib) => Analyzer.analyze(lib));
