@@ -1,3 +1,11 @@
-# stagedive
+# l10n - cmdline sample
 
-A minimal command-line application.
+Try
+
+    dart bin/cmdline
+    
+and
+
+    dart bin/cmdline -l de
+    
+        
