@@ -1,4 +1,4 @@
-# German translations for L package.
+# English translations for L package.
 # Copyright (C) 2017 THE L'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the L package.
 # Automatically generated, 2017.
@@ -7,35 +7,54 @@ msgid ""
 msgstr ""
 "Project-Id-Version: L 10N4Dart\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 15:25\n"
-"PO-Revision-Date: 2017-08-23 12:50+0200\n"
+"POT-Creation-Date: 2017-12-06 18:36\n"
+"PO-Revision-Date: 2017-12-06 18:14\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
-"Language: de\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Everything within l10n(...) will be in your .po File
-#: lib/cmdline/Config.dart:41 lib/cmdline/Options.dart:32
+#: lib/cmdline/Config.dart:41
 msgid "loglevel"
-msgstr "LL Translated"
+msgstr "loglevel"
 
 #. 'translate' will translate your ID/String
 #: lib/cmdline/Config.dart:44
 msgid "Config folder"
-msgstr "Konfigurationsordner"
+msgstr "Config folder"
 
 #: lib/cmdline/Config.dart:45
-#, fuzzy
 msgid "Config file"
-msgstr "Konfigurationsfile"
+msgstr "Config file"
 
 #: lib/cmdline/Config.dart:46
 msgid "Locale"
-msgstr ""
+msgstr "Locale"
 
 #: lib/cmdline/Config.dart:49
 msgid "Dirs to scan"
-msgstr "Scan-Directories"
+msgstr "Dirs to scan"
+
+#: lib/cmdline/Options.dart:23
+msgid "Usage: cmdline [options]"
+msgstr ""
+
+#: lib/cmdline/Options.dart:29
+msgid "Sample:"
+msgstr "Sample:"
+
+#: lib/cmdline/Options.dart:31
+msgid "Generates the static site in your 'web-folder':"
+msgstr ""
+
+#: lib/cmdline/Options.dart:34
+msgid "Tests the loglevel-translation:"
+msgstr ""
+
+#: lib/cmdline/Options.dart:46
+msgid "Prints settings"
+msgstr ""

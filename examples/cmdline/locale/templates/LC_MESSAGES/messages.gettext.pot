@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 15:25+0200\n"
+"POT-Creation-Date: 2017-12-06 18:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,6 +22,7 @@ msgstr ""
 #. Everything within l10n(...) will be in your .po File
 #: lib/cmdline/Config.dart:41 lib/cmdline/Options.dart:29
 #: lib/cmdline/Options.dart:32 lib/cmdline/Options.dart:33
+#: lib/cmdline/Options.dart:35
 msgid "loglevel"
 msgstr ""
 
@@ -40,4 +41,28 @@ msgstr ""
 
 #: lib/cmdline/Config.dart:49
 msgid "Dirs to scan"
+msgstr ""
+
+#: lib/cmdline/Options.dart:23
+msgid "Usage: $APPNAME [options]"
+msgstr ""
+
+#: lib/cmdline/Options.dart:23
+msgid "Usage: cmdline [options]"
+msgstr ""
+
+#: lib/cmdline/Options.dart:29
+msgid "Sample:"
+msgstr ""
+
+#: lib/cmdline/Options.dart:31
+msgid "Generates the static site in your 'web-folder':"
+msgstr ""
+
+#: lib/cmdline/Options.dart:34
+msgid "Tests the loglevel-translation:"
+msgstr ""
+
+#: lib/cmdline/Options.dart:45 lib/cmdline/Options.dart:46
+msgid "Prints settings"
 msgstr ""

@@ -16,7 +16,7 @@ import 'package:intl/intl_standalone.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:logging/logging.dart';
-import 'package:logging_handlers/logging_handlers_shared.dart';
+import 'package:console_log_handler/print_log_handler.dart';
 
 import 'package:l10n/l10n.dart';
 import 'package:l10n/locale/messages.dart';
@@ -390,7 +390,7 @@ class Application {
                 Logger.root.level = Level.INFO;
         }
 
-        Logger.root.onRecord.listen(new LogPrintHandler(messageFormat: "%m"));
+        Logger.root.onRecord.listen(logToConsole);
     }
 }
 

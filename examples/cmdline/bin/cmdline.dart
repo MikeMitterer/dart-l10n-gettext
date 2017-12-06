@@ -20,6 +20,14 @@ Future main(List<String> arguments) async {
     // For debugging
     // print("SystemLocale: $locale"); // in my case: de_AT.UTF-8
 
+    // Only necessary for this sample
+    // Ignore the following 5 lines in real life
+    if(arguments.contains("-l")) {
+        translate.locale = arguments[arguments.indexOf("-l") + 1];
+    } else if(arguments.contains("--locale")) {
+        translate.locale = arguments[arguments.indexOf("--locale") + 1];
+    }
+
     final Application application = new Application();
     application.run( arguments, locale );
 }

@@ -1,11 +1,8 @@
-@TestOn("content-shell")
 import 'package:test/test.dart';
-
-import '../config.dart';
 
 main() {
     // final Logger _logger = new Logger("unit.test.RegExp");
-    configLogging();
+    // configLogging();
 
     group('RegExp', () {
         setUp(() {

@@ -1,0 +1,14 @@
+{
+   "en": {
+      "Config file": "Config file",
+      "Config folder": "Config folder",
+      "Dirs to scan": "Dirs to scan",
+      "Generates the static site in your 'web-folder':": "",
+      "Locale": "Locale",
+      "loglevel": "loglevel",
+      "Prints settings": "",
+      "Sample:": "Sample:",
+      "Tests the loglevel-translation:": "",
+      "Usage: cmdline [options]": ""
+   }
+}

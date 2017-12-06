@@ -21,7 +21,6 @@ dependencies:
   browser: any
 
   logging: any
-  logging_handlers: any
   console_log_handler: any
 
   validate: any

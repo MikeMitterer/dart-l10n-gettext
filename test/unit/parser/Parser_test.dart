@@ -4,9 +4,8 @@ import 'dart:io';
 import 'package:test/test.dart';
 
 import 'package:logging/logging.dart';
+import 'package:console_log_handler/print_log_handler.dart';
 import 'package:l10n/parser.dart';
-
-import '../config.dart';
 
 class _TestPrintVisitor extends Visitor {
   final Logger _logger = new Logger('test.unit.lexer._TestVisitor');

@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 
 import 'package:logging/logging.dart';
-import 'package:logging_handlers/logging_handlers_shared.dart';
+import 'package:console_log_handler/print_log_handler.dart';
 
 import 'package:l10n/l10n.dart';
 import 'package:l10n/locale/messages.dart';
