@@ -41,7 +41,7 @@ main() async {
 
     // If you want to see some log outptut set "defaultLogLevel:"
     // to Level.FINE or Level.FINER
-    configLogging(defaultLogLevel: Level.FINER);
+    configLogging();
 
     final String source = new File("test/unit/_resources/login.dart.txt").readAsStringSync();
 

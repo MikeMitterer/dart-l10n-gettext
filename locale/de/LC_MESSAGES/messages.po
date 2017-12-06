@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: L 10N4Dart\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 15:16\n"
+"POT-Creation-Date: 2017-12-06 15:52\n"
 "PO-Revision-Date: 2017-08-21 11:22+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -66,7 +66,7 @@ msgstr "mkl10n -l en,de .    - Erstellt die Übersetzungen für en + de"
 msgid "Shows this message"
 msgstr ""
 
-#: bin/argparser/Options.dart:42 test/unit/l10n/L10NTranslation_test.dart:139
+#: bin/argparser/Options.dart:42 test/unit/l10n/L10NTranslation_test.dart:141
 msgid "Prints settings"
 msgstr "Zeigt die Settings an"
 
@@ -90,12 +90,16 @@ msgstr "Wo soll das generierte Dart-File (messages.dart) erstellt werden"
 msgid "Exclude folders from scaning"
 msgstr ""
 
-#: test/unit/l10n/L10NTranslation_test.dart:134
+#: test/unit/l10n/L10NTranslation_test.dart:136
 msgid "Test1"
 msgstr ""
 
-#: test/unit/l10n/L10NTranslation_test.dart:160
+#: test/unit/l10n/L10NTranslation_test.dart:165
 msgid ""
 "Hallo\n"
 "Test"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Der Server meldet {{status}} bei der API-Key Anforderung."
+#~ msgstr "Fehlerhafte Anfrage (400) bei der API-Key Anforderung!"

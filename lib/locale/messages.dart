@@ -9,6 +9,27 @@ import 'package:l10n/l10n.dart';
 
 
 final L10NTranslate translate = new L10NTranslate.withTranslations( {
+   "en": {
+      "\"\n\"Hallo\\n\"\n\"Test": "",
+      "Config-File": "",
+      "Defines where to place your locale-Dir": "Defines where to place your locale-Dir",
+      "Dirs to exclude": "Dirs to scan",
+      "Dirs to scan": "Dirs to scan",
+      "Example:": "",
+      "Exclude folders from scaning": "",
+      "External commands:": "",
+      "Libprefix for generated DART-File (library <prefix>.locale;)": "Libprefix for generated DART-File (library <prefix>.locale;)",
+      "locales - separated by colon, Sample: --locales en,de,es": "locales - separated by colon, Sample: --locales en,de,es",
+      "mkl10n -l en,de . - Generates translation for en + de": "",
+      "mkl10n . - Generates lib/locale/messages.dart": "",
+      "not installed!": "",
+      "Prints settings": "Prints settings",
+      "Settings:": "Settings:",
+      "Shows this message": "Shows this message",
+      "Test1": "",
+      "Usage: mkl10n [options] <dir(s) to scan>": "Usage: mkl10nlocale [options] <dir(s) to scan>",
+      "Where should the DART-File go? (<path>/locale/messages.dart)": "Where should the DART-File go? (<path>/locale/messages.dart)"
+   },
    "de": {
       "\"\n\"Hallo\\n\"\n\"Test": "",
       "Config-File": "Konfigurationsfile",

@@ -4,6 +4,8 @@ import 'package:test/test.dart';
 import 'package:logging/logging.dart';
 import 'package:logging_handlers/logging_handlers_shared.dart';
 
+import '../config.dart';
+
 main() {
     // final Logger _logger = new Logger("unit.test.RegExp");
     configLogging();
@@ -39,10 +41,4 @@ main() {
 
     });
     // end 'RegExp' group
-}
-
-void configLogging() {
-    hierarchicalLoggingEnabled = false;
-    Logger.root.level = Level.INFO;
-    Logger.root.onRecord.listen(new LogPrintHandler());
 }

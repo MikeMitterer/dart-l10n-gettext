@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 15:16+0200\n"
+"POT-Creation-Date: 2017-12-06 15:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,6 +63,7 @@ msgid "Shows this message"
 msgstr ""
 
 #: bin/argparser/Options.dart:42 test/unit/l10n/L10NTranslation_test.dart:139
+#: test/unit/l10n/L10NTranslation_test.dart:141
 msgid "Prints settings"
 msgstr ""
 
@@ -87,19 +88,27 @@ msgid "Exclude folders from scaning"
 msgstr ""
 
 #: test/unit/l10n/L10NTranslation_test.dart:40
+#: test/unit/l10n/L10NTranslation_test.dart:42
 #: test/unit/l10n/L10NTranslation_test.dart:49
+#: test/unit/l10n/L10NTranslation_test.dart:51
 #: test/unit/l10n/L10NTranslation_test.dart:58
+#: test/unit/l10n/L10NTranslation_test.dart:60
 msgid "Hallo {{name}}"
 msgstr ""
 
 #: test/unit/l10n/L10NTranslation_test.dart:63
+#: test/unit/l10n/L10NTranslation_test.dart:65
 #: test/unit/l10n/L10NTranslation_test.dart:78
+#: test/unit/l10n/L10NTranslation_test.dart:80
 msgid "Hallo {{l10n}}"
 msgstr ""
 
 #: test/unit/l10n/L10NTranslation_test.dart:64
+#: test/unit/l10n/L10NTranslation_test.dart:66
 #: test/unit/l10n/L10NTranslation_test.dart:79
+#: test/unit/l10n/L10NTranslation_test.dart:81
 #: test/unit/l10n/L10NTranslation_test.dart:83
+#: test/unit/l10n/L10NTranslation_test.dart:85
 msgid "Mike + {{name}}"
 msgstr ""
 
@@ -133,15 +142,43 @@ msgstr ""
 #. - Fallback to EN
 #. default locale is en
 #. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
+#. default locale is en
+#. - Fallback to EN
 #: test/unit/l10n/L10NTranslation_test.dart:109
+#: test/unit/l10n/L10NTranslation_test.dart:111
 #: test/unit/l10n/L10NTranslation_test.dart:116
+#: test/unit/l10n/L10NTranslation_test.dart:118
 #: test/unit/l10n/L10NTranslation_test.dart:127
+#: test/unit/l10n/L10NTranslation_test.dart:129
 msgid "Hallo, dies ist ein {{what}}"
 msgstr ""
 
 #. Im deutschen wird bei der Übersetzung ein \n eingefügt.
 #. Ob der Key (msgid) ein \n enthält oder nicht ist egal
 #: test/unit/l10n/L10NTranslation_test.dart:121
+#: test/unit/l10n/L10NTranslation_test.dart:123
 msgid ""
 "Hallo,\n"
 " dies ist ein {{what}}"
@@ -149,14 +186,38 @@ msgstr ""
 
 #. Does not exist at all - brings back default message
 #: test/unit/l10n/L10NTranslation_test.dart:130
+#: test/unit/l10n/L10NTranslation_test.dart:132
 msgid "Hallo, {{name}}"
 msgstr ""
 
 #: test/unit/l10n/L10NTranslation_test.dart:134
+#: test/unit/l10n/L10NTranslation_test.dart:136
 msgid "Test1"
 msgstr ""
 
+#: test/unit/l10n/L10NTranslation_test.dart:153
+msgid "Der Server meldet statuscode bei der API-Key Anforderung."
+msgstr ""
+
+#: test/unit/l10n/L10NTranslation_test.dart:153
+#: test/unit/l10n/L10NTranslation_test.dart:154
+#: test/unit/l10n/L10NTranslation_test.dart:155
+msgid "Der Server meldet {{statuscode-400}} bei der API-Key Anforderung."
+msgstr ""
+
+#: test/unit/l10n/L10NTranslation_test.dart:153
+msgid "Der Server meldet {{statuscode}} bei der API-Key Anforderung."
+msgstr ""
+
+#: test/unit/l10n/L10NTranslation_test.dart:153
+msgid "Der Server meldet {{status}} bei der API-Key Anforderung."
+msgstr ""
+
 #: test/unit/l10n/L10NTranslation_test.dart:160
+#: test/unit/l10n/L10NTranslation_test.dart:162
+#: test/unit/l10n/L10NTranslation_test.dart:163
+#: test/unit/l10n/L10NTranslation_test.dart:164
+#: test/unit/l10n/L10NTranslation_test.dart:165
 msgid ""
 "Hallo\n"
 "Test"

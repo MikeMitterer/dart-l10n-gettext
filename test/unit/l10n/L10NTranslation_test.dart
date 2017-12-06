@@ -12,11 +12,13 @@ main() {
 
     final Map<String,Map<String,String>> translationTable = {
         "en" : {
-            "Hallo, dies ist ein {{what}}" : "Hello, this is a {{what}}"
+            "Hallo, dies ist ein {{what}}" :
+                "Hello, this is a {{what}}",
         },
 
         "de" : {
-            "Hallo, dies ist ein {{what}}" : "Hallo,\n dies ist ein {{what}}"
+            "Hallo, dies ist ein {{what}}" :
+                "Hallo,\n dies ist ein {{what}}",
         }
     };
 
@@ -148,13 +150,13 @@ main() {
                     "status"     : "{{statuscode-${major}}}"
                 });
 
-            expect(l.message,"Der Server meldet {{statuscode-400}} bei der API-Key Anforderung.");
+            expect(l.message, "Der Server meldet {{statuscode-400}} bei der API-Key Anforderung.");
             expect(translate(l),"Der Server meldet {{statuscode-400}} bei der API-Key Anforderung.");
 
             translate.locale = "de";
             expect(translate(l),"Fehlerhafte Anfrage (400) bei der API-Key Anforderung!");
 
-        }); // end of 'SubTranslation' test
+        }, skip: "Sub-Translation is not supported since lexer/parser upgrade "); // end of 'SubTranslation' test
 
         test('> MessageID with newline', () {
             expect(l10n("Hallo\nTest").msgid, "HalloTest");
