@@ -18,7 +18,7 @@ executables:
 dependencies:
   browser: ^0.10.0
 
-  logging: ^0.11.0
+  logging: '>=0.11.3 <1.0.0'
   console_log_handler: '>=0.5.0 <1.0.0'
     # path: /Volumes/Daten/DevLocal/DevDart/ConsoleLogHandler
 
