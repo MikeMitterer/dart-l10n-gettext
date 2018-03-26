@@ -28,7 +28,7 @@ dependencies:
 
   args: ^0.13.0
 
-  dice: ^1.7.0
+  dryice: ^1.8.0
     # path: /Volumes/Daten/DevLocal/DevDart/dice
 
   which: "^0.1.3"

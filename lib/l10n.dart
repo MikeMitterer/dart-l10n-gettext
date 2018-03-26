@@ -4,7 +4,7 @@ import "dart:collection";
 import 'package:logging/logging.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
-import 'package:dice/dice.dart' as di;
+import 'package:dryice/dryice.dart' as di;
 
 import "package:validate/validate.dart";
 
