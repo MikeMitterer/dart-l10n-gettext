@@ -173,7 +173,7 @@ POTVisitor WritePOTVisitor(final Logger logger, final File file) {
         buffer.writeln();
 
         logger.fine(buffer.toString().replaceFirst(new RegExp(r"\n$"), ""));
-        file.writeAsStringSync(buffer.toString(),mode: FileMode.WRITE_ONLY_APPEND,flush: true);
+        file.writeAsStringSync(buffer.toString(),mode: FileMode.writeOnlyAppend,flush: true);
         };
     }
 

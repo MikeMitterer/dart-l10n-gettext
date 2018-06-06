@@ -42,8 +42,8 @@ abstract class ShellCommand {
             Map<String, String> environment,
             bool includeParentEnvironment: true,
             bool runInShell: false,
-            Encoding stdoutEncoding: SYSTEM_ENCODING,
-            Encoding stderrEncoding: SYSTEM_ENCODING}) =>
+            Encoding stdoutEncoding: systemEncoding,
+            Encoding stderrEncoding: systemEncoding}) =>
             Process.run(executable, arguments,
                 workingDirectory: workingDirectory,
                 includeParentEnvironment: includeParentEnvironment,
@@ -56,8 +56,8 @@ abstract class ShellCommand {
             Map<String, String> environment,
             bool includeParentEnvironment: true,
             bool runInShell: false,
-            Encoding stdoutEncoding: SYSTEM_ENCODING,
-            Encoding stderrEncoding: SYSTEM_ENCODING}) =>
+            Encoding stdoutEncoding: systemEncoding,
+            Encoding stderrEncoding: systemEncoding}) =>
             Process.runSync(executable, arguments,
                 workingDirectory: workingDirectory,
                 includeParentEnvironment: includeParentEnvironment,

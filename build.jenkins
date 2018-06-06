@@ -8,15 +8,22 @@ pipeline {
                 timeout(time: 15, unit: 'MINUTES') {
                     ansiColor('xterm') {
                         sh 'pub update'
-                        sh 'pub global activate grinder'
                     }
+                }
+            }
+        }
+        stage('Analyze') {
+            steps {
+                ansiColor('xterm') {
+                    sh 'dartanalyzer bin/'
+                    sh 'dartanalyzer lib/'
                 }
             }
         }
         stage('Test') {
             steps {
                 ansiColor('xterm') {
-                    sh 'pub run test'
+                    sh 'pub run build_runner test'
                 }
             }
         }

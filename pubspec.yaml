@@ -16,8 +16,6 @@ executables:
   mkl10n:
 
 dependencies:
-  browser: ^0.10.0
-
   logging: '>=0.11.3 <1.0.0'
   console_log_handler: '>=0.5.0 <1.0.0'
     # path: /Volumes/Daten/DevLocal/DevDart/ConsoleLogHandler
@@ -26,7 +24,7 @@ dependencies:
 
   validate: ^1.0.0
 
-  args: ^0.13.0
+  args: ^1.0.0
 
   dryice: ^1.8.0
     # path: /Volumes/Daten/DevLocal/DevDart/dice
@@ -38,6 +36,9 @@ dependencies:
   optional: ^1.2.0
 
 dev_dependencies:
-  grinder: any
   test: any
+
+  build_runner: ^0.8.0
+  build_test: ^0.10.0
+  build_web_compilers: ^0.4.0
 

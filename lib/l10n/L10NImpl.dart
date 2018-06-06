@@ -85,7 +85,7 @@ class L10NImpl implements L10N {
 
     @override
     String toString() {
-        return JSON.encode(toJson());
+        return json.encode(toJson());
     }
 
     String toPrettyString() {
@@ -104,7 +104,7 @@ class L10NImpl implements L10N {
             return data as Map<String, dynamic>;
 
         } else if(data is String) {
-            return JSON.decode(data) as Map<String, dynamic>;
+            return json.decode(data) as Map<String, dynamic>;
         }
 
         throw new ArgumentError("$data is not a valid basis for a JSON-Map. Data should be either a String or a Map but was ${data.runtimeType}");

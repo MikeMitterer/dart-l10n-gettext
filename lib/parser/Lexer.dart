@@ -324,6 +324,8 @@ class Lexer {
         return _character;
     }
 
+    /// Keep as a reminder!
+    // ignore: unused_element
     String _readStringParam() {
         String value = "";
         TokenizeState subState = TokenizeState.DEFAULT;
