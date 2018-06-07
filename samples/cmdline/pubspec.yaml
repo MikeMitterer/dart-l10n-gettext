@@ -21,13 +21,13 @@ dependencies:
   logging: any
   console_log_handler: any
 
-  validate: any
+  validate: ^1.6.0
 
-  args: any
-  yaml: any
+  args: ^1.4.0
+  yaml: ^2.1.0
 
-  l10n:
-    path: ../..
+  l10n: ^1.0.0
+    # path: ../..
 
 dev_dependencies:
   test: any
