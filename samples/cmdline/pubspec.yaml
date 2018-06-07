@@ -18,8 +18,6 @@ executables:
   cmdline:
 
 dependencies:
-  browser: any
-
   logging: any
   console_log_handler: any
 
@@ -33,4 +31,3 @@ dependencies:
 
 dev_dependencies:
   test: any
-  grinder: any

@@ -6,7 +6,6 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:l10n_sample_cmdline/cmdline.dart';
 import 'package:l10n_sample_cmdline/locale/messages.dart';
 
-
 Future main(List<String> arguments) async {
 
     // Determine your locale automatically:
