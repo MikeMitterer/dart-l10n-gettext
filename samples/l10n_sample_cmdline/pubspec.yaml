@@ -11,23 +11,21 @@ environment:
 # Add the bin/cmdline.dart script to the scripts pub installs.
 # Activate local repo:
 #   pub global activate --source path .
-# Decativate local repo:
+#
+# Deactivate local repo:
 #   pub global deactivate cmdline
 #
 executables:
   cmdline:
 
 dependencies:
-  logging: any
-  console_log_handler: any
+  l10n: # ^1.0.0
+    path: ../..
+
+  logging: '>=0.11.3 <1.0.0'
+  console_log_handler: '>=0.5.0 <1.0.0'
 
   validate: ^1.6.0
 
   args: ^1.4.0
   yaml: ^2.1.0
-
-  l10n: ^1.0.0
-    # path: ../..
-
-dev_dependencies:
-  test: any

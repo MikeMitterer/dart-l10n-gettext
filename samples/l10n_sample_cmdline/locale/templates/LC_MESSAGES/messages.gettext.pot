@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-06 18:36+0100\n"
+"POT-Creation-Date: 2018-06-07 09:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,21 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: .dart_tool/pub/deps/debug/intl/lib/src/intl/bidi_utils.dart:24
+msgid "LTR"
+msgstr ""
+
+#: .dart_tool/pub/deps/debug/intl/lib/src/intl/bidi_utils.dart:25
+msgid "RTL"
+msgstr ""
+
+#. If the directionality of the text cannot be determined and we are not using
+#. the context direction (or if the context direction is unknown), then the
+#. text falls back on the more common ltr direction.
+#: .dart_tool/pub/deps/debug/intl/lib/src/intl/bidi_utils.dart:29
+msgid "UNKNOWN"
+msgstr ""
 
 #. Everything within l10n(...) will be in your .po File
 #. Noch ein Kommentar
