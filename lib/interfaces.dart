@@ -45,7 +45,7 @@ abstract class Translatable {
 ///             bind(Translator, toValue: _translator);
 ///         }
 ///     }
-@di.injectable
+@inject
 abstract class Translator {
     String translate(final L10N l10n);
 

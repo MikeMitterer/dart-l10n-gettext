@@ -30,9 +30,9 @@ abstract class ShellCommand {
         Validate.notBlank(name);
     }
 
-    String get executable {
+    FutureOr<String> get executable async {
         if (_exeCache == null) {
-            _exeCache = whichSync(name);
+            _exeCache = await where(name);
         }
         return _exeCache;
     }
@@ -43,27 +43,30 @@ abstract class ShellCommand {
             bool includeParentEnvironment: true,
             bool runInShell: false,
             Encoding stdoutEncoding: systemEncoding,
-            Encoding stderrEncoding: systemEncoding}) =>
-            Process.run(executable, arguments,
-                workingDirectory: workingDirectory,
-                includeParentEnvironment: includeParentEnvironment,
-                runInShell: runInShell,
-                stdoutEncoding: stdoutEncoding,
-                stderrEncoding: stderrEncoding);
+            Encoding stderrEncoding: systemEncoding}) async {
 
-    runSync(List<String> arguments,
-        {String workingDirectory,
-            Map<String, String> environment,
-            bool includeParentEnvironment: true,
-            bool runInShell: false,
-            Encoding stdoutEncoding: systemEncoding,
-            Encoding stderrEncoding: systemEncoding}) =>
-            Process.runSync(executable, arguments,
-                workingDirectory: workingDirectory,
-                includeParentEnvironment: includeParentEnvironment,
-                runInShell: runInShell,
-                stdoutEncoding: stdoutEncoding,
-                stderrEncoding: stderrEncoding);
+        final String exe = await executable;
+        return Process.run(exe, arguments,
+            workingDirectory: workingDirectory,
+            includeParentEnvironment: includeParentEnvironment,
+            runInShell: runInShell,
+            stdoutEncoding: stdoutEncoding,
+            stderrEncoding: stderrEncoding);
+    }
+
+//    runSync(List<String> arguments,
+//        {String workingDirectory,
+//            Map<String, String> environment,
+//            bool includeParentEnvironment: true,
+//            bool runInShell: false,
+//            Encoding stdoutEncoding: systemEncoding,
+//            Encoding stderrEncoding: systemEncoding}) =>
+//            Process.runSync(executable, arguments,
+//                workingDirectory: workingDirectory,
+//                includeParentEnvironment: includeParentEnvironment,
+//                runInShell: runInShell,
+//                stdoutEncoding: stdoutEncoding,
+//                stderrEncoding: stderrEncoding);
 
     // - private -------------------------------------------------------------------------------------------------------
 

@@ -20,18 +20,18 @@ class Options {
     }
 
     void showUsage() {
-        print(translate(l10n("Usage: cmdline [options]")));
+        print(TRANSLATOR(l10n("Usage: cmdline [options]")));
         _parser.usage.split("\n").forEach((final String line) {
             print("    $line");
         });
 
         print("");
-        print(translate(l10n("Sample:")));
+        print(TRANSLATOR(l10n("Sample:")));
         print("");
-        print("    " + translate(l10n("Generates the static site in your 'web-folder':")).padRight(50)
+        print("    " + TRANSLATOR(l10n("Generates the static site in your 'web-folder':")).padRight(50)
             + "'$APPNAME -g'");
 
-        print("    " + translate(l10n("Tests the loglevel-translation:")).padRight(50)
+        print("    " + TRANSLATOR(l10n("Tests the loglevel-translation:")).padRight(50)
             + "'$APPNAME -h'");
             
         print("");
@@ -43,7 +43,7 @@ class Options {
         final ArgParser parser = new ArgParser()
 
             ..addFlag(_ARG_SETTINGS,         abbr: 's', negatable: false,
-                help: translate(l10n("Prints settings")))
+                help: TRANSLATOR(l10n("Prints settings")))
 
             ..addOption(_ARG_LOCALE,         abbr: 'l', help: "Set locale")
 

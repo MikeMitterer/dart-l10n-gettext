@@ -14,10 +14,10 @@ class Application {
             final ArgResults argResults = options.parse(args);
             final Config config = new Config(argResults,locale);
 
-            _configLogging(config.loglevel);
+            configLogging(show: Level.INFO);
 
             if (argResults.wasParsed(Options._ARG_LOCALE)) {
-                translate.locale = config.locale;
+                TRANSLATOR.locale = config.locale;
             }
 
             if (argResults.wasParsed(Options._ARG_HELP) || (config.dirstoscan.length == 0 && args.length == 0)) {
@@ -47,27 +47,4 @@ class Application {
 
     // -- private -------------------------------------------------------------
 
-    void _configLogging(final String loglevel) {
-        Validate.notBlank(loglevel);
-
-        hierarchicalLoggingEnabled = false; // set this to true - its part of Logging SDK
-
-        // now control the logging.
-        // Turn off all logging first
-        switch (loglevel) {
-            case "fine":
-            case "debug":
-                Logger.root.level = Level.FINE;
-                break;
-
-            case "warning":
-                Logger.root.level = Level.SEVERE;
-                break;
-
-            default:
-                Logger.root.level = Level.INFO;
-        }
-
-        Logger.root.onRecord.listen(new LogPrintHandler(messageFormat: "%m"));
-    }
 }

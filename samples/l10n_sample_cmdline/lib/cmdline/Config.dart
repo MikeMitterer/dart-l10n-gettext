@@ -38,15 +38,15 @@ class Config {
         final Map<String,String> settings = new Map<String,String>();
 
         // Everything within l10n(...) will be in your .po File
-        settings[translate(l10n("loglevel"))]              = loglevel;
+        settings[TRANSLATOR(l10n("loglevel"))]              = loglevel;
 
         // 'translate' will translate your ID/String
-        settings[translate(l10n("Config folder"))]         = configfolder;
-        settings[translate(l10n('Config file'))]           = configfile;
-        settings[translate(l10n("Locale"))]                = locale;
+        settings[TRANSLATOR(l10n("Config folder"))]         = configfolder;
+        settings[TRANSLATOR(l10n('Config file'))]           = configfile;
+        settings[TRANSLATOR(l10n("Locale"))]                = locale;
 
         if(dirstoscan.length > 0) {
-            settings[translate(l10n("Dirs to scan"))]      = dirstoscan.join(", ");
+            settings[TRANSLATOR(l10n("Dirs to scan"))]      = dirstoscan.join(", ");
         }
 
         return settings;

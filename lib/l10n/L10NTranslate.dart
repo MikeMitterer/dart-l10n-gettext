@@ -4,6 +4,7 @@ part of l10n;
  * Basis für Übersetzungen.
  * Macht zur Zeit im Prinzip nur einen String-Replace
  */
+@inject
 class L10NTranslate extends Translator {
     final Logger _logger = new Logger("l10n.L10NTranslate");
 

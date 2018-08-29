@@ -6,7 +6,7 @@ homepage: https://github.com/Mike Mitterer/dart-cmdline
 version: 1.0.0
 
 environment:
-  sdk: '>=1.0.0 <2.0.0'
+  sdk: ">=2.0.0 <3.0.0"
 
 # Add the bin/cmdline.dart script to the scripts pub installs.
 # Activate local repo:
@@ -23,9 +23,9 @@ dependencies:
     path: ../..
 
   logging: '>=0.11.3 <1.0.0'
-  console_log_handler: '>=0.5.0 <1.0.0'
+  console_log_handler: '>=1.1.0 <2.0.0'
 
-  validate: ^1.6.0
+  validate: ^1.0.0
 
   args: ^1.4.0
   yaml: ^2.1.0

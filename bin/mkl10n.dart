@@ -7,9 +7,9 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:args/args.dart';
-import 'package:which/which.dart';
 import 'package:yaml/yaml.dart' as yaml;
 import 'package:validate/validate.dart';
+import 'package:where/where.dart';
 
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
@@ -65,12 +65,14 @@ class Application {
 
                 // _createJson returns ASYNC - so we wait until all locale JSON-Files are created
                 final List<Future> futuresForJson = new List<Future>();
-                locales.forEach( (final String locale) {
-                    final File pofile = _preparePOFile(locale, potfile,config.getPOFile(locale));
+
+                await Future.forEach(locales, (final String locale) async {
+                    final File pofile = await _preparePOFile(locale, potfile,config.getPOFile(locale));
 
                     _mergePO(pofile,potfile);
                     futuresForJson.add( _createJson(locale,pofile).then((final Map<String,String> jsonForLocale) => json[locale] = jsonForLocale));
                 });
+
                 Future.wait(futuresForJson).then((_) {
                     _createMergedJson(json,config.jsonfile);
                     _createDartFile(json,config.dartfile,libPrefix: config.libprefix);
@@ -125,8 +127,8 @@ class Application {
     }
 
     /// Updates your translated PO with new records from .pot-File
-    void _mergePO(final File pofile,final File potfile) {
-        final ProcessResult result = msgmerge.runSync(['-U', pofile.path, potfile.path]);
+    void _mergePO(final File pofile,final File potfile) async {
+        final ProcessResult result = await msgmerge.run(['-U', pofile.path, potfile.path]);
         if(result.exitCode != 0) {
             _logger.severe(result.stderr);
         }
@@ -134,11 +136,11 @@ class Application {
     }
 
     /// Mainly a copy of POT File
-    File _preparePOFile(final String locale, final File potfile, final String pofilename) {
+    Future<File> _preparePOFile(final String locale, final File potfile, final String pofilename) async {
         final File pofile = new File(pofilename);
         if(!pofile.existsSync()) {
             pofile.createSync(recursive: true);
-            final ProcessResult result = msginit.runSync(['--no-translator','--input', potfile.path, '--output', pofile.path, '-l', locale ]);
+            final ProcessResult result = await msginit.run(['--no-translator','--input', potfile.path, '--output', pofile.path, '-l', locale ]);
             if(result.exitCode != 0) {
                 _logger.severe(result.stderr);
             } else {
@@ -195,17 +197,17 @@ class Application {
 
     /// Iterates through dirs and adds the result to the POT-File
     Future<bool> _scanDirsAndFillPOTWithXGetText(final List<String> dirstoscan,
-        String potfile, final List<String> dirsToExclude) {
+        String potfile, final List<String> dirsToExclude) async {
 
         potfile = potfile.replaceFirst(new RegExp(r"\.pot$"), ".gettext.pot");
         final Future<bool> future = new Future<bool>(() {
             for (final String dir in dirstoscan) {
-                _iterateThroughDirSync(dir, dirsToExclude, (final File file) {
+                _iterateThroughDirSync(dir, dirsToExclude, (final File file) async {
                     _logger.fine(" -> ${file.path}");
 
                     // --from-code ... iconv -l shows all the available codes!
                     String language = 'JavaScript';
-                    final ProcessResult result = xgettext.runSync(['-kl10n', '-kL10N', '-k_', '-c' ,
+                    final ProcessResult result = await xgettext.run(['-kl10n', '-kL10N', '-k_', '-c' ,
                         '-j', '-o', "$potfile", '-L', language ,
                         '--from-code=utf-8', '--sort-by-file', file.path ]);
 
@@ -305,10 +307,10 @@ class Application {
 
 
     /// Creates .json-File in the same location where the .po file is
-    Future<HashMap<String,String>> _createJson(final String locale,final File pofile) {
+    Future<Map<String,String>> _createJson(final String locale,final File pofile) {
         final Completer<Map<String,String>> completer = new Completer<Map<String,String>>();
 
-        final Map<String,Map<String,String>> json = new HashMap<String,Map<String,String>>();
+        final HashMap<String,Map<String,String>> json = new HashMap<String,Map<String,String>>();
         json[locale] = new SplayTreeMap<String,String>((final String key1,final String key2) {
             // sort case insensitive
             return key1.toLowerCase().compareTo(key2.toLowerCase());

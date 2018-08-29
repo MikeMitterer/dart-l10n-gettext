@@ -3,3 +3,4 @@ packages
 packages/**
 ##locale
 *.po~
+*.pot
