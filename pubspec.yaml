@@ -1,5 +1,5 @@
 name: l10n
-version: 1.3.2
+version: 1.4.0
 
 author: Mike Mitterer  <office@mikemitterer.at>
 description: Creates translatable PO-Files, strong orientation to xgettext

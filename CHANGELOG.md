@@ -1,6 +1,11 @@
 # Change Log for l10n
 Creates translatable PO-Files, strong orientation to xgettext
 
+## [v1.4](http://github.com/mikemitterer/dart-l10n-gettext/compare/v1.3...v1.4) - 2018-08-29
+
+### Refactor
+* Preparing fort Dart II [b5525bc](https://github.com/mikemitterer/dart-l10n-gettext/commit/b5525bc10a94913336cbd19426b505f9c9b276ca)
+
 ## [v1.3](http://github.com/mikemitterer/dart-l10n-gettext/compare/v1.2...v1.3) - 2018-06-06
 
 ### Feature
