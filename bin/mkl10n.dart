@@ -14,6 +14,13 @@ import 'package:where/where.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl_translation/extract_messages.dart';
+import 'package:intl_translation/src/intl_message.dart';
+import 'package:intl_translation/extract_messages.dart';
+import 'package:intl_translation/generate_localized.dart';
+import 'package:intl_translation/src/intl_message.dart';
+import 'package:intl_translation/src/icu_parser.dart';
+import 'package:path/path.dart' as path;
 
 import 'package:logging/logging.dart';
 import 'package:console_log_handler/print_log_handler.dart';
@@ -21,6 +28,8 @@ import 'package:console_log_handler/print_log_handler.dart';
 import 'package:l10n/l10n.dart';
 import 'package:l10n/locale/messages.dart';
 import 'package:l10n/parser.dart';
+import 'package:l10n/arb.dart';
+import 'package:l10n/codegen.dart';
 
 part 'argparser/Config.dart';
 part 'argparser/Options.dart';
@@ -32,7 +41,7 @@ class Application {
     final Logger _logger = new Logger("l10n.Application");
 
     /// Commandline options
-    final Options _options = new Options();
+    final _options = new Options();
 
     Future run(List<String> args,final String locale) async {
         Validate.notBlank(locale);
@@ -53,10 +62,32 @@ class Application {
             else {
                 await _createPOTHeaderTemplate(config.headerTemplateFile);
                 final File potfile = await _createPOTFile(config.potfile);
-                await _scanDirsAndFillPOTWithXGetText(config.dirstoscan,config.potfile, config.excludeDirs);
 
-                await _scanDirsAndFillPOTWithParser(config.dirstoscan,
+                void _writeMessagesToFile(final File file, final Map<String,MainMessage> allMessages) {
+                    final messages = {};
+                    final arb = ARB();
+
+                    messages["@@last_modified"] = new DateTime.now().toIso8601String();
+                    allMessages.forEach((final String k, final MainMessage v) {
+                        //print("KKKK $k");
+                        messages.addAll(arb.toJSON((v)));
+                    });
+                    file.writeAsStringSync(_makePrettyJsonString(messages));
+                }
+
+                //await _scanDirsAndFillPOTWithXGetText(config.dirstoscan,config.potfile, config.excludeDirs);
+
+                //await _scanDirsAndFillPOTWithParser(config.dirstoscan,
+                //    config.potfile, config.headerTemplateFile,config.excludeDirs);
+
+                final Map<String,MainMessage> allMessages = await _scanDirsAndGenerateARBMessages(config.dirstoscan,
                     config.potfile, config.headerTemplateFile,config.excludeDirs);
+
+                final defaultFolder = Directory("l10n");
+                if(!defaultFolder.existsSync()) {
+                    defaultFolder.createSync(recursive: true);
+                }
+                _writeMessagesToFile(File(path.join(defaultFolder.path,"intl_messages.arb")), allMessages);
 
                 final List<String> locales = config.locales.split(',');
 
@@ -66,18 +97,39 @@ class Application {
                 // _createJson returns ASYNC - so we wait until all locale JSON-Files are created
                 final List<Future> futuresForJson = new List<Future>();
 
-                await Future.forEach(locales, (final String locale) async {
-                    final File pofile = await _preparePOFile(locale, potfile,config.getPOFile(locale));
+//                await Future.forEach(locales, (final String locale) async {
+//                    final File pofile = await _preparePOFile(locale, potfile,config.getPOFile(locale));
+//
+//                    _mergePO(pofile,potfile);
+//                    futuresForJson.add( _createJson(locale,pofile).then((final Map<String,String> jsonForLocale) => json[locale] = jsonForLocale));
+//                });
+//
+//                Future.wait(futuresForJson).then((_) {
+//                    _createMergedJson(json,config.jsonfile);
+//                    _createDartFile(json,config.dartfile,libPrefix: config.libprefix);
+//                });
 
-                    _mergePO(pofile,potfile);
-                    futuresForJson.add( _createJson(locale,pofile).then((final Map<String,String> jsonForLocale) => json[locale] = jsonForLocale));
+                messages = new Map();
+                allMessages.forEach((key,value) {
+                    messages.putIfAbsent(key, () => []).add(value);
                 });
 
-                Future.wait(futuresForJson).then((_) {
-                    _createMergedJson(json,config.jsonfile);
-                    _createDartFile(json,config.dartfile,libPrefix: config.libprefix);
+                var generation = new MessageGeneration();
+                //var generation = new JsonMessageGeneration();
+                var targetDir = path.join("lib","l10n");
+                generation.useDeferredLoading = true;
+                ["intl_de.arb" /*, "intl_messages.arb"*/].forEach((final String file) {
+                    generateLocaleFile(
+                        File(path.join(defaultFolder.path,file)),
+                        targetDir,
+                        generation);
+
                 });
 
+                var mainImportFile = new File(path.join(
+                    targetDir, '${generation.generatedFilePrefix}messages_all.dart'));
+
+                mainImportFile.writeAsStringSync(generation.generateMainImportFile());
             }
         }
 
@@ -256,9 +308,52 @@ class Application {
         return future;
     }
 
+    /// Iterates through dirs and adds the result to the POT-File
+    Future<Map<String, MainMessage>> _scanDirsAndGenerateARBMessages(final List<String> dirstoscan,
+        final String potfile, final String headerTemplate, final List<String> dirsToExclude) {
+
+        final Lexer lexer = new Lexer();
+        final Parser parser = new Parser();
+        final POT pot = new POT();
+        final extraction = MessageExtraction();
+        final allMessages = Map<String, MainMessage>(); // Map<dynamic, dynamic>(); // Map<String, MainMessage>();
+        final arb = ARB();
+
+        //allMessages["@@last_modified"] = new DateTime.now().toIso8601String();
+        final future = new Future<Map<String, MainMessage>>(() async {
+            for (final String dir in dirstoscan) {
+                _iterateThroughDirSync(dir, dirsToExclude, (final File file) {
+                    _logger.info("  -> ${file.path}");
+
+                    //final String filename = file.path;
+
+                    final Map<String, MainMessage> messages  = extraction.parseFile(file);
+                    allMessages.addAll(messages);
+
+
+//                    final String source = new File(filename).readAsStringSync();
+//                    final List<Token> tokens = lexer.scan(source);
+//                    final List<Statement> statements = parser.parse(filename, tokens);
+//                    final List<POTBlock> blocks = collectPOTBlocks(statements);
+//
+//                    if(blocks.length > 0) {
+//                        _logger.finer("    #${blocks.length} Translation-Blocks found in ${filename}");
+//                        pot.addBlocks(blocks);
+//                    }
+                });
+            }
+
+            await pot.write(potfile,headerTemplate);
+            return allMessages;
+        });
+
+        return future;
+    }
+
     /// Goes through the files
     void _iterateThroughDirSync(final String dir, final List<String> dirsToExclude, void callback(final File file)) {
-        _logger.info("Scanning: $dir");
+        String scanningMessage() => Intl.message("Scanning",desc: "In '_iterateThroughDirSync'");
+        _logger.info("${scanningMessage()}: $dir");
 
         // its OK if the path starts with packages but not if the path contains packages (avoid recursion)
         final RegExp regexp = new RegExp("^/*packages/*");
@@ -394,6 +489,7 @@ class Application {
 
         Logger.root.onRecord.listen(logToConsole);
     }
+
 }
 
 void main(List<String> arguments) {

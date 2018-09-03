@@ -1,2 +1,2 @@
 # Ignore these dirs
-exclude_dirs: example, test, samples
+exclude_dirs: example, test, samples, .dart_tool

@@ -10,11 +10,15 @@ class Application {
 
     void run(List<String> args,final String locale) {
 
+
         try {
             final ArgResults argResults = options.parse(args);
             final Config config = new Config(argResults,locale);
 
             configLogging(show: Level.INFO);
+
+            String message() => Intl.message("abc");
+            _logger.info(message());
 
             if (argResults.wasParsed(Options._ARG_LOCALE)) {
                 TRANSLATOR.locale = config.locale;

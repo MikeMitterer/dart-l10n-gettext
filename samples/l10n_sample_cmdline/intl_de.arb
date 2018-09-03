@@ -1,0 +1,13 @@
+{
+  "@@last_modified": "2018-09-03T12:42:34.765555",
+  "abc": "123",
+  "@abc": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Servus Mike": "DE Servus Mike DE",
+  "@Servus Mike": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

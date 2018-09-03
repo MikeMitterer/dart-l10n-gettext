@@ -1,0 +1,14 @@
+{
+  "@@last_modified": "2018-09-03T12:36:36.908487",
+  "Dirs to scan": "Dirs to scan",
+  "@Dirs to scan": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "Scanning": "Scanning",
+  "@Scanning": {
+    "description": "In '_iterateThroughDirSync'",
+    "type": "text",
+    "placeholders": {}
+  }
+}

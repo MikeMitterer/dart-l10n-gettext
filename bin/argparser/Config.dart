@@ -106,7 +106,7 @@ class Config {
         settings["System-Locale"]                               = systemLocale;
 
         if(dirstoscan.length > 0) {
-            settings[translate(l10n("Dirs to scan"))] = dirstoscan.join(", ");
+            settings[/*translate*/(Intl.message("Dirs to scan"))] = dirstoscan.join(", ");
         }
         settings[translate(l10n("Dirs to exclude"))
             + " (${Config._KEY_EXCLUDE_DIRS})"]  = excludeDirs.join(", ");

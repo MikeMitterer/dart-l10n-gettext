@@ -29,3 +29,6 @@ dependencies:
 
   args: ^1.4.0
   yaml: ^2.1.0
+
+dev_dependencies:
+  intl_translation: ^0.17.0

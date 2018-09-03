@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: L 10N4Dart\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-06 18:36\n"
+"POT-Creation-Date: 2018-08-31 09:34\n"
 "PO-Revision-Date: 2017-08-23 12:50+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,6 +16,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. bidi_utils.dart directly.
+#: .dart_tool/pub/deps/debug/intl/lib/src/intl/bidi_utils.dart:24
+msgid "LTR"
+msgid_plural "ltr"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .dart_tool/pub/deps/debug/intl/lib/src/intl/bidi_utils.dart:25
+msgid "RTL"
+msgid_plural "rtl"
+msgstr[0] ""
+msgstr[1] ""
+
+#. text falls back on the more common ltr direction.
+#: .dart_tool/pub/deps/debug/intl/lib/src/intl/bidi_utils.dart:29
+msgid "UNKNOWN"
+msgid_plural "ltr"
+msgstr[0] ""
+msgstr[1] ""
 
 #. Everything within l10n(...) will be in your .po File
 #: lib/cmdline/Config.dart:41
@@ -36,10 +56,6 @@ msgstr "Konfigurationsfile"
 msgid "Locale"
 msgstr ""
 
-#: lib/cmdline/Config.dart:49
-msgid "Dirs to scan"
-msgstr "Scan-Directories"
-
 #: lib/cmdline/Options.dart:23
 msgid "Usage: cmdline [options]"
 msgstr "Verwendung: cmdline [optionen]"
@@ -59,3 +75,6 @@ msgstr "Testet die loglevel-Übersetzung:"
 #: lib/cmdline/Options.dart:46
 msgid "Prints settings"
 msgstr "Zeigt die settings an"
+
+#~ msgid "Dirs to scan"
+#~ msgstr "Scan-Directories"

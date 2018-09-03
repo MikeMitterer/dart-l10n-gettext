@@ -167,9 +167,11 @@ POTVisitor WritePOTVisitor(final Logger logger, final File file) {
 
         if(statement.params.length > 1) {
             buffer.writeln('msgid_plural "${statement.params[1]}"');
+            buffer.writeln('msgstr[0] ""');
+        } else {
+            buffer.writeln('msgstr ""');
         }
 
-        buffer.writeln('msgstr ""');
         buffer.writeln();
 
         logger.fine(buffer.toString().replaceFirst(new RegExp(r"\n$"), ""));

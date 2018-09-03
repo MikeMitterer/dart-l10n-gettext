@@ -46,8 +46,11 @@ class Config {
         settings[TRANSLATOR(l10n("Locale"))]                = locale;
 
         if(dirstoscan.length > 0) {
-            settings[TRANSLATOR(l10n("Dirs to scan"))]      = dirstoscan.join(", ");
+            settings[TRANSLATOR(l10n("Dir to scan {greetings}",{ "greeting": "Hi"}))]      = dirstoscan.join(", ");
         }
+
+        String message() => Intl.message("Servus -{0}-",args: ["Mike"]);
+        _logger.info(message());
 
         return settings;
     }
