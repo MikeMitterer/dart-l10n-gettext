@@ -1,2 +1,4 @@
 # Ignore these dirs
-exclude_dirs: samples
+exclude_dirs:
+  - samples
+suppress-warnings: true

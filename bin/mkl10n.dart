@@ -16,10 +16,7 @@ import 'package:intl/intl_standalone.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl_translation/extract_messages.dart';
 import 'package:intl_translation/src/intl_message.dart';
-import 'package:intl_translation/extract_messages.dart';
 import 'package:intl_translation/generate_localized.dart';
-import 'package:intl_translation/src/intl_message.dart';
-import 'package:intl_translation/src/icu_parser.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:logging/logging.dart';
@@ -27,8 +24,7 @@ import 'package:console_log_handler/print_log_handler.dart';
 
 import 'package:l10n/l10n.dart';
 import 'package:l10n/locale/messages.dart';
-import 'package:l10n/parser.dart';
-import 'package:l10n/arb.dart';
+import 'package:l10n/arb.dart' as arb;
 import 'package:l10n/codegen.dart';
 
 part 'argparser/Config.dart';
@@ -60,76 +56,33 @@ class Application {
 
             }
             else {
-                await _createPOTHeaderTemplate(config.headerTemplateFile);
-                final File potfile = await _createPOTFile(config.potfile);
+                final Map<String,MainMessage> allMessages = await arb.scanDirsAndGenerateARBMessages(
+                    () {
+                        return MessageExtraction()
+                            ..suppressWarnings = config.suppressWarnings
+                        ;
+                    },
+                    config.dirstoscan,config.excludeDirs);
 
-                void _writeMessagesToFile(final File file, final Map<String,MainMessage> allMessages) {
-                    final messages = {};
-                    final arb = ARB();
+                arb.writeMessagesToOutputFile(Directory(config.outputDir), File(config.outputFile), allMessages);
 
-                    messages["@@last_modified"] = new DateTime.now().toIso8601String();
-                    allMessages.forEach((final String k, final MainMessage v) {
-                        //print("KKKK $k");
-                        messages.addAll(arb.toJSON((v)));
-                    });
-                    file.writeAsStringSync(_makePrettyJsonString(messages));
-                }
+                final List<String> locales = config.locales.split(',')
+                    .map((final String locale) => locale.trim()).toList();
 
-                //await _scanDirsAndFillPOTWithXGetText(config.dirstoscan,config.potfile, config.excludeDirs);
-
-                //await _scanDirsAndFillPOTWithParser(config.dirstoscan,
-                //    config.potfile, config.headerTemplateFile,config.excludeDirs);
-
-                final Map<String,MainMessage> allMessages = await _scanDirsAndGenerateARBMessages(config.dirstoscan,
-                    config.potfile, config.headerTemplateFile,config.excludeDirs);
-
-                final defaultFolder = Directory("l10n");
-                if(!defaultFolder.existsSync()) {
-                    defaultFolder.createSync(recursive: true);
-                }
-                _writeMessagesToFile(File(path.join(defaultFolder.path,"intl_messages.arb")), allMessages);
-
-                final List<String> locales = config.locales.split(',');
-
-                // accumulated JSON (the one ine locale)
-                final Map<String,Map<String,String>> json = new HashMap<String,Map<String,String>>();
-
-                // _createJson returns ASYNC - so we wait until all locale JSON-Files are created
-                final List<Future> futuresForJson = new List<Future>();
-
-//                await Future.forEach(locales, (final String locale) async {
-//                    final File pofile = await _preparePOFile(locale, potfile,config.getPOFile(locale));
-//
-//                    _mergePO(pofile,potfile);
-//                    futuresForJson.add( _createJson(locale,pofile).then((final Map<String,String> jsonForLocale) => json[locale] = jsonForLocale));
-//                });
-//
-//                Future.wait(futuresForJson).then((_) {
-//                    _createMergedJson(json,config.jsonfile);
-//                    _createDartFile(json,config.dartfile,libPrefix: config.libprefix);
-//                });
-
-                messages = new Map();
-                allMessages.forEach((key,value) {
-                    messages.putIfAbsent(key, () => []).add(value);
+                locales.forEach((final String locale) {
+                    arb.generateTranslationFile(
+                        Directory(config.outputDir),
+                        File(config.outputFile.replaceAll("_messages", "_${locale}")), locale, allMessages);
                 });
 
-                var generation = new MessageGeneration();
-                //var generation = new JsonMessageGeneration();
-                var targetDir = path.join("lib","l10n");
-                generation.useDeferredLoading = true;
-                ["intl_de.arb" /*, "intl_messages.arb"*/].forEach((final String file) {
-                    generateLocaleFile(
-                        File(path.join(defaultFolder.path,file)),
-                        targetDir,
-                        generation);
+                generateDartCode(() {
+                    return MessageGeneration()
+                        ..useDeferredLoading = config.useDeferredLoading
+                        ..codegenMode = config.codegenMode
+                    ;
+                }, config.outputDir, path.join("lib",config.codegenDir),
+                        allMessages, [ config.outputFile ]);
 
-                });
-
-                var mainImportFile = new File(path.join(
-                    targetDir, '${generation.generatedFilePrefix}messages_all.dart'));
-
-                mainImportFile.writeAsStringSync(generation.generateMainImportFile());
             }
         }
 
@@ -139,328 +92,6 @@ class Application {
     }
 
     // -- private -------------------------------------------------------------
-
-    /// Writes the DART-File - makes translation easy
-    void _createDartFile(final Map<String,Map<String,String>> json, final String filename,{ final String libPrefix: "not.defined" } ) {
-        Validate.notEmpty(json);
-        Validate.notBlank(filename);
-
-        final File dartFile = new File(filename);
-        if(!dartFile.existsSync()) {
-            dartFile.createSync(recursive: true);
-        }
-
-        final StringBuffer buffer = new StringBuffer();
-
-        buffer.writeln("library $libPrefix.locale;\n");
-        buffer.writeln('/**');
-        buffer.writeln('* DO NOT EDIT. This is code generated with:');
-        buffer.writeln('*     projectdir \$ mkl10n .');
-        buffer.writeln('*/');
-        buffer.writeln("");
-        buffer.writeln("import 'package:l10n/l10n.dart';");
-        buffer.writeln("\n");
-        buffer.write('final L10NTranslate translate = new L10NTranslate.withTranslations( ');
-        buffer.write(_makePrettyJsonString(json));
-        buffer.writeln(");\n");
-
-        dartFile.writeAsStringSync(buffer.toString());
-        _logger.info("Dart-File (${dartFile.path}) created");
-    }
-
-    /// message.json in locale, contains all the specified locales
-    void _createMergedJson(final Map<String,Map<String,String>> json, final String filename) {
-        Validate.notEmpty(json);
-        Validate.notBlank(filename);
-
-        final File jsonFile = new File(filename);
-        jsonFile.writeAsStringSync(_makePrettyJsonString(json));
-        _logger.info("Merged-Json (${jsonFile.path}) created");
-    }
-
-    /// Updates your translated PO with new records from .pot-File
-    void _mergePO(final File pofile,final File potfile) async {
-        final ProcessResult result = await msgmerge.run(['-U', pofile.path, potfile.path]);
-        if(result.exitCode != 0) {
-            _logger.severe(result.stderr);
-        }
-        _logger.fine("${pofile.path} merged!");
-    }
-
-    /// Mainly a copy of POT File
-    Future<File> _preparePOFile(final String locale, final File potfile, final String pofilename) async {
-        final File pofile = new File(pofilename);
-        if(!pofile.existsSync()) {
-            pofile.createSync(recursive: true);
-            final ProcessResult result = await msginit.run(['--no-translator','--input', potfile.path, '--output', pofile.path, '-l', locale ]);
-            if(result.exitCode != 0) {
-                _logger.severe(result.stderr);
-            } else {
-                String contents = pofile.readAsStringSync();
-
-                // msginit tries to find out the content-type with the according locale - today, I think, it's much better to set it to utf-8
-                contents = contents.replaceFirst("Content-Type: text/plain; charset=ASCII","Content-Type: text/plain; charset=UTF-8");
-                pofile.writeAsStringSync(contents);
-            }
-        }
-        return pofile;
-    }
-
-    /// Make sure that the POT-File exists before xgettext
-    Future<File> _createPOTFile(final String potfile) async {
-        final File file = new File(potfile);
-        final File fileGetText = new File(potfile.replaceFirst(new RegExp(r"\.pot$"), ".gettext.pot"));
-
-        await fileGetText.create(recursive: true);
-        return file.create(recursive: true);
-
-
-    }
-
-    /// If the header-Template does not exist - it will be created
-    Future _createPOTHeaderTemplate(final String templateName) async {
-        final File file = new File(templateName);
-        final String template = '''
-            # SOME DESCRIPTIVE TITLE.
-            # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-            # This file is distributed under the same license as the PACKAGE package.
-            # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-            #
-            msgid ""
-            msgstr ""
-            "Project-Id-Version: PACKAGE VERSION\\n"
-            "Report-Msgid-Bugs-To: \\n"
-            "POT-Creation-Date: {date}\\n"
-            "PO-Revision-Date: YEAR-MO-DA HO:MI\\n"
-            "Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"
-            "Language-Team: LANGUAGE <LL@li.org>\\n"
-            "Language: \\n"
-            "MIME-Version: 1.0\\n"
-            "Content-Type: text/plain; charset=UTF-8\\n"
-            "Content-Transfer-Encoding: 8bit\\n"        
-        '''.replaceAll(new RegExp(r"^\s*",multiLine: true), "")
-            .replaceFirst(new RegExp(r"\n$",multiLine: true), "");
-
-        if(! await file.exists()) {
-            await file.create(recursive: true);
-            await file.writeAsString(template,flush: true);
-        }
-    }
-
-    /// Iterates through dirs and adds the result to the POT-File
-    Future<bool> _scanDirsAndFillPOTWithXGetText(final List<String> dirstoscan,
-        String potfile, final List<String> dirsToExclude) async {
-
-        potfile = potfile.replaceFirst(new RegExp(r"\.pot$"), ".gettext.pot");
-        final Future<bool> future = new Future<bool>(() {
-            for (final String dir in dirstoscan) {
-                _iterateThroughDirSync(dir, dirsToExclude, (final File file) async {
-                    _logger.fine(" -> ${file.path}");
-
-                    // --from-code ... iconv -l shows all the available codes!
-                    String language = 'JavaScript';
-                    final ProcessResult result = await xgettext.run(['-kl10n', '-kL10N', '-k_', '-c' ,
-                        '-j', '-o', "$potfile", '-L', language ,
-                        '--from-code=utf-8', '--sort-by-file', file.path ]);
-
-                    if (result.exitCode != 0) {
-                        _logger.severe("${result.stderr}");
-                    }
-                });
-            }
-            return true;
-        });
-
-        return future;
-    }
-
-    /// Iterates through dirs and adds the result to the POT-File
-    Future<bool> _scanDirsAndFillPOTWithParser(final List<String> dirstoscan,
-        final String potfile, final String headerTemplate, final List<String> dirsToExclude) {
-
-        final Lexer lexer = new Lexer();
-        final Parser parser = new Parser();
-        final POT pot = new POT();
-
-        final Future<bool> future = new Future<bool>(() async {
-            for (final String dir in dirstoscan) {
-                _iterateThroughDirSync(dir, dirsToExclude, (final File file) {
-                    _logger.finer("  -> ${file.path}");
-
-                    final String filename = file.path;
-
-                    final String source = new File(filename).readAsStringSync();
-                    final List<Token> tokens = lexer.scan(source);
-                    final List<Statement> statements = parser.parse(filename, tokens);
-                    final List<POTBlock> blocks = collectPOTBlocks(statements);
-
-                    if(blocks.length > 0) {
-                        _logger.finer("    #${blocks.length} Translation-Blocks found in ${filename}");
-                        pot.addBlocks(blocks);
-                    }
-                });
-            }
-
-            await pot.write(potfile,headerTemplate);
-            return true;
-        });
-
-        return future;
-    }
-
-    /// Iterates through dirs and adds the result to the POT-File
-    Future<Map<String, MainMessage>> _scanDirsAndGenerateARBMessages(final List<String> dirstoscan,
-        final String potfile, final String headerTemplate, final List<String> dirsToExclude) {
-
-        final Lexer lexer = new Lexer();
-        final Parser parser = new Parser();
-        final POT pot = new POT();
-        final extraction = MessageExtraction();
-        final allMessages = Map<String, MainMessage>(); // Map<dynamic, dynamic>(); // Map<String, MainMessage>();
-        final arb = ARB();
-
-        //allMessages["@@last_modified"] = new DateTime.now().toIso8601String();
-        final future = new Future<Map<String, MainMessage>>(() async {
-            for (final String dir in dirstoscan) {
-                _iterateThroughDirSync(dir, dirsToExclude, (final File file) {
-                    _logger.info("  -> ${file.path}");
-
-                    //final String filename = file.path;
-
-                    final Map<String, MainMessage> messages  = extraction.parseFile(file);
-                    allMessages.addAll(messages);
-
-
-//                    final String source = new File(filename).readAsStringSync();
-//                    final List<Token> tokens = lexer.scan(source);
-//                    final List<Statement> statements = parser.parse(filename, tokens);
-//                    final List<POTBlock> blocks = collectPOTBlocks(statements);
-//
-//                    if(blocks.length > 0) {
-//                        _logger.finer("    #${blocks.length} Translation-Blocks found in ${filename}");
-//                        pot.addBlocks(blocks);
-//                    }
-                });
-            }
-
-            await pot.write(potfile,headerTemplate);
-            return allMessages;
-        });
-
-        return future;
-    }
-
-    /// Goes through the files
-    void _iterateThroughDirSync(final String dir, final List<String> dirsToExclude, void callback(final File file)) {
-        String scanningMessage() => Intl.message("Scanning",desc: "In '_iterateThroughDirSync'");
-        _logger.info("${scanningMessage()}: $dir");
-
-        // its OK if the path starts with packages but not if the path contains packages (avoid recursion)
-        final RegExp regexp = new RegExp("^/*packages/*");
-
-        final Directory directory = new Directory(dir);
-        if (directory.existsSync()) {
-            directory.listSync(recursive: true).where((final FileSystemEntity entity) {
-                _logger.finer("Entity: ${entity}");
-
-                bool isUsableFile = (entity != null && FileSystemEntity.isFileSync(entity.path) &&
-                    ( entity.path.endsWith(".dart") || entity.path.endsWith(".DART")) || entity.path.endsWith(".html") );
-
-                if(!isUsableFile) {
-                    return false;
-                }
-                if(entity.path.contains("packages")) {
-                    // return only true if the path starts!!!!! with packages
-                    return entity.path.contains(regexp);
-                }
-
-                if(entity.path.startsWith(".pub/") || entity.path.startsWith("./.pub/") ||
-                    entity.path.startsWith(".git/") || entity.path.startsWith("./.git/") ||
-                    entity.path.startsWith("build/") || entity.path.startsWith("./build/")){
-                    return false;
-                }
-
-                for(final String dirToExclude in dirsToExclude) {
-                    final String dir = dirToExclude.trim();
-                    if(entity.path.startsWith("${dir}/") || entity.path.startsWith("./${dir}/")) {
-                        return false;
-                    }
-                }
-
-                return true;
-
-            }).map((final FileSystemEntity entity) => new File(entity.path))
-                .forEach((final File file) {
-                _logger.fine("  Found: ${file}");
-                callback(file);
-            });
-        }
-    }
-
-
-
-
-
-    /// Creates .json-File in the same location where the .po file is
-    Future<Map<String,String>> _createJson(final String locale,final File pofile) {
-        final Completer<Map<String,String>> completer = new Completer<Map<String,String>>();
-
-        final HashMap<String,Map<String,String>> json = new HashMap<String,Map<String,String>>();
-        json[locale] = new SplayTreeMap<String,String>((final String key1,final String key2) {
-            // sort case insensitive
-            return key1.toLowerCase().compareTo(key2.toLowerCase());
-        });
-
-        if(pofile.existsSync()) {
-            final File jsonFile = new File(pofile.path.replaceFirst(new RegExp("\.po"),".json"));
-            if(jsonFile.existsSync()) {
-                jsonFile.deleteSync();
-            }
-            jsonFile.createSync(recursive: true);
-
-            pofile.readAsString().then((final String content) {
-
-                // There is always a newline between the msg-blocks, so split there
-                final List<String> msgblocks = content.split(new RegExp("(\r\n|\n){2}"));
-
-                String _sanitize(final String value) {
-                    return value.replaceFirst("msgid","").trim().replaceFirst(new RegExp("^\""),"").replaceFirst(new RegExp('"\$'),"").trim();
-                }
-                // If there is a header - skip it!
-                final bool skipHeader = content.contains("Project-Id-Version");
-                msgblocks.skip(skipHeader ? 1 : 0).where((final String block) => block.trim().isNotEmpty)
-                        .forEach((final String block) {
-                    final String withoutcomment = block.replaceAll(new RegExp("#.*(\r\n|\n)"),"");
-                    final List<String> message = withoutcomment.split("msgstr");
-
-                    if(withoutcomment.isNotEmpty) {
-                        final String key = _sanitize(message[0].replaceFirst("msgid", ""));
-                        final String value = _sanitize(message[1]);
-
-                        json[locale][key] = value;
-                    }
-                });
-
-
-                jsonFile.writeAsString(_makePrettyJsonString(json)).then((final File file) {
-                    _logger.fine("${file.path} created!");
-                    completer.complete(json[locale]);
-                });
-            });
-
-        } else {
-            _logger.fine("${pofile.path} does not exist!");
-        }
-
-        return completer.future;
-    }
-
-    String _makePrettyJsonString(final json) {
-        Validate.notEmpty(json);
-
-        final JsonEncoder encoder = const JsonEncoder.withIndent('   ');
-        return encoder.convert(json);
-    }
 
     void _configLogging(final String loglevel) {
         Validate.notBlank(loglevel);

@@ -9,25 +9,58 @@ import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation/src/icu_parser.dart';
 
-/// Keeps track of all the messages we have processed so far, keyed by message
-/// name.
-Map<String, List<MainMessage>> messages;
+import 'utils.dart' as utils;
 
 const jsonDecoder = const JsonCodec();
 
 final pluralAndGenderParser = new IcuParser().message;
 final plainParser = new IcuParser().nonIcuMessage;
 
+typedef Map<String, List<MainMessage>> ProcessedMessages();
+
+generateDartCode(
+    MessageGeneration generator(),
+    final String arbDir,
+    final String targetDir,
+    final Map<String,MainMessage> allMessages, final List<String> filesToExclude) {
+
+    // Keeps track of all the messages we have processed so far, keyed by message name.
+    final messages = Map<String, List<MainMessage>>();
+
+    allMessages.forEach((final String key,value) {
+        messages.putIfAbsent(key, () => []).add(value);
+    });
+
+    final generation = generator();
+
+    final dir = Directory(targetDir);
+    if(!dir.existsSync()) { dir.createSync(recursive: true); }
+
+    utils.iterateThroughDirSync(arbDir, [ ".arb" ], [], (final File file) {
+        if(!filesToExclude.contains(path.basename(file.path))) {
+            _generateLocaleFile( file, targetDir, generation ,() => messages);
+        }
+    });
+
+    var mainImportFile = new File(path.join(
+        targetDir, '${generation.generatedFilePrefix}messages_all.dart'));
+
+    mainImportFile.writeAsStringSync(generation.generateMainImportFile());
+}
+
 /// Create the file of generated code for a particular locale. We read the ARB
 /// data and create [BasicTranslatedMessage] instances from everything,
 /// excluding only the special _locale attribute that we use to indicate the
 /// locale. If that attribute is missing, we try to get the locale from the last
 /// section of the file name.
-void generateLocaleFile(
-    final File file,final String targetDir,final MessageGeneration generation) {
+void _generateLocaleFile(
+    final File file,
+    final String targetDir,
+    final MessageGeneration generation,
+    final ProcessedMessages messages) {
 
-    var src = file.readAsStringSync();
-    var data = jsonDecoder.decode(src);
+    final src = file.readAsStringSync();
+    final data = jsonDecoder.decode(src);
     var locale = data["@@locale"] ?? data["_locale"];
     if (locale == null) {
         // Get the locale from the end of the file name. This assumes that the file
@@ -43,7 +76,7 @@ void generateLocaleFile(
 
     List<TranslatedMessage> translations = [];
     data.forEach((id, messageData) {
-        final TranslatedMessage message = _recreateIntlObjects(id, messageData);
+        final TranslatedMessage message = _recreateIntlObjects(id, messageData, messages);
         if (message != null) {
             translations.add(message);
         }
@@ -55,7 +88,11 @@ void generateLocaleFile(
 /// things that are messages, we expect [id] not to start with "@" and
 /// [data] to be a String. For metadata we expect [id] to start with "@"
 /// and [data] to be a Map or null. For metadata we return null.
-BasicTranslatedMessage _recreateIntlObjects(String id, data) {
+BasicTranslatedMessage _recreateIntlObjects(
+    final String id,
+    final data,
+    final ProcessedMessages messages) {
+
     if (id.startsWith("@")) return null;
     if (data == null) return null;
 
@@ -64,13 +101,18 @@ BasicTranslatedMessage _recreateIntlObjects(String id, data) {
         parsed = plainParser.parse(data).value;
     }
 
-    return new BasicTranslatedMessage(id, parsed /*as MainMessage*/);
+    return new BasicTranslatedMessage(id, parsed, messages);
 }
 
 /// A TranslatedMessage that just uses the name as the id and knows how to look
 /// up its original messages in our [messages].
 class BasicTranslatedMessage extends TranslatedMessage {
-    BasicTranslatedMessage(final String name,final translated) : super(name, translated);
+
+    /// Callback that returns all processed messages
+    final ProcessedMessages messages;
+
+    BasicTranslatedMessage(final String name,final translated,this.messages)
+        : super(name, translated);
 
     List<MainMessage> get originalMessages => (super.originalMessages == null)
         ? _findOriginals()
@@ -78,5 +120,5 @@ class BasicTranslatedMessage extends TranslatedMessage {
 
     // We know that our [id] is the name of the message, which is used as the
     // key in [messages]. (id == name)
-    List<MainMessage> _findOriginals() => originalMessages = messages[id];
+    List<MainMessage> _findOriginals() => originalMessages = messages()[id];
 }

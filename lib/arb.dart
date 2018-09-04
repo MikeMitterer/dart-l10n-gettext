@@ -1,87 +1,113 @@
 library l10n.arb;
 
-import "dart:collection";
 import 'dart:io';
+import 'dart:async';
+import 'package:path/path.dart' as path;
 import 'package:logging/logging.dart';
-import 'dart:convert';
-import 'package:intl/intl.dart';
-import 'package:dryice/dryice.dart';
+import 'package:intl_translation/extract_messages.dart';
 import 'package:intl_translation/src/intl_message.dart';
 
+import 'package:l10n/utils.dart' as utils;
 
 import "package:validate/validate.dart";
 
-class ARB {
-    static final ARB _instance = ARB._private();
+export 'package:intl_translation/extract_messages.dart' ;
 
-    factory ARB() => _instance;
+part 'arb/ARB.dart';
 
-    /// Singleton uses privat CTOR
-    ARB._private();
+final Logger _logger = new Logger("l10n.arb");
 
-    /// Convert the [MainMessage] to a trivial JSON format.
-    Map toJSON(final MainMessage message) {
-        final out = {};
+/// Iterates through dirs and generates a map of [MainMessage]s
+Future<Map<String, MainMessage>> scanDirsAndGenerateARBMessages(
+    MessageExtraction extractor(),
+    final List<String> dirstoscan, final List<String> dirsToExclude) {
 
-        if (message.messagePieces.isEmpty) return null;
-        
-        out[message.name] = _icuForm(message);
-        out["@${message.name}"] = _arbMetadata(message);
+    Validate.notNull(extractor());
+    Validate.notEmpty(dirstoscan);
+    Validate.notNull(dirsToExclude);
 
-        return out;
-    }
+    final extraction = extractor();
+    final allMessages = Map<String, MainMessage>(); // Map<dynamic, dynamic>(); // Map<String, MainMessage>();
 
+    final future = new Future<Map<String, MainMessage>>(() async {
+        for (final String dir in dirstoscan) {
+            utils.iterateThroughDirSync(dir, [ ".dart" ], dirsToExclude, (final File file) {
+                _logger.info("  -> ${file.path}");
 
-    /// Return a version of the message string with with ICU parameters "{variable}"
-    /// rather than Dart interpolations "$variable".
-    String _icuForm(final MainMessage message) => message.expanded(_turnInterpolationIntoICUForm);
+                //final String filename = file.path;
 
-    Map _arbMetadata(final MainMessage message) {
-        var out = {};
-        var desc = message.description;
-        if (desc != null) {
-            out["description"] = desc;
+                final Map<String, MainMessage> messages  = extraction.parseFile(file);
+                allMessages.addAll(messages);
+
+            });
         }
-        out["type"] = "text";
-        var placeholders = {};
-        for (var arg in message.arguments) {
-            _addArgumentFor(message, arg, placeholders);
-        }
-        out["placeholders"] = placeholders;
-        return out;
-    }
 
-    void _addArgumentFor(final MainMessage message, final String arg,final Map result) {
-        var extraInfo = {};
-        if (message.examples != null && message.examples[arg] != null) {
-            extraInfo["example"] = message.examples[arg];
-        }
-        result[arg] = extraInfo;
-    }
+        return allMessages;
+    });
 
-    String _turnInterpolationIntoICUForm(final Message message,final chunk, { bool shouldEscapeICU: false }) {
-        if (chunk is String) {
-            return shouldEscapeICU ? _escape(chunk) : chunk;
-        }
-        if (chunk is int && chunk >= 0 && chunk < message.arguments.length) {
-            return "{${message.arguments[chunk]}}";
-        }
-        if (chunk is SubMessage) {
-            return chunk.expanded((message, chunk) =>
-                _turnInterpolationIntoICUForm(message, chunk, shouldEscapeICU: true));
-        }
-        if (chunk is Message) {
-            return chunk.expanded((message, chunk) => _turnInterpolationIntoICUForm(
-                message, chunk,
-                shouldEscapeICU: shouldEscapeICU));
-        }
-        throw new FormatException("Illegal interpolation: $chunk");
-    }
-
-    String _escape(String s) {
-        return s.replaceAll("'", "''").replaceAll("{", "'{'").replaceAll("}", "'}'");
-    }
-
-
+    return future;
 }
 
+/// Generates the base .arb-File
+///
+/// By default this is l10n/intl_messages.arb
+void writeMessagesToOutputFile(
+    final Directory dir,
+    final File file,
+    final Map<String,MainMessage> allMessages) {
+
+    Validate.notNull(dir);
+    Validate.notNull(file);
+    Validate.notNull(allMessages);
+
+    final messages = {};
+    final arb = _ARB();
+
+    if(!dir.existsSync()) {
+        dir.createSync(recursive: true);
+    }
+
+    final fullPath = File(path.join(dir.path,file.path));
+
+    messages["@@last_modified"] = new DateTime.now().toIso8601String();
+    allMessages.forEach((final String k, final MainMessage v) {
+        messages.addAll(arb.toJSON((v)));
+    });
+
+    fullPath.writeAsStringSync(utils.makePrettyJsonString(messages));
+}
+
+/// Bases on intl_messages.arb a translatable file gets create
+/// if it doesn't exist
+///
+/// E.g. if the locale is "de" this creates intl_de.arb
+void generateTranslationFile(
+    final Directory dir,
+    final File file,
+    final String locale,
+    final Map<String,MainMessage> allMessages) {
+
+    Validate.notNull(dir);
+    Validate.notNull(file);
+    Validate.notBlank(locale);
+    Validate.notNull(allMessages);
+
+    final fullPath = File(path.join(dir.path,file.path));
+
+    if(fullPath.existsSync()) {
+        _logger.warning("Localized file already existst! (${fullPath.path})");
+        return;
+    }
+
+    final messages = {};
+    final arb = _ARB();
+
+    messages["@@last_modified"] = new DateTime.now().toIso8601String();
+    messages["@@locale"] = locale;
+
+    allMessages.forEach((final String k, final MainMessage v) {
+        messages.addAll(arb.toJSON((v)));
+    });
+
+    fullPath.writeAsStringSync(utils.makePrettyJsonString(messages));
+}

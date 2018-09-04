@@ -1,5 +1,6 @@
 {
-   "@@last_modified": "2018-09-04T17:01:27.146139",
+   "@@last_modified": "2018-09-04T17:01:27.154870",
+   "@@locale": "en",
    "abc": "abc",
    "@abc": {
       "type": "text",

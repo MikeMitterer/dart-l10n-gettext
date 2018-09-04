@@ -13,7 +13,7 @@ import 'package:intl/intl.dart';
 // The second command generates intl_messages.arb and the third generates
 // messages_all.dart. There's more about this process in
 // https://pub.dartlang.org/packages/intl.
-import 'package:l10n_sample_cmdline/l10n/messages_all.dart';
+import 'package:l10n_sample_cmdline/_l10n/messages_all.dart';
 
 Future main() async {
     Intl.defaultLocale = "en";

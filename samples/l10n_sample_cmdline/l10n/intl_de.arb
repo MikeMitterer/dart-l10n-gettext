@@ -1,15 +1,9 @@
 {
-  "@@last_modified": "2018-09-03T12:42:34.765555",
-  "abc": "123",
-  "@abc": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "message2": "Servus {name}",
-   "@message2": {
+   "@@last_modified": "2018-09-04T16:57:27.509930",
+   "@@locale": "de",
+   "abc": "abc",
+   "@abc": {
       "type": "text",
-      "placeholders": {
-         "name": {}
-      }
+      "placeholders": {}
    }
 }

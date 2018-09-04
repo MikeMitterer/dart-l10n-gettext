@@ -7,47 +7,62 @@ part of l10n.app;
 class Config {
     final Logger _logger = new Logger("mkl10llocale.Config");
 
-    static const String _KEY_LOCALE_DIR         = "localeDir";
-    static const String _KEY_TEMPLATES_DIR      = "templatesDir";
-    static const String _KEY_HEADER_TEMPLATE    = "headertemplate";
-    static const String _KEY_POT_DIR            = "potdir";
-    static const String _KEY_POT_FILENAME       = "potfile";
-    static const String _KEY_PO_FILENAME        = "pofile";
-    static const String _KEY_JSON_FILENAME      = "jsonfilename";
-    static const String _KEY_DART_FILENAME      = "dartfilename";
-    static const String _KEY_LIB_PREFIX         = "libprefix";
-    static const String _KEY_LOGLEVEL           = "loglevel";
-    static const String _KEY_LOCALES            = "locales";
-    static const String _KEY_DART_PATH          = "dartpath";
-    static const String _KEY_SYSTEM_LOCALE      = "systemlocale";
-    static const String _KEY_EXCLUDE_DIRS       = "exclude_dirs";
+    static const String _KEY_LOCALE_DIR             = "localeDir";
+    static const String _KEY_TEMPLATES_DIR          = "templatesDir";
+    static const String _KEY_HEADER_TEMPLATE        = "headertemplate";
+    static const String _KEY_POT_DIR                = "potdir";
+    static const String _KEY_POT_FILENAME           = "potfile";
+    static const String _KEY_PO_FILENAME            = "pofile";
+    static const String _KEY_JSON_FILENAME          = "jsonfilename";
+    static const String _KEY_DART_FILENAME          = "dartfilename";
+    static const String _KEY_LIB_PREFIX             = "libprefix";
+    static const String _KEY_LOGLEVEL               = "loglevel";
+    static const String _KEY_LOCALES                = "locales";
+    static const String _KEY_DART_PATH              = "dartpath";
+    static const String _KEY_SYSTEM_LOCALE          = "systemlocale";
+    static const String _KEY_EXCLUDE_DIRS           = "exclude_dirs";
+
+    static const String _KEY_SUPPRESS_WARNINGS      = Options._ARG_SUPPRESS_WARNINGS;
+    static const String _KEY_OUTPUT_DIR             = 'output_dir';
+    static const String _KEY_OUTPUT_FILE            = 'output_file';
+    static const String _KEY_USE_DEFERRED_LOADING   = 'use-deferred-loading';
+    static const String _KEY_CODEGEN_MODE           = Options._ARG_CODEGEN_MODE;
+    static const String _KEY_CODEGEN_DIR            = 'codegen_dir';
+
 
     final ArgResults _argResults;
-    final Map<String,String> _settings = new Map<String,String>();
+    final _settings = new Map<String,String>();
 
     Config(this._argResults,final String systemLocale) {
 
-        _settings[_KEY_LOCALE_DIR]      = 'locale';
-        _settings[_KEY_TEMPLATES_DIR]   = 'templates';
-        _settings[_KEY_HEADER_TEMPLATE] = 'potheader.tpl';
-        _settings[_KEY_POT_DIR]         = 'templates/LC_MESSAGES';
+        _settings[_KEY_LOCALE_DIR]              = 'locale';
+        _settings[_KEY_TEMPLATES_DIR]           = 'templates';
+        _settings[_KEY_HEADER_TEMPLATE]         = 'potheader.tpl';
+        _settings[_KEY_POT_DIR]                 = 'templates/LC_MESSAGES';
 
-        _settings[_KEY_POT_FILENAME]    = 'messages.pot';
-        _settings[_KEY_PO_FILENAME]     = 'messages.po';
+        _settings[_KEY_POT_FILENAME]            = 'messages.pot';
+        _settings[_KEY_PO_FILENAME]             = 'messages.po';
 
-        _settings[_KEY_JSON_FILENAME]   = 'messages.json';
-        _settings[_KEY_DART_FILENAME]   = 'messages.dart';
+        _settings[_KEY_JSON_FILENAME]           = 'messages.json';
+        _settings[_KEY_DART_FILENAME]           = 'messages.dart';
 
-        _settings[_KEY_LIB_PREFIX]      = 'l10n';
-        _settings[_KEY_LOGLEVEL]        = 'info';
+        _settings[_KEY_LIB_PREFIX]              = 'l10n';
+        _settings[_KEY_LOGLEVEL]                = 'info';
 
 
-        _settings[_KEY_DART_PATH]       = 'lib';
+        _settings[_KEY_DART_PATH]               = 'lib';
 
-        _settings[_KEY_LOCALES]         = Intl.shortLocale(systemLocale);
-        _settings[_KEY_SYSTEM_LOCALE]   = systemLocale;
+        _settings[_KEY_LOCALES]                 = Intl.shortLocale(systemLocale);
+        _settings[_KEY_SYSTEM_LOCALE]           = systemLocale;
 
-        _settings[_KEY_EXCLUDE_DIRS]    = '';
+        _settings[_KEY_EXCLUDE_DIRS]            = '';
+
+        _settings[_KEY_SUPPRESS_WARNINGS]       = 'false';
+        _settings[_KEY_OUTPUT_DIR]              = 'l10n';
+        _settings[_KEY_OUTPUT_FILE]             = 'intl_messages.arb';
+        _settings[_KEY_USE_DEFERRED_LOADING]    = 'true';
+        _settings[_KEY_CODEGEN_MODE]            = 'debug';
+        _settings[_KEY_CODEGEN_DIR]             = '_l10n';
 
         initializeDateFormatting(_settings[_KEY_SYSTEM_LOCALE],null);
 
@@ -90,6 +105,17 @@ class Config {
 
     String get configfile => ".mkl10n.yaml";
 
+    bool get suppressWarnings => _settings[_KEY_SUPPRESS_WARNINGS].toLowerCase() == 'true';
+
+    String get outputDir => _settings[_KEY_OUTPUT_DIR];
+    String get outputFile => _settings[_KEY_OUTPUT_FILE];
+
+    bool get useDeferredLoading => _settings[_KEY_USE_DEFERRED_LOADING].toLowerCase() == 'true';
+
+    String get codegenMode => _settings[_KEY_CODEGEN_MODE];
+
+    String get codegenDir => _settings[_KEY_CODEGEN_DIR];
+
     Map<String,String> get settings {
         final Map<String,String> settings = new Map<String,String>();
 
@@ -104,6 +130,12 @@ class Config {
         settings["loglevel"]                                    = loglevel;
         settings["locales"]                                     = locales;
         settings["System-Locale"]                               = systemLocale;
+        settings["Suppress Warnings"]                           = suppressWarnings.toString();
+        settings["Output dir"]                                  = outputDir;
+        settings["Output file"]                                 = outputFile;
+        settings["Use deferred loading"]                        = useDeferredLoading ? 'yes' : 'no';
+        settings["Code generation mode"]                        = codegenMode;
+        settings["Code generation dir"]                         = "lib${path.separator}$codegenDir";
 
         if(dirstoscan.length > 0) {
             settings[/*translate*/(Intl.message("Dirs to scan"))] = dirstoscan.join(", ");
@@ -138,10 +170,10 @@ class Config {
 
         // You will see this comment in the .po/.pot-File
         print(translate(l10n("External commands:")));
-        [ xgettext, msginit, msgmerge ].forEach((final ShellCommand command) {
+        [ xgettext, msginit, msgmerge ].forEach((final ShellCommand command) async {
             String exe = translate(l10n("not installed!"));
             try {
-                exe = command.executable;
+                exe = await command.executable;
 
             } on StateError catch(_) {}
 
@@ -189,6 +221,15 @@ class Config {
         if(_argResults[Options._ARG_EXCLUDE] != null) {
             _settings[_KEY_EXCLUDE_DIRS] = checkPath(_argResults[Options._ARG_EXCLUDE]);
         }
+
+        if(_argResults[Options._ARG_SUPPRESS_WARNINGS] != null) {
+            _settings[_KEY_SUPPRESS_WARNINGS] = (_argResults[Options._ARG_SUPPRESS_WARNINGS] as bool) ? 'true' : 'false';
+        }
+
+        if(_argResults[Options._ARG_CODEGEN_MODE] != null) {
+            _settings[_KEY_CODEGEN_MODE] = _argResults[Options._ARG_CODEGEN_MODE];
+        }
+
     }
 
     void _overwriteSettingsWithConfigFile() {
@@ -197,12 +238,25 @@ class Config {
             return;
         }
         final yaml.YamlMap map = yaml.loadYaml(file.readAsStringSync());
+        bool foundSetting = false;
+
+        //map.keys.forEach((final key) => print("KK $key"));
+
         _settings.keys.forEach((final String key) {
+            // print("K $key");
             if(map != null && map.containsKey(key)) {
-                _settings[key] = map[key];
+                if(map[key] is bool) {
+                    _settings[key] = map[key] ? 'true' : 'false';
+                } else {
+                    _settings[key] = map[key].toString();
+                }
                 print("Found $key in $configfile: ${map[key]}");
+                foundSetting = true;
             }
         });
+        if(foundSetting) {
+            print("");
+        }
     }
 
 

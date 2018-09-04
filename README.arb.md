@@ -12,6 +12,7 @@
     
 ### Links
 
+   - [ARB Specs](https://github.com/googlei18n/app-resource-bundle/wiki/ApplicationResourceBundleSpecification)
    - [Localize Flutter](https://proandroiddev.com/flutter-localization-step-by-step-30f95d06018d)    
    - [Application Resource Bundle Specification](https://github.com/googlei18n/app-resource-bundle/wiki/ApplicationResourceBundleSpecification)
    - [Gen from ARB](https://github.com/dart-lang/intl_translation/blob/master/bin/generate_from_arb.dart)
