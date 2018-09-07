@@ -8,6 +8,7 @@ import 'package:intl_translation/extract_messages.dart';
 import 'package:intl_translation/src/intl_message.dart';
 
 import 'package:l10n/utils.dart' as utils;
+import 'package:l10n/extractor.dart';
 
 import "package:validate/validate.dart";
 
@@ -19,15 +20,24 @@ final Logger _logger = new Logger("l10n.arb");
 
 /// Iterates through dirs and generates a map of [MainMessage]s
 Future<Map<String, MainMessage>> scanDirsAndGenerateARBMessages(
-    MessageExtraction extractor(),
+    MessageExtraction intlExtractor(), L10NMessageExtraction l10Extractor(),
     final List<String> dirstoscan, final List<String> dirsToExclude) {
 
-    Validate.notNull(extractor());
+    Validate.notNull(intlExtractor());
     Validate.notEmpty(dirstoscan);
     Validate.notNull(dirsToExclude);
 
-    final extraction = extractor();
+    final intlMessageExtractor = intlExtractor();
+    final l10nMessageExtractor = l10Extractor();
+
     final allMessages = Map<String, MainMessage>(); // Map<dynamic, dynamic>(); // Map<String, MainMessage>();
+
+    // Dirs to scan has priority
+//    dirstoscan.forEach((final String dir) {
+//        if(dirsToExclude.contains(dir)) {
+//            dirsToExclude.removeWhere((final String dirToExclude) => dirsToExclude == dir);
+//        }
+//    });
 
     final future = new Future<Map<String, MainMessage>>(() async {
         for (final String dir in dirstoscan) {
@@ -36,9 +46,11 @@ Future<Map<String, MainMessage>> scanDirsAndGenerateARBMessages(
 
                 //final String filename = file.path;
 
-                final Map<String, MainMessage> messages  = extraction.parseFile(file);
+                Map<String, MainMessage> messages  = intlMessageExtractor.parseFile(file);
                 allMessages.addAll(messages);
 
+                messages = l10nMessageExtractor.parseFile(file);
+                allMessages.addAll(messages);
             });
         }
 
@@ -85,7 +97,7 @@ void generateTranslationFile(
     final Directory dir,
     final File file,
     final String locale,
-    final Map<String,MainMessage> allMessages) {
+    final Map<String,MainMessage> allMessages, final overwriteLocaleFile) {
 
     Validate.notNull(dir);
     Validate.notNull(file);
@@ -94,8 +106,8 @@ void generateTranslationFile(
 
     final fullPath = File(path.join(dir.path,file.path));
 
-    if(fullPath.existsSync()) {
-        _logger.warning("Localized file already existst! (${fullPath.path})");
+    if(fullPath.existsSync() && overwriteLocaleFile == false) {
+        _logger.warning("Localized file already exists! (${fullPath.path})");
         return;
     }
 

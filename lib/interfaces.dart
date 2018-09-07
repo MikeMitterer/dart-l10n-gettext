@@ -7,7 +7,7 @@ abstract class L10N {
     /// Vars for KEY
     Map<String, dynamic> get vars;
 
-    /// Untranslated msgid but vars set
+    /// Translated msgid but vars set
     String get message;
 
     const factory L10N(final String msgid,[ final Map<String, dynamic> vars ]) = L10NImpl;

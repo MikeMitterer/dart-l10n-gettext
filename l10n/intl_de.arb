@@ -1,0 +1,20 @@
+{
+   "@@last_modified": "2018-09-04T18:08:19.087079",
+   "@@locale": "de",
+   "Code generation dir": "Dart-Code Verzeichnis",
+   "@Code generation dir": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Dirs to scan": "Dirs to scan",
+   "@Dirs to scan": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Scanning": "Scanning",
+   "@Scanning": {
+      "description": "In '_iterateThroughDirSync'",
+      "type": "text",
+      "placeholders": {}
+   }
+}

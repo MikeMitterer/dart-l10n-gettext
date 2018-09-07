@@ -1,0 +1,23 @@
+{
+   "@@last_modified": "2018-09-07T17:49:20.797185",
+   "Hi Kotlin!": "Hi Kotlin!",
+   "@Hi Kotlin!": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Hallo {?}-": "Hallo {?}-",
+   "@Hallo {?}-": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Hello {\\name}-": "Hello {\\name}-",
+   "@Hello {\\name}-": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Your are [age] years old": "Your are [age] years old",
+   "@Your are [age] years old": {
+      "type": "text",
+      "placeholders": {}
+   }
+}

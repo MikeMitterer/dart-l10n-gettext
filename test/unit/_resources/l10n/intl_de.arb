@@ -1,0 +1,24 @@
+{
+   "@@last_modified": "2018-09-07T16:33:21.995467",
+   "@@locale": "de",
+   "Hi Kotlin!": "Servus Kotlin!",
+   "@Hi Kotlin!": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Hallo {?}-": "Guten Morgen {?}-",
+   "@Hallo {?}-": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Hello {\\name}-": "Servus {\\name}",
+   "@Hello {\\name}-": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Your are [age] years old": "Du bist [age] Jahre alt!",
+   "@Your are [1age] years old": {
+      "type": "text",
+      "placeholders": {}
+   }
+}

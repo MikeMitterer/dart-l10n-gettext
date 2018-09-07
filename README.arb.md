@@ -7,8 +7,16 @@
     cp -f intl_messages.arb intl_de.arb
     
     pub run intl_translation:generate_from_arb --output-dir=lib/l10n \
-       --no-use-deferred-loading web/main.dart intl_*.arb 
-    
+       --no-use-deferred-loading web/main.dart intl_*.arb
+       
+## Testing
+
+    # Creates .arb-files for Tests
+    #   -a Folder for generated .ARB-Files
+    #   -g Folder for generated .dart-Files
+    #   -i Inore excluded Folders (by default 'test' is excluded!)       
+    #   test/unit/l10n/ - This folder get's scanned
+    mkl10n -a test/unit/_resources/l10n -g test/unit/_resources -i test/unit/l10n/            
     
 ### Links
 

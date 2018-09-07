@@ -17,10 +17,11 @@
  * limitations under the License.
  */
 
-part of mobiad_rest_ui_mdl.dialogs;
+import 'dart:html' as dom;
+import 'package:l10n/l10n.dart';
 
-@Component
-class LoginDialog extends MaterialDialog {
+//@Component
+class LoginDialog /* extends MaterialDialog*/ {
 
     static const String _DEFAULT_SUBMIT_BUTTON = "Submit";
     static const String _DEFAULT_CANCEL_BUTTON = "Cancel";
@@ -29,16 +30,15 @@ class LoginDialog extends MaterialDialog {
     String yesButton = _DEFAULT_SUBMIT_BUTTON;
     String noButton = _DEFAULT_CANCEL_BUTTON;
 
-    final ObservableProperty<String> username = new ObservableProperty<String>('');
-    final ObservableProperty<String> password = new ObservableProperty<String>('');
+    final String username = '';
+    final String password = '';
 
     /// Zeigt den LoginDialog an
     ///
     /// Wenn [undoPossible] auf true gesetzt ist kann der User
     /// den Dialog beenden und kehrt zu seinem vorhergehenden Login zurück
     /// [undoPossible] wird eingeschaltet wenn der User eingeloggt ist
-    LoginDialog({final bool undoPossible: false })
-        : super(new DialogConfig(closeOnBackDropClick: undoPossible,acceptEscToClose: undoPossible));
+    LoginDialog({final bool undoPossible: false });
 
     LoginDialog call({ final String title: "",
                          final String yesButton: _DEFAULT_SUBMIT_BUTTON,
@@ -57,41 +57,46 @@ class LoginDialog extends MaterialDialog {
 
     void onLogin(final dom.Event event) {
         event.preventDefault();
-        close(MdlDialogStatus.OK);
+        //close(MdlDialogStatus.OK);
 
-        print(translate(l10n("Test 1")));
+        print(l10n("Test 1"));
 
-        // Plural-Test
-        print(translate(l10n("Test 2","Test 2 - Plural Name: {name}")));
+        // Params-Test
+        print(l10n("Test 2 - Plural Name: {name}",{ "name" : "Mike" }));
 
         /// Dart Kommentar II
-        print(translate(_( "Test 3" )));
+        print(l10n( "Test 3" ));
 
         /* Dart Kommentar III */
-        print(translate(_("Test \"4\"")));
+        print(l10n("Test \"4\""));
 
-        print(translate(_("Test (5)")));
+        print(l10n("Test (5)"));
 
-        print("Hallo ${translate(_('Test 6'))} --!");
+        print("Hallo ${l10n('Test 6')} --!");
+
+        // Doesn't create a Intl.Message
+        final objL10n = L10N("Call my name!");
+        print(objL10n.message);
+
+        final message = l10n("I wish you a nice day!");
+        print(message);
     }
 
     // Must not appear in scan
-    void l10n(final String fakeFunction) {
-        print(fakeFunction)
-    }
+    String tr(final String value) => l10n(value);
 
     // - private ----------------------------------------------------------------------------------
 
     // - template ----------------------------------------------------------------------------------
 
-    @override
+    //@override
     String template = """
         <div class="mdl-dialog login-dialog1">
             <form method="post" class="right mdl-form mdl-form-registration demo-registration">
                 <h5 class="mdl-form__title" translate='yes'>
                 <!-- Multi line
                     HTML Kommentar -->
-                l10n('Test 7')</h5>
+                tr('Test 7')</h5>
                 <div class="mdl-form__content">
                     <div class="mdl-textfield">
                         <input class="mdl-textfield__input" type="email" id="email" mdl-model="username" required autofocus>

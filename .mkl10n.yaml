@@ -1,4 +1,3 @@
 # Ignore these dirs
-exclude_dirs:
-  - samples
+exclude: samples, .dart_tool, test
 suppress-warnings: true

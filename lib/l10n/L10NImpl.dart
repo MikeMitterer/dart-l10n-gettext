@@ -1,15 +1,6 @@
 part of l10n;
 
-/**
- * Die MessageID darf kein \n, \r oder mehrere Spaces enthalten.
- */
-String _sanitizeMessageID(final String translatedMessage) {
-    Validate.notBlank(translatedMessage);
-    return translatedMessage
-        .replaceAll(new RegExp(r'(\.\n)'),". ")
-        .replaceAll(new RegExp(r'(\n|\r)'),"")
-        .replaceAll(new RegExp(r'\s{2,}')," ").trim();
-}
+
 
 /**
  * Handelt eine Message die später übersetzt werden kann.
@@ -50,12 +41,12 @@ class L10NImpl implements L10N {
 
     String get msgid => _sanitizeMessageID(_msgID);
 
-    /// Gives back the msgid with all the vars set
+    /// Gives back the translated msgid with all the vars set
     String get message {
-        String message = msgid;
-
+        String message = Intl.message(msgid);
         _vars.forEach((final String key,final value) {
-            message = message.replaceAll("{{$key}}",value.toString());
+            message = message.replaceAll("{$key}",value.toString());
+            message = message.replaceAll("[$key]",value.toString());
         });
 
         return message;
@@ -111,4 +102,14 @@ class L10NImpl implements L10N {
     }
 }
 
+/**
+ * Die MessageID darf kein \n, \r oder mehrere Spaces enthalten.
+ */
+String _sanitizeMessageID(final String translatedMessage) {
+    Validate.notBlank(translatedMessage);
+    return translatedMessage
+        .replaceAll(new RegExp(r'(\.\n)'),". ")
+        .replaceAll(new RegExp(r'(\n|\r)'),"")
+        .replaceAll(new RegExp(r'\s{2,}')," ").trim();
+}
 
