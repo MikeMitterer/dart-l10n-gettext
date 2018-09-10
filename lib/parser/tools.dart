@@ -36,11 +36,12 @@ class CharacterType {
         return regexp.hasMatch(char);
     }
 
+    /// . is also treated as Digit
     static bool isDigit(final String char) {
         Validate.notNull(char);
         Validate.isTrue(char.isNotEmpty && char.length == 1);
 
-        final RegExp regexp = new RegExp(r"^[0-9]$");
+        final RegExp regexp = new RegExp(r"^[0-9.]$");
         return regexp.hasMatch(char);
     }
 }

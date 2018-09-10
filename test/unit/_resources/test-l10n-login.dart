@@ -62,7 +62,7 @@ class LoginDialog /* extends MaterialDialog*/ {
         print(l10n("Test 1"));
 
         // Params-Test
-        print(l10n("Test 2 - Plural Name: {name}",{ "name" : "Mike" }));
+        print(l10n("Test 2 - Plural Name: {name}, Age: {age}",{ "name" : "Mike", "age" : 99.9 }));
 
         /// Dart Kommentar II
         print(l10n( "Test 3" ));

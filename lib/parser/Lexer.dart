@@ -32,12 +32,13 @@ class Lexer {
     String _source = '';
 
     /// Many tokens are a single character, like operators and ().
-    final String _singleCharTokens = "(),{}";
+    final String _singleCharTokens = "(),{}:";
 
     /// These types are directly associated with [_singleCharTokens]
     final List<TokenType> _tokenTypes = [
         TokenType.LEFT_BRACKET, TokenType.RIGHT_BRACKET,
-        TokenType.COLON, TokenType.SCOPE_BEGIN, TokenType.SCOPE_END,
+        TokenType.COMMA, TokenType.SCOPE_BEGIN, TokenType.SCOPE_END,
+        TokenType.COLON
     ];
 
     int _lineCounter = 0;
@@ -127,7 +128,7 @@ class Lexer {
                         token = "";
                     }
 
-                    // Single-Character-Tokens
+                    // Single-Character-Tokens: (),{}
                     else if (_singleCharTokens.indexOf(c) != -1) {
                         _tokens.add(new Token(c, _tokenTypes[_singleCharTokens.indexOf(c)]));
                     }

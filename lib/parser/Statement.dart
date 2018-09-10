@@ -48,19 +48,19 @@ class CommentStatement extends Statement {
 }
 
 class L10NStatement extends Statement {
-    final List<String> params;
+    final String msgid;
+    final Map<String,dynamic> params;
+
     final String filename;
 
-    L10NStatement(this.filename, final int line, final List<String> params)
-        : params = new List.from(params), super(line);
+    L10NStatement(this.filename, final int line, this.msgid
+        , { final Map<String,dynamic> params = const <String,dynamic>{} })
+        : this.params = new Map.from(params), super(line);
 
     @override
     void accept(final Visitor visitor) {
         visitor.visitL10n(this);
     }
-
-    /// First param is always the msgid
-    String get msgid => params.first;
 }
 
 class NewLineStatement extends Statement {
@@ -68,7 +68,7 @@ class NewLineStatement extends Statement {
     NewLineStatement(final int line) : super(line);
 
     @override
-    void accept(Visitor visitor) {
+    void accept(final Visitor visitor) {
         visitor.visitNetLine(this);
     }
 }

@@ -33,7 +33,7 @@ class Parser {
      * tokens and routing to the other parse functions for the different
      * grammar syntax until we run out of code to parse.
      *
-     * We need a [filename] to printing out filenames and linenumbers
+     * We need a [filename] to print out filenames and linenumbers
      * The [tokens] to parse
      */
     List<Statement> parse(final String filename, final List<Token> tokens) {
@@ -57,20 +57,37 @@ class Parser {
                     break;
 
                 case TokenType.L10N:
-                    // Singular
+                    // Singular: l10n("My name is Mike")
                     if(_isNext([TokenType.LEFT_BRACKET, TokenType.STRING, TokenType.RIGHT_BRACKET ])) {
                         token = _read(skip: 1).value;
-                        statements.add(new L10NStatement(filename, line, [token.text]));
+                        statements.add(new L10NStatement(filename, line, token.text ));
                     }
-                    // Plural
-                    else if(_isNext([TokenType.LEFT_BRACKET, TokenType.STRING, TokenType.COLON, TokenType.STRING, TokenType.RIGHT_BRACKET ])) {
-                        final List<String> params = new List<String>();
+                    // With Param: l10n("My name is {name}",{ "name" : "Mike" })
+                    else if(_isNext([TokenType.LEFT_BRACKET, TokenType.STRING, TokenType.COMMA, TokenType.SCOPE_BEGIN ])) {
+                        final String msgid = _read(skip: 1).value.text; // String
+                        final params = Map<String,dynamic>();
 
-                        // String, Colon, String
-                        params.add(_read(skip: 1).value.text);_read();params.add(_read().value.text);
+                        _read(); _read(); // Comma, {
 
-                        statements.add(
-                            new L10NStatement(filename, line, params));
+                        do {
+                            final String key = _read().value.text;
+                            _read(); // Colon
+
+                            final valueToken = _read();
+                            var value;
+                            if(valueToken.value.type == TokenType.STRING) {
+                                value = valueToken.value.text;
+                            } else {
+                                value = num.parse(valueToken.value.text);
+                            }
+                            params.putIfAbsent(key, () => value);
+                            if(_isNext([ TokenType.COMMA])) {
+                                _read();
+                            }
+                        } while(!_isNext([ TokenType.SCOPE_END ]));
+                        print(_read().value.text); // }
+
+                        statements.add( new L10NStatement(filename, line, msgid, params: params));
                     }
                     _read();
                     break;

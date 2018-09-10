@@ -39,5 +39,4 @@ part 'parser/Parser.dart';
 part 'parser/Statement.dart';
 part 'parser/Token.dart';
 
-part 'parser/pot.dart';
 part 'parser/tools.dart';

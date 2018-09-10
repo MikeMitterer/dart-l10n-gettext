@@ -17,7 +17,15 @@
  * limitations under the License.
  */
 
-part of l10n.parser;
+library l10n.pot;
+
+import 'dart:async';
+import 'dart:io';
+import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
+import 'package:validate/validate.dart';
+
+import 'package:l10n/parser.dart';
 
 typedef void POTVisitor(
             final List<CommentStatement> comments,

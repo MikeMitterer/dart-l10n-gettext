@@ -1,3 +1,4 @@
+@TestOn("vm")
 library test.unit.lexer;
 
 import 'dart:io';
@@ -6,6 +7,7 @@ import 'package:test/test.dart';
 import 'package:logging/logging.dart';
 import 'package:console_log_handler/print_log_handler.dart';
 import 'package:l10n/parser.dart';
+import 'package:l10n/pot.dart';
 
 class _TestPrintVisitor extends Visitor {
   final Logger _logger = new Logger('test.unit.lexer._TestVisitor');
@@ -36,13 +38,13 @@ class _TestPrintVisitor extends Visitor {
 
 
 main() async {
-    // final Logger _logger = new Logger("test.unit.parser");
+    final Logger _logger = new Logger("test.unit.parser");
 
     // If you want to see some log outptut set "defaultLogLevel:"
     // to Level.FINE or Level.FINER
-    configLogging();
+    configLogging(show: Level.FINER);
 
-    final String source = new File("test/unit/_resources/login.dart.txt").readAsStringSync();
+    final String source = new File("test/unit/_resources/test-l10n-login.dart").readAsStringSync();
 
     group('Lexer', () {
         setUp(() { });
@@ -58,7 +60,7 @@ main() async {
             final int nrOfFunctions = tokens.where((final Token token) =>
             token.type == TokenType.L10N).length;
 
-            expect(nrOfComments, equals(15));
+            expect(nrOfComments, equals(20));
             // 14 - but one is a function declaration!
             expect(nrOfFunctions, equals(14));
 
@@ -91,17 +93,33 @@ main() async {
             final Parser parser = new Parser();
 
             final List<Token> tokens = lexer.scan(source);
-            // _logTokes(tokens);
+            //_logTokes(tokens);
             
-            final List<Statement> statements = parser.parse(filename, tokens);
+            final List<Statement> ast = parser.parse(filename, tokens);
 
-            // statements.where((final Statement statement)
-            //     => !(statement is NewLineStatement)).forEach( (final Statement statement) {
-            //         _logger.fine(statement);
-            // });
+            ast.where((final Statement statement)
+                 => !(statement is NewLineStatement)).forEach( (final Statement statement) {
+                     if(statement is CommentStatement) {
+                         _logger.fine(statement.comment);
+                     }
+                     else if(statement is L10NStatement) {
+                         final params = List<String>();
+                         statement.params.forEach((final String key, final value) {
+                            params.add("$key:$value");
+                         });
+                         if(params.isEmpty) {
+                             _logger.fine("l10n('${statement.msgid}')");
+                         } else {
+                             _logger.fine("l10n('${statement.msgid}',{ ${params.join(", ")} })");
+                         }
+                     }
+                     else {
+                         _logger.fine(statement);
+                     }
+             });
 
-            expect(statements.where((final Statement statement)
-                => !(statement is NewLineStatement)).length, equals(28));
+            expect(ast.where((final Statement statement)
+                => !(statement is NewLineStatement)).length, equals(33));
 
             final Visitor visitor = new _TestPrintVisitor(filename);
 
@@ -111,7 +129,7 @@ main() async {
             // msgid "Test 10: 12345678aA16#"
             // msgstr ""
             //
-            final List<POTBlock> blocks = collectPOTBlocks(statements);
+            final List<POTBlock> blocks = collectPOTBlocks(ast);
             expect(blocks.length, 13);
 
             expect(blocks[12].comments.length, 0);
@@ -174,7 +192,7 @@ void _logTokes(final List<Token> tokens) {
                 break;
 
             default:
-                _logger.finer("${token.type.toString().padRight(20)} -> Text: ${token.text}");
+                _logger.finer("${token.type.toString().padRight(25)} -> Text: ${token.text}");
                 break;
         }
     });
