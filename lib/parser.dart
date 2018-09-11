@@ -39,4 +39,7 @@ part 'parser/Parser.dart';
 part 'parser/Statement.dart';
 part 'parser/Token.dart';
 
+part 'parser/ParserError.dart';
+part 'parser/InvalidTokenException.dart';
+
 part 'parser/tools.dart';

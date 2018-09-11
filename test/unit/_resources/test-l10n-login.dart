@@ -78,7 +78,7 @@ class LoginDialog /* extends MaterialDialog*/ {
         final objL10n = L10N("Call my name!");
         print(objL10n.message);
 
-        final message = l10n("I wish you a nice day!");
+        final message = l10n("I wish you a nice day!!");
         print(message);
     }
 

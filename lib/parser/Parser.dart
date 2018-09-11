@@ -46,63 +46,89 @@ class Parser {
         this._tokens.addAll(tokens);
 
         int line = 1;
-        for(Optional<Token> oToken = _peek(); oToken.isPresent && _offset < _tokens.length; oToken = _peek()) {
-            Token token = oToken.value;
+        try {
+            for (Optional<Token> oToken = _peek(); oToken.isPresent && _offset < _tokens.length;
+            oToken = _peek()) {
+                Token token = oToken.value;
 
-            switch(token.type) {
-                case TokenType.COMMENT:
-                    statements.add(new CommentStatement(line, token.text));
-                    line += math.max(1,token.text.split("\n").length);
-                    _read();
-                    break;
+                switch (token.type) {
+                    case TokenType.COMMENT:
+                        statements.add(new CommentStatement(line, token.text));
+                        line += math.max(1, token.text
+                            .split("\n")
+                            .length);
+                        _read();
+                        break;
 
-                case TokenType.L10N:
+                    case TokenType.L10N:
                     // Singular: l10n("My name is Mike")
-                    if(_isNext([TokenType.LEFT_BRACKET, TokenType.STRING, TokenType.RIGHT_BRACKET ])) {
-                        token = _read(skip: 1).value;
-                        statements.add(new L10NStatement(filename, line, token.text ));
-                    }
-                    // With Param: l10n("My name is {name}",{ "name" : "Mike" })
-                    else if(_isNext([TokenType.LEFT_BRACKET, TokenType.STRING, TokenType.COMMA, TokenType.SCOPE_BEGIN ])) {
-                        final String msgid = _read(skip: 1).value.text; // String
-                        final params = Map<String,dynamic>();
+                        if (_isNext(
+                            [TokenType.LEFT_BRACKET, TokenType.STRING, TokenType.RIGHT_BRACKET])) {
+                            token = _read(skip: 1).value;
+                            statements.add(new L10NStatement(filename, line, token.text));
+                            _read(expect: TokenType.RIGHT_BRACKET);
+                        }
+                        // With Param: l10n("My name is {name}",{ "name" : "Mike" })
+                        else if (_isNext([
+                            TokenType.LEFT_BRACKET,
+                            TokenType.STRING,
+                            TokenType.COMMA,
+                            TokenType.SCOPE_BEGIN
+                        ])) {
+                            final String msgid = _read(skip: 1).value.text; // String
+                            final params = Map<String, dynamic>();
 
-                        _read(); _read(); // Comma, {
+                            // Comma, {
+                            _read(expect: TokenType.COMMA);
+                            _read(expect: TokenType.SCOPE_BEGIN);
 
-                        do {
-                            final String key = _read().value.text;
-                            _read(); // Colon
+                            do {
+                                final String key = _read().value.text;
+                                _read(expect: TokenType.COLON); // Colon
 
-                            final valueToken = _read();
-                            var value;
-                            if(valueToken.value.type == TokenType.STRING) {
-                                value = valueToken.value.text;
-                            } else {
-                                value = num.parse(valueToken.value.text);
-                            }
-                            params.putIfAbsent(key, () => value);
-                            if(_isNext([ TokenType.COMMA])) {
-                                _read();
-                            }
-                        } while(!_isNext([ TokenType.SCOPE_END ]));
-                        print(_read().value.text); // }
+                                final valueToken = _read();
+                                var value;
+                                if (valueToken.value.type == TokenType.STRING) {
+                                    value = valueToken.value.text;
+                                }
+                                else {
+                                    value = num.parse(valueToken.value.text);
+                                }
+                                params.putIfAbsent(key, () => value);
+                                if (_isNext([ TokenType.COMMA])) {
+                                    _read(expect: TokenType.COMMA);
+                                }
+                            } while (!_isNext([ TokenType.SCOPE_END]));
+                            _read(expect: TokenType.SCOPE_END); // }
 
-                        statements.add( new L10NStatement(filename, line, msgid, params: params));
-                    }
-                    _read();
-                    break;
+                            statements.add(
+                                new L10NStatement(filename, line, msgid, params: params));
+                            _read(expect: TokenType.RIGHT_BRACKET);
+                        }
+                        // l10n-Function call e.g. l10n(value)
+                        // No further processing - we ignore function calls
+                        else if(_isNext([TokenType.LEFT_BRACKET, TokenType.WORD, TokenType.RIGHT_BRACKET])) {
+                            _read(skip: 2, expect: TokenType.RIGHT_BRACKET);
+                        } else {
+                            throw ParserError("Syntax error! Unexpected l10n-Function-call on line $line!",
+                                filename, line);
+                        }
+                        break;
 
-                case TokenType.LINE:
-                    statements.add(new NewLineStatement(line));
-                    line++;
-                    _read();
-                    break;
+                    case TokenType.LINE:
+                        statements.add(new NewLineStatement(line));
+                        line++;
+                        _read();
+                        break;
 
-                default:
-                    _read();
-            }
-        };
-
+                    default:
+                        _read();
+                }
+            };
+        } on InvalidTokenException catch(e) {
+            throw ParserError("Invalid Token! Expected: ${e.expectedToken} but found: ${e.found}",
+                filename, line, e);
+        }
         return statements;
     }
 
@@ -116,10 +142,17 @@ class Parser {
     /// Returns the next [Token]
     ///
     /// In case of EOF it returns an empty [Optional]
-    Optional<Token>  _read({final int skip = 0}) {
+    Optional<Token>  _read({final int skip = 0, final TokenType expect  }) {
         _offset += 1 + skip;
         if (_offset < _tokens.length) {
+            final found = _tokens[_offset].type;
+            if(expect != null && found != expect) {
+                throw InvalidTokenException(expect,found);
+            }
             return new Optional.of(_tokens[_offset]);
+        }
+        if(expect != null) {
+            throw InvalidTokenException(expect,null);
         }
         return new Optional.empty();
     }

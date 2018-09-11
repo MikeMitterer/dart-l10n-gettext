@@ -42,7 +42,7 @@ main() async {
 
     // If you want to see some log outptut set "defaultLogLevel:"
     // to Level.FINE or Level.FINER
-    configLogging(show: Level.FINER);
+    configLogging(show: Level.INFO);
 
     final String source = new File("test/unit/_resources/test-l10n-login.dart").readAsStringSync();
 
@@ -93,30 +93,10 @@ main() async {
             final Parser parser = new Parser();
 
             final List<Token> tokens = lexer.scan(source);
-            //_logTokes(tokens);
+            _logTokes(tokens);
             
             final List<Statement> ast = parser.parse(filename, tokens);
-
-            ast.where((final Statement statement)
-                 => !(statement is NewLineStatement)).forEach( (final Statement statement) {
-                     if(statement is CommentStatement) {
-                         _logger.fine(statement.comment);
-                     }
-                     else if(statement is L10NStatement) {
-                         final params = List<String>();
-                         statement.params.forEach((final String key, final value) {
-                            params.add("$key:$value");
-                         });
-                         if(params.isEmpty) {
-                             _logger.fine("l10n('${statement.msgid}')");
-                         } else {
-                             _logger.fine("l10n('${statement.msgid}',{ ${params.join(", ")} })");
-                         }
-                     }
-                     else {
-                         _logger.fine(statement);
-                     }
-             });
+            _logStatements(ast);
 
             expect(ast.where((final Statement statement)
                 => !(statement is NewLineStatement)).length, equals(33));
@@ -145,39 +125,35 @@ main() async {
 
     }); // End of '' group
 
-    group('POT', () {
+    group('HTML', () {
         setUp(() {});
 
-        test('> Merge', () {
+        test('> extract only HTML-Part', () {
+            final startTag = r'<div class="mdl-dialog login-dialog1">';
+            final endTag = r'</div>';
+
+            final re = RegExp("${startTag}(?:\\s|.)*${endTag}",
+                multiLine: true, caseSensitive: false);
+
+            expect(re.hasMatch(source), isTrue);
+            expect(re.firstMatch(source).group(0).split("\n").length,35);
+
             final Lexer lexer = new Lexer();
             final Parser parser = new Parser();
-            final POT pot = new POT();
 
-            String filename = "test.dart";
-            final List<Token> tokens = lexer.scan(source);
+            final filename = "test.dart";
+            final htmlSource = re.firstMatch(source).group(0);
 
-            final List<Statement> statements = parser.parse(filename, tokens);
-            final List<POTBlock> blocks = collectPOTBlocks(statements);
-
-            pot.addBlocks(blocks);
-            pot.addBlocks(blocks);
-
-            pot.mergedBlocks.values.forEach((final MergedPOTBlock block) {
-                // Shows its output only it the loglevel is set to Level.FINE
-                block.visit(LogPOTVisitor);
-            });
-
-            expect(blocks.length, 13);
-
-            expect(pot.mergedBlocks.length, 13);
-            expect(pot.mergedBlocks.values.last.comments.length, 0);
-            expect(pot.mergedBlocks.values.last.statements.length, 2);
-            expect(pot.mergedBlocks.values.last.statements.first.msgid, "Test 13: Sign in");
-
-        }); // end of 'Merge' test
+            final List<Token> tokens = lexer.scan(htmlSource);
+            final List<Statement> ast = parser.parse(filename, tokens);
+            _logStatements(ast, onlyIf: (final Statement statement) => statement is L10NStatement);
+            
+            expect(ast.where((final Statement statement)
+                => (statement is L10NStatement)).length, equals(6));
+        }); // end of 'extract only HTML-Part' test
 
 
-    });
+    }); // End of '' group
 }
 
 void _logTokes(final List<Token> tokens) {
@@ -196,4 +172,30 @@ void _logTokes(final List<Token> tokens) {
                 break;
         }
     });
+}
+
+void _logStatements(final List<Statement> ast, { bool onlyIf(final Statement statement)}) {
+    final Logger _logger = new Logger("test.unit.parser._logStatements");
+
+    onlyIf ??= (final Statement statement) => !(statement is NewLineStatement);
+
+    ast.where(onlyIf).forEach( (final Statement statement) {
+            if(statement is CommentStatement) {
+                _logger.fine(statement.comment);
+            }
+            else if(statement is L10NStatement) {
+                final params = List<String>();
+                statement.params.forEach((final String key, final value) {
+                    params.add("$key:$value");
+                });
+                if(params.isEmpty) {
+                    _logger.fine("l10n('${statement.msgid}')");
+                } else {
+                    _logger.fine("l10n('${statement.msgid}',{ ${params.join(", ")} })");
+                }
+            }
+            else {
+                _logger.fine(statement);
+            }
+        });
 }
