@@ -20,5 +20,15 @@
    "@Your are [1age] years old": {
       "type": "text",
       "placeholders": {}
+   },
+   "Test 10: Password": "Test 10: Kennwort",
+   "@Test 10: Password": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Test 11: 12345678aA16#": "Test 11: abc#",
+   "@Test 11: 12345678aA16#": {
+      "type": "text",
+      "placeholders": {}
    }
 }

@@ -20,7 +20,9 @@ final Logger _logger = new Logger("l10n.arb");
 
 /// Iterates through dirs and generates a map of [MainMessage]s
 Future<Map<String, MainMessage>> scanDirsAndGenerateARBMessages(
-    MessageExtraction intlExtractor(), L10NMessageExtraction l10Extractor(),
+    MessageExtraction intlExtractor(),
+    L10NMessageExtraction l10Extractor(),
+    HTMLExtraction htmlExtractor(),
     final List<String> dirstoscan, final List<String> dirsToExclude) {
 
     Validate.notNull(intlExtractor());
@@ -29,28 +31,30 @@ Future<Map<String, MainMessage>> scanDirsAndGenerateARBMessages(
 
     final intlMessageExtractor = intlExtractor();
     final l10nMessageExtractor = l10Extractor();
+    final htmlMessageExtractor = htmlExtractor();
 
-    final allMessages = Map<String, MainMessage>(); // Map<dynamic, dynamic>(); // Map<String, MainMessage>();
-
-    // Dirs to scan has priority
-//    dirstoscan.forEach((final String dir) {
-//        if(dirsToExclude.contains(dir)) {
-//            dirsToExclude.removeWhere((final String dirToExclude) => dirsToExclude == dir);
-//        }
-//    });
+    final allMessages = Map<String, MainMessage>();
 
     final future = new Future<Map<String, MainMessage>>(() async {
         for (final String dir in dirstoscan) {
-            utils.iterateThroughDirSync(dir, [ ".dart" ], dirsToExclude, (final File file) {
+            utils.iterateThroughDirSync(dir, [ ".dart", ".html" ], dirsToExclude, (final File file) {
+                final extension = path.extension(file.path).toLowerCase();
+
                 _logger.info("  -> ${file.path}");
 
-                //final String filename = file.path;
+                if(extension == '.html') {
+                    Map<String, MainMessage> messages = htmlMessageExtractor.parseFile(file);
+                    allMessages.addAll(messages);
+                } else {
+                    Map<String, MainMessage> messages  = intlMessageExtractor.parseFile(file);
+                    allMessages.addAll(messages);
 
-                Map<String, MainMessage> messages  = intlMessageExtractor.parseFile(file);
-                allMessages.addAll(messages);
+                    messages = l10nMessageExtractor.parseFile(file);
+                    allMessages.addAll(messages);
 
-                messages = l10nMessageExtractor.parseFile(file);
-                allMessages.addAll(messages);
+                    messages = htmlMessageExtractor.parseFile(file);
+                    allMessages.addAll(messages);
+                }
             });
         }
 

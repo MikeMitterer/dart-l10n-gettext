@@ -91,6 +91,7 @@ class LoginDialog /* extends MaterialDialog*/ {
 
     //@override
     String template = """
+        <template>
         <div class="mdl-dialog login-dialog1">
             <form method="post" class="right mdl-form mdl-form-registration demo-registration">
                 <h5 class="mdl-form__title" translate='yes'>
@@ -126,5 +127,6 @@ class LoginDialog /* extends MaterialDialog*/ {
                 </div>
             </form>
         </div>
+        </template>
         """;
 }

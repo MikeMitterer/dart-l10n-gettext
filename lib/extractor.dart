@@ -23,9 +23,11 @@ import 'dart:io';
 import 'package:logging/logging.dart';
 
 import 'package:analyzer/analyzer.dart';
-import 'package:analyzer/dart/ast/standard_ast_factory.dart';
 import 'package:intl_translation/src/intl_message.dart';
+import 'package:path/path.dart' as path;
 
+import 'package:l10n/parser.dart' as l10n;
 
 part "extractor/L10NMessageExtraction.dart";
 part "extractor/L10NMessageExtractionException.dart";
+part "extractor/HTMLExtraction.dart";

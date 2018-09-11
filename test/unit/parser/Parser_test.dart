@@ -132,7 +132,8 @@ main() async {
             final startTag = r'<div class="mdl-dialog login-dialog1">';
             final endTag = r'</div>';
 
-            final re = RegExp("${startTag}(?:\\s|.)*${endTag}",
+            // [\\s\\S] matches anything including newline
+            final re = RegExp("${startTag}[\\s\\S]*${endTag}",
                 multiLine: true, caseSensitive: false);
 
             expect(re.hasMatch(source), isTrue);
@@ -151,7 +152,6 @@ main() async {
             expect(ast.where((final Statement statement)
                 => (statement is L10NStatement)).length, equals(6));
         }); // end of 'extract only HTML-Part' test
-
 
     }); // End of '' group
 }

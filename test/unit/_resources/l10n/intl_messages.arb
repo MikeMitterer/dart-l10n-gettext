@@ -1,5 +1,5 @@
 {
-   "@@last_modified": "2018-09-07T17:49:20.797185",
+   "@@last_modified": "2018-09-11T14:31:27.692512",
    "Hi Kotlin!": "Hi Kotlin!",
    "@Hi Kotlin!": {
       "type": "text",
@@ -17,6 +17,16 @@
    },
    "Your are [age] years old": "Your are [age] years old",
    "@Your are [age] years old": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Test 10: Password": "Test 10: Password",
+   "@Test 10: Password": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Test 11: 12345678aA16#": "Test 11: 12345678aA16#",
+   "@Test 11: 12345678aA16#": {
       "type": "text",
       "placeholders": {}
    }

@@ -65,10 +65,8 @@ class Application {
                             ..suppressWarnings = config.suppressWarnings
                         ;
                     },
-                    () {
-                        return L10NMessageExtraction()
-                        ;
-                    },
+                    () => L10NMessageExtraction(),
+                    () => HTMLExtraction(),
                     config.dirstoscan,config.excludeDirs);
 
                 arb.writeMessagesToOutputFile(Directory(config.outputDir), File(config.outputFile), allMessages);

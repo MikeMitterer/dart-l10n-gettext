@@ -22,6 +22,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "Hallo {?}-" : MessageLookupByLibrary.simpleMessage("Guten Morgen {?}-"),
     "Hello {\\name}-" : MessageLookupByLibrary.simpleMessage("Servus {\\name}"),
     "Hi Kotlin!" : MessageLookupByLibrary.simpleMessage("Servus Kotlin!"),
+    "Test 10: Password" : MessageLookupByLibrary.simpleMessage("Test 10: Kennwort"),
+    "Test 11: 12345678aA16#" : MessageLookupByLibrary.simpleMessage("Test 11: abc#"),
     "Your are [age] years old" : MessageLookupByLibrary.simpleMessage("Du bist [age] Jahre alt!")
   };
 }

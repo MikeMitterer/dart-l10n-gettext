@@ -20,10 +20,10 @@
 part of l10n.parser;
 
 abstract class Visitor {
-    void visitComment(final CommentStatement statement);
-    void visitL10n(final L10NStatement statement);
+    void visitComment(final CommentStatement statement) {}
+    void visitL10n(final L10NStatement statement) {}
 
-    void visitNetLine(final NewLineStatement statement) {}
+    void visitNewLine(final NewLineStatement statement) {}
 }
 
 /// Base interface for a gettext statements.
@@ -61,6 +61,10 @@ class L10NStatement extends Statement {
     void accept(final Visitor visitor) {
         visitor.visitL10n(this);
     }
+
+    @override
+    String toString() => "l10n('${msgid}'${params.isNotEmpty ? ', ... ' : ''})";
+
 }
 
 class NewLineStatement extends Statement {
@@ -69,6 +73,6 @@ class NewLineStatement extends Statement {
 
     @override
     void accept(final Visitor visitor) {
-        visitor.visitNetLine(this);
+        visitor.visitNewLine(this);
     }
 }
