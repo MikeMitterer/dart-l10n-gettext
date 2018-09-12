@@ -1,0 +1,14 @@
+# Rsync-Destination für dieses sample
+#
+#   - ssh ls2
+#   - cat ~/website/config/nginx/_template.conf.txt | sed -e 's/%example%/l10n4dart/' > ~/website/config/nginx/l10n4dart.conf
+#   - cat ~/website/config/nginx/l10n4dart.conf
+#   - sudo mkdir -p ~/website/data/example/l10n4dart
+#   - sudo chown ubuntu:ubuntu ~/website/data/example/l10n4dart
+#   - sudo chmod 775 ~/website/data/example/l10n4dart
+#   - ls -lad ~/website/data/example/l10n4dart
+#   - cd ~/website && docker-compose restart
+#
+RSYNC_DESTINATION=":~/website/data/example/l10n4dart/"
+EXAMPLE_URL="http://l10n4dart.example.mikemitterer.at/"
+
