@@ -1,9 +1,0 @@
-{
-   "@@last_modified": "2018-09-04T16:57:27.509930",
-   "@@locale": "de",
-   "abc": "abc",
-   "@abc": {
-      "type": "text",
-      "placeholders": {}
-   }
-}

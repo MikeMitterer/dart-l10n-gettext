@@ -19,8 +19,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "Code generation dir" : MessageLookupByLibrary.simpleMessage("Dart-Code Verzeichnis"),
-    "Dirs to scan" : MessageLookupByLibrary.simpleMessage("Dirs to scan"),
-    "Scanning" : MessageLookupByLibrary.simpleMessage("Scanning")
+    "First test" : MessageLookupByLibrary.simpleMessage("Erster Test"),
+    "Good morning [name]" : MessageLookupByLibrary.simpleMessage("Guten Morgen [name]!"),
+    "Second test" : MessageLookupByLibrary.simpleMessage("Zweiter Test")
   };
 }

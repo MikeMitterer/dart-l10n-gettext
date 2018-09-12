@@ -1,3 +1,124 @@
 {
-   "@@last_modified": "2018-09-06T17:20:58.923937"
+   "@@last_modified": "2018-09-11T14:52:37.586771",
+   "Code generation dir": "Code generation dir",
+   "@Code generation dir": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Dirs to scan": "Dirs to scan",
+   "@Dirs to scan": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Config-File": "Config-File",
+   "@Config-File": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Dirs to exclude": "Dirs to exclude",
+   "@Dirs to exclude": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Settings:": "Settings:",
+   "@Settings:": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "External commands:": "External commands:",
+   "@External commands:": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "not installed!": "not installed!",
+   "@not installed!": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Usage: mkl10n [options] <dir(s) to scan>": "Usage: mkl10n [options] <dir(s) to scan>",
+   "@Usage: mkl10n [options] <dir(s) to scan>": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Example:": "Example:",
+   "@Example:": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "mkl10n . - Generates lib/locale/messages.dart": "mkl10n . - Generates lib/locale/messages.dart",
+   "@mkl10n . - Generates lib/locale/messages.dart": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "mkl10n -l en,de . - Generates translation for en + de": "mkl10n -l en,de . - Generates translation for en + de",
+   "@mkl10n -l en,de . - Generates translation for en + de": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Shows this message": "Shows this message",
+   "@Shows this message": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Prints settings": "Prints settings",
+   "@Prints settings": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "locales - separated by colon, Sample: --locales en,de,es": "locales - separated by colon, Sample: --locales en,de,es",
+   "@locales - separated by colon, Sample: --locales en,de,es": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Libprefix for generated DART-File (library <prefix>.locale;)": "Libprefix for generated DART-File (library <prefix>.locale;)",
+   "@Libprefix for generated DART-File (library <prefix>.locale;)": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Defines where to place your locale-Dir": "Defines where to place your locale-Dir",
+   "@Defines where to place your locale-Dir": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Folder where .ARB-Files gets stored": "Folder where .ARB-Files gets stored",
+   "@Folder where .ARB-Files gets stored": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Exclude folders from scaning": "Exclude folders from scaning",
+   "@Exclude folders from scaning": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Suppress printing of warnings": "Suppress printing of warnings",
+   "@Suppress printing of warnings": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Mode to run the code generator in. Either release or debug": "Mode to run the code generator in. Either release or debug",
+   "@Mode to run the code generator in. Either release or debug": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "File where you want to store the generated Dart-Files (Usually inside lib)": "File where you want to store the generated Dart-Files (Usually inside lib)",
+   "@File where you want to store the generated Dart-Files (Usually inside lib)": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Ignore excluded folders": "Ignore excluded folders",
+   "@Ignore excluded folders": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Overwrites intl_<local> if it exists": "Overwrites intl_<local> if it exists",
+   "@Overwrites intl_<local> if it exists": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Scanning": "Scanning",
+   "@Scanning": {
+      "description": "In '_iterateThroughDirSync'",
+      "type": "text",
+      "placeholders": {}
+   }
 }

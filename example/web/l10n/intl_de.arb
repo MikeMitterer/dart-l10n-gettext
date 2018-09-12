@@ -1,0 +1,14 @@
+{
+   "@@last_modified": "2018-09-12T15:21:36.904016",
+   "@@locale": "de",
+   "Hi Mike": "Servus Mike",
+   "@Hi Mike": {
+      "type": "text",
+      "placeholders": {}
+   },
+  "My cat's name is 'Pebbles'": "Der Name meiner Katze ist 'Pebbles'!",
+  "@My cat's name is 'Pebbles'": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

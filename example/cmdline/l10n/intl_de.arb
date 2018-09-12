@@ -1,0 +1,19 @@
+{
+   "@@last_modified": "2018-09-12T08:44:19.922481",
+   "@@locale": "de",
+   "First test": "Erster Test",
+   "@First test": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Second test": "Zweiter Test",
+   "@Second test": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Good morning [name]": "Guten Morgen [name]!",
+   "@Good morning [name]": {
+      "type": "text",
+      "placeholders": {}
+   }
+}

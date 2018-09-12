@@ -1,0 +1,13 @@
+{
+   "@@last_modified": "2018-09-12T16:12:22.631239",
+   "Hi Mike": "Hi Mike",
+   "@Hi Mike": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "My cat's name is 'Pebbles'": "My cat's name is 'Pebbles'",
+   "@My cat's name is 'Pebbles'": {
+      "type": "text",
+      "placeholders": {}
+   }
+}

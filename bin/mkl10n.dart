@@ -2,7 +2,6 @@ library l10n.app;
 
 import 'dart:io';
 import 'dart:async';
-import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
 
@@ -37,7 +36,7 @@ part 'commands/ShellCommand.dart';
 part 'commands/commands.dart';
 
 class Application {
-    final Logger _logger = new Logger("l10n.Application");
+    // final Logger _logger = new Logger("l10n.Application");
 
     /// Commandline options
     final _options = new Options();
@@ -51,12 +50,14 @@ class Application {
 
             _configLogging(config.loglevel);
 
-            if (argResults[Options._ARG_HELP] || (config.dirstoscan.length == 0 && args.length == 0)) {
+            if (argResults[Options._ARG_HELP]) {
                 _options.showUsage();
 
             } else if(argResults[Options._ARG_SETTINGS]) {
                 config.printSettings(config.settings);
 
+            } else if(config.dirstoscan.isEmpty) {
+                _options.showUsage();
             }
             else {
                 final Map<String,MainMessage> allMessages = await arb.scanDirsAndGenerateARBMessages(
@@ -130,10 +131,15 @@ class Application {
 }
 
 void main(List<String> arguments) {
-
     findSystemLocale().then((final String locale) async {
         translate.locale = Intl.shortLocale(locale);
 
+        // Avoids error message:
+        //      LocaleDataException: Locale data has not been initialized,
+        //      call initializeDateFormatting(<locale>).
+        await initializeDateFormatting(locale);
+
+        // Initialize translation-table
         await initializeMessages(Intl.shortLocale(locale));
 
         final Application application = new Application();
