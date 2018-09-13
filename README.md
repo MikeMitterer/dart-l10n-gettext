@@ -1,5 +1,5 @@
 # l10n 
-> Easy to use generator for .arb-Files 
+> Easy to use generator for .arb-Files   
 > Helps if you want to translate your application
 
 ## l10n >= v2.x
@@ -11,7 +11,7 @@ This is a complete rewrite. **l10n** now fully supports `Intl.message` and .ARB-
    
 Now `mkl10n` should be available on the command-line.
 
-Go to your package you want to translate - say to 'German'
+Go to the package you want to translate.
 
 ```bash
     mkl10n -l de .
@@ -74,7 +74,7 @@ In my opinion `Intl.message` is to complex for most situations so I also support
 
 ```dart
     // Yup - this prints 'Second test'
-    // And after you have translated the intl_de.arb to German it print 'Zweiter Test' 
+    // And after you have translated the intl_de.arb to German it prints 'Zweiter Test' 
     print(l10n("Second test"));
 ```
 
@@ -92,13 +92,13 @@ Sure!
 </main>
 ```
 That's how it works in HTML. Wrap the string you want to translate with `_(...)` 
-(You can also wrap it in `l10n(...)`)
+You can also wrap it with `l10n(...)` but I prefer `_(...)`
 
-It get's even better - if you have a dart-File with HTML-Included like [so](https://github.com/MikeMitterer/dart-l10n-gettext/blob/master/test/unit/_resources/test-l10n-login.dart#L93-L130):
+It get's even better - if you have a dart-File with [HTML-Included](https://github.com/MikeMitterer/dart-l10n-gettext/blob/master/test/unit/_resources/test-l10n-login.dart#L93-L130) like [so](https://github.com/MikeMitterer/dart-l10n-gettext/blob/master/test/unit/_resources/test-l10n-login.dart#L93-L130)  
 it's also fully scanned by `mkl10n` 
 
 ## Flutter
-This *should* seamlessly work with Flutter. *Should* because I haven't tested it with Flutter
+This *should* seamlessly work with Flutter. *Should* because I haven't tested it with Flutter  
 If it fails please write file an issue report.   
 
 ## If you have problems
