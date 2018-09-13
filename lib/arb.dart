@@ -111,8 +111,10 @@ void generateTranslationFile(
 
     final fullPath = File(path.join(dir.path,file.path));
 
-    if(fullPath.existsSync() && overwriteLocaleFile == false && suppressWarning == false) {
-        _logger.warning(l10n("Localized file already exists! ([path])",{ "path" : fullPath.path }));
+    if(fullPath.existsSync() && overwriteLocaleFile == false) {
+        if(!suppressWarning) {
+            _logger.warning(l10n("Localized file already exists! ([path])",{ "path" : fullPath.path }));
+        }
         return;
     }
 

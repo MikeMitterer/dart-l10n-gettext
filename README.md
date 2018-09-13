@@ -1,171 +1,112 @@
-l10n / (gettext-oriented) PO-File Generator
--------------------------------------------
-> Translate With GetText PO and POT Files
+# l10n 
+> Easy to use generator for .arb-Files 
+> Helps if you want to translate your application
 
-## Important
-Since v1.x xgettext creates `locale/templates/LC_MESSAGES/messages.gettext.pot` for testing purposes only!!!  
+## l10n >= v2.x
+This is a complete rewrite. **l10n** now fully supports `Intl.message` and .ARB-Files
 
-**`mkl10n` does'nt use xgettext anymore - instead the `l10n.parser`-package creates it's own `.pot`-File!**
+## Usage
 
-## Before your start:
-   - [A Quick Gettext Tutorial](http://www.labri.fr/perso/fleury/posts/programming/a-quick-gettext-tutorial.html)
+   - First install l10n with `pub global activate l10n`
    
-### Windows
-**Sorry guys** - this is App is tested under Mac-OSX but should work on Linux without problems.  
+Now `mkl10n` should be available on the command-line.
 
-## Supported syntax (.dart + .html)
-`.dart`-File:
-```dart
-    // Translator: Comment I
-    _("String to translate");
-    l10n("String to translate");
+Go to your package you want to translate - say to 'German'
 
-    // Translator: Comment II
-    _("String to translate", "Plural form of String");
-    l10n("String to translate", "Plural form of String");
-    
-    // Translator: Comment III
-    print("Hallo ${_('world')}!");
-    
-    // Translator: Comment IV
-    print("Hallo ${translate(_('world'))}!");
-    
-    template = """
-        <span translate='yes'>
-            <!-- Translator: Comment V -->
-            _("String to translate", "Plural form of String");
-            l10n("String to translate", "Plural form of String");
-        </span>
-    """
-```
-
-The last option has to be used for HTML-"String-Blocks" (`"""` | `'''`)
-    
-## Install 
 ```bash
-$ pub global activate l10n
+    mkl10n -l de .
 ```
 
-## System requirements
-Install the following cmdline-Applications:
-* xgettext (**Depreciated** since 1.x!)
-* msginit
-* msgmerge
+*Yes - that's it!*
 
-To verify it they are on your system type:
+Your .arb-Files are in `l10n`. You should see `intl_messages.arb` and `intl_de.arb`
+
+*Translate `intl_de.arb`*
+
 ```bash
-    mkl10n -s 
-```
-If you get an error message - do the following:
-```bash
-    $ brew install gettext
-    # on Linux: apt-get install gettext
+    # Run this command again
+    mkl10n -l de .
 ```
 
-## How to use it
-[![Screenshot][1])](https://youtu.be/qj4W-iPKP7s)  
-(You have to watch it in 1080p - sorry! Better screencast will follow)
+Your generated dart-Files are in `lib/_l10`. You should see `messages_all.dart` and `messages_de.dart`
 
-   - Download the example from `samples/cmdline`
-   - Run `pub update`
-   - Run `mkl10n .`  
-   Generates the required .po,.pot files and the lib/locale/messages.dart
-   - Translate the generated .po-File (`locale/<your localr>/messages.po`)
-   - Run `mkl10n .` again
-   
-Run `dart bin/cmdline.dart -s` - you should see the translated strings
-
-Play with `dart bin/cmdline.dart -l de -s` and `dart bin/cmdline.dart -l en -s`   
-
-**This is the most important code-part:**  
-_cmdline/Config.dart_
+Import `messages_all.dart` in your app.
 
 ```dart
-    Map<String,String> get settings {
-        final Map<String,String> settings = new Map<String,String>();
+// Include this if you run your app in the browser
+import 'package:intl/intl_browser.dart';
 
-        // Everything within l10n(...) will be in your .po File
-        settings[translate(l10n("loglevel"))]              = loglevel;
+// Include this if you run your app on the cmdline
+import 'package:intl/intl_standalone.dart';
 
-        // 'translate' will translate your ID/String 
-        settings[translate(l10n("Config folder"))]         = configfolder;
-        settings[translate(l10n("Config file"))]           = configfile;
-        settings[translate(l10n("Locale"))]                = locale;
+import 'package:l10n/l10n.dart';
+import 'package:<your package>/_l10n/messages_all.dart';
 
+Future main() async {
+    // Determine your locale
+    final String locale = await findSystemLocale();
+    final String shortLocale = Intl.shortLocale(locale);
 
-        if(dirstoscan.length > 0) {
-            settings[translate(l10n("Dirs to scan"))]      = dirstoscan.join(", ");
-        }
+    // Avoids error message:
+    //      LocaleDataException: Locale data has not been initialized,
+    //      call initializeDateFormatting(<locale>).
+    await initializeDateFormatting(locale);
 
-        return settings;
-    }
+    // Initialize translation-table
+    await initializeMessages(shortLocale);
 
+    // Here comes you app-code
+    // ...
+}
 ```
 
-### How to use it with Material Design 4 Dart
+On [GitHub](https://github.com/MikeMitterer/dart-l10n-gettext/tree/master/example) you can find a
+cmdline-example and a browser-example.
 
-Check out this sample on GitHub:  
-   - [mdld_translate](https://github.com/MikeMitterer/dart-material-design-lite-site/tree/master/samples/mdld_translate)
-   
-This sample also shows the usage with Dice - the dependency injection framework
-   
-HTML-Translation: (_index.html_)
-```html
-    <!-- /* Comment added from HTML-File */ -->
-    <span translate>_('Translate me')</span>
-```
+[Browser-Example Live-Version](http://l10n4dart.example.mikemitterer.at/)
+This is the most simple version of a translated HTML-page I could think of...
 
-## Sub-Translations
-Since 0.11.0 Sub-Translations are possible - here is the explanation:
- 
-```
-locale/de/.../messages.po: 
-    msgid: "Servermessage {{statuscode-400}}."
-    msgstr: "Fehlerhafte Anfrage"
-    
-locale/en/.../messages.po: 
-    msgid: "Servermessage {{statuscode-400}}."
-    msgstr: ""
-    
-```
+## More details
+As mentioned above `Intl.message` is fully supported. More infos can be found on [pub](https://pub.dartlang.org/packages/intl#messages)
+
+### Hey but there is more!
+In my opinion `Intl.message` is to complex for most situations so I also support my own `l10n` syntax.
 
 ```dart
-    final int major = 400;
-    
-    // This produces a msgid "Servermessage {{status}}." in your PO-File.
-    // You can translate it as usual 
-    final L10N l = new L10N( "Servermessage {{status}}.", { "status"  : "{{statuscode-${major}}}" });
-    expect(l.message,"Servermessage {{statuscode-400}}.");
-
-    // No translation for en - so fallback to msgid
-    expect(translate(l),"Servermessage {{statuscode-400}}.");
-
-    // But what we really want is what I call Sub-Translation
-    translate.locale = "de";
-    expect(translate(l),"Fehlerhafte Anfrage");
-    
-    /* 
-    Internal way of sub-translation: 
-      Replace vars in L10N message -> Servermessage {{statuscode-400}}.
-      Check if there is a translation - return it, if not, return the msgid
-    */
+    // Yup - this prints 'Second test'
+    // And after you have translated the intl_de.arb to German it print 'Zweiter Test' 
+    print(l10n("Second test"));
 ```
 
-<b>Drawback</b><br>
-You have to add the msgid "Servermessage {{statuscode-400}}." by hand to your <strong>POT</strong>-File.<br>
-The rest is done be the nice merging-feature of l10n/msgmerge 
+Check out the source on [GitHub](https://github.com/MikeMitterer/dart-l10n-gettext/blob/master/example/cmdline/bin/cmdline.dart)  
 
+But hey - we also have `HTML-Files`...
+
+Sure!
+```html 
+<main class="cols">
+   <div>
+       <div class="translate">_("Hi Mike")</div>
+       <div class="translate">_("My cat's name is 'Pebbles'")</div>
+   </div>
+</main>
+```
+That's how it works in HTML. Wrap the string you want to translate with `_(...)` 
+(You can also wrap it in `l10n(...)`)
+
+It get's even better - if you have a dart-File with HTML-Included like [so](https://github.com/MikeMitterer/dart-l10n-gettext/blob/master/test/unit/_resources/test-l10n-login.dart#L93-L130):
+it's also fully scanned by `mkl10n` 
+
+## Flutter
+This *should* seamlessly work with Flutter. *Should* because I haven't tested it with Flutter
+If it fails please write file an issue report.   
 
 ## If you have problems
-* [Issues][2]
+* [Issues](https://github.com/MikeMitterer/dart-l10n-gettext/issues)
 
-## Links
-   - [GNU gettext utilities](https://www.gnu.org/software/gettext/manual/gettext.html)
-   - [POEditor](https://poeditor.com/)
-   
 ### License
 
-    Copyright 2017 Michael Mitterer (office@mikemitterer.at), 
+    Copyright 2018 Michael Mitterer (office@mikemitterer.at), 
     IT-Consulting and Development Limited, Austrian Branch
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -181,8 +122,12 @@ The rest is done be the nice merging-feature of l10n/msgmerge
     governing permissions and limitations under the License.
     
     
-If this plugin is helpful for you - please [(Circle)](http://gplus.mikemitterer.at/) me.
+### Links
 
-[1]: https://raw.githubusercontent.com/MikeMitterer/dart-l10n-gettext/master/doc/_resources/screenshot.png
-[2]: https://github.com/MikeMitterer/dart-l10n-gettext/issues
+   - [ARB Specs](https://github.com/googlei18n/app-resource-bundle/wiki/ApplicationResourceBundleSpecification)
+   - [Localize Flutter](https://proandroiddev.com/flutter-localization-step-by-step-30f95d06018d)    
+   - [Application Resource Bundle Specification](https://github.com/googlei18n/app-resource-bundle/wiki/ApplicationResourceBundleSpecification)
+   - [Gen from ARB](https://github.com/dart-lang/intl_translation/blob/master/bin/generate_from_arb.dart)
+   - [Extract to ARB](https://github.com/dart-lang/intl_translation/blob/master/bin/extract_to_arb.dart)
+   
 

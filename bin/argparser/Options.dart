@@ -31,7 +31,7 @@ class Options {
 
         print("");
         print(l10n("Example:"));
-        print("    " + l10n("mkl10n . - Generates lib/locale/messages.dart"));
+        print("    " + l10n("mkl10n . - Erstellt lib/_l10/messages_*.dart"));
         print("    " + l10n("mkl10n -l es,de . - Generates translation for es + de"));
         print("");
     }

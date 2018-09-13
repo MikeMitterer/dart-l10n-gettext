@@ -16,7 +16,7 @@ class Config {
     static const String _KEY_DART_FILENAME              = "dartfilename";
     static const String _KEY_LIB_PREFIX                 = "libprefix";
     static const String _KEY_LOGLEVEL                   = "loglevel";
-    static const String _KEY_LOCALES                    = "locales";
+    static const String _KEY_LOCALES_TO_GENERATE        = "locales";
 //    static const String _KEY_DART_PATH                  = "dartpath";
     static const String _KEY_SYSTEM_LOCALE              = "systemlocale";
     static const String _KEY_EXCLUDE_DIRS               = Options._ARG_EXCLUDE;
@@ -51,7 +51,7 @@ class Config {
 
 //        _settings[_KEY_DART_PATH]               = 'lib';
 
-        _settings[_KEY_LOCALES]                 = Intl.shortLocale(systemLocale);
+        _settings[_KEY_LOCALES_TO_GENERATE]                 = Intl.shortLocale(systemLocale);
         _settings[_KEY_SYSTEM_LOCALE]           = systemLocale;
 
         _settings[_KEY_EXCLUDE_DIRS]            = 'test';
@@ -80,7 +80,7 @@ class Config {
 
     String get loglevel => _settings[_KEY_LOGLEVEL];
 
-    String get locales => _settings[_KEY_LOCALES];
+    String get localesToGenerate => _settings[_KEY_LOCALES_TO_GENERATE];
 
     String get systemLocale => _settings[_KEY_SYSTEM_LOCALE];
 
@@ -113,7 +113,7 @@ class Config {
 
         settings[l10n("libprefix (${Config._KEY_LIB_PREFIX})")]       = libprefix;
         settings[l10n("loglevel")]                                    = loglevel;
-        settings[l10n("locales")]                                     = locales;
+        settings[l10n("locales to generate")]                         = localesToGenerate;
         settings[l10n("System-Locale")]                               = systemLocale;
         settings[l10n("Suppress Warnings")]                           = suppressWarnings ? l10n('yes') : l10n('no');
         settings[l10n("Output dir for .ARB-Files")]                   = outputDir;
@@ -175,7 +175,7 @@ class Config {
         }
 
         if(_argResults[Options._ARG_LOCALES] != null) {
-            _settings[_KEY_LOCALES] = _argResults[Options._ARG_LOCALES];
+            _settings[_KEY_LOCALES_TO_GENERATE] = _argResults[Options._ARG_LOCALES];
         }
 
         if(_argResults[Options._ARG_EXCLUDE] != null) {
@@ -225,7 +225,7 @@ class Config {
                 else {
                     _settings[key] = map[key].toString();
                 }
-                print(l10n("Found '[key]' in [file]: [value]",
+                print(l10n("Found [key] in [file]: [value]",
                     {"key" : key, "file" : configfile, "value" : map[key] }));
 
                 foundSetting = true;

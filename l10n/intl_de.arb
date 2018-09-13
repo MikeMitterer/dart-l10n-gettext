@@ -1,7 +1,7 @@
 {
-   "@@last_modified": "2018-09-13T14:31:04.833410",
+   "@@last_modified": "2018-09-13T15:04:29.635",
    "@@locale": "de",
-   "Dirs to scan": "Dirs to scan",
+   "Dirs to scan": "Zu scannende Verzeichnisse",
    "@Dirs to scan": {
       "type": "text",
       "placeholders": {}
@@ -16,8 +16,8 @@
       "type": "text",
       "placeholders": {}
    },
-   "locales": "locales",
-   "@locales": {
+   "locales to generate": "Zu generierende Übersetzungsfiles",
+   "@locales to generate": {
       "type": "text",
       "placeholders": {}
    },
@@ -26,142 +26,147 @@
       "type": "text",
       "placeholders": {}
    },
-   "Suppress Warnings": "Suppress Warnings",
+   "Suppress Warnings": "Warnungen unterdrücken",
    "@Suppress Warnings": {
       "type": "text",
       "placeholders": {}
    },
-   "yes": "yes",
+   "yes": "ja",
    "@yes": {
       "type": "text",
       "placeholders": {}
    },
-   "no": "no",
+   "no": "nein",
    "@no": {
       "type": "text",
       "placeholders": {}
    },
-   "Output dir for .ARB-Files": "Output dir for .ARB-Files",
+   "Output dir for .ARB-Files": "Ausgabeverzeichnis für die .arb-Files",
    "@Output dir for .ARB-Files": {
       "type": "text",
       "placeholders": {}
    },
-   "Output file": "Output file",
+   "Output file": "Ausgabedatei",
    "@Output file": {
       "type": "text",
       "placeholders": {}
    },
-   "Use deferred loading": "Use deferred loading",
+   "Use deferred loading": "Verwende 'deferred loading'",
    "@Use deferred loading": {
       "type": "text",
       "placeholders": {}
    },
-   "Code generation mode": "Code generation mode",
+   "Code generation mode": "Modus für die Kodegenerierung",
    "@Code generation mode": {
       "type": "text",
       "placeholders": {}
    },
-   "Code generation dir": "Code generation dir",
+   "Code generation dir": "Ausgabeverzeichnis für die generierten .dart-Files",
    "@Code generation dir": {
       "type": "text",
       "placeholders": {}
    },
-   "Ignore excluded folders": "Ignore excluded folders",
+   "Ignore excluded folders": "Ignorieren der 'excluded' Verzeichnisse",
    "@Ignore excluded folders": {
       "type": "text",
       "placeholders": {}
    },
-   "Overwrite intl_<locale>": "Overwrite intl_<locale>",
+   "Overwrite intl_<locale>": "Überschreiben von intl_<locale>",
    "@Overwrite intl_<locale>": {
       "type": "text",
       "placeholders": {}
    },
-   "Dirs to exclude": "Dirs to exclude",
+   "Dirs to exclude": "'exclude' Verzeichnisse",
    "@Dirs to exclude": {
       "type": "text",
       "placeholders": {}
    },
-   "Settings:": "Settings:",
+   "Settings:": "Einstellungen:",
    "@Settings:": {
       "type": "text",
       "placeholders": {}
    },
-   "Found '[key]' in [file]: [value]": "Found '[key]' in [file]: [value]",
-   "@Found '[key]' in [file]: [value]": {
+   "Found [key] in [file]: [value]": "'[key]' in [file] gefunden: [value]",
+   "@Found [key] in [file]: [value]": {
       "type": "text",
       "placeholders": {}
    },
-   "Usage: mkl10n [options] <dir(s) to scan>": "Usage: mkl10n [options] <dir(s) to scan>",
+   "Usage: mkl10n [options] <dir(s) to scan>": "Verwendung: mkl10n [options] <scan-Verzeichnis>",
    "@Usage: mkl10n [options] <dir(s) to scan>": {
       "type": "text",
       "placeholders": {}
    },
-   "Example:": "Example:",
+   "Example:": "Beispiel:",
    "@Example:": {
       "type": "text",
       "placeholders": {}
    },
-   "mkl10n . - Generates lib/locale/messages.dart": "mkl10n . - Generates lib/locale/messages.dart",
+   "mkl10n . - Generates lib/locale/messages.dart": "mkl10n . - E lib/locale/messages.dart",
    "@mkl10n . - Generates lib/locale/messages.dart": {
       "type": "text",
       "placeholders": {}
    },
-   "mkl10n -l es,de . - Generates translation for es + de": "mkl10n -l es,de . - Generates translation for es + de",
+   "mkl10n -l es,de . - Generates translation for es + de": "mkl10n -l es,de . - Erstellt Übersetzung für es + de",
    "@mkl10n -l es,de . - Generates translation for es + de": {
       "type": "text",
       "placeholders": {}
    },
-   "Shows this message": "Shows this message",
+   "Shows this message": "Zeigt diese Message an",
    "@Shows this message": {
       "type": "text",
       "placeholders": {}
    },
-   "Prints settings": "Prints settings",
+   "Prints settings": "Gibt die Settings aus",
    "@Prints settings": {
       "type": "text",
       "placeholders": {}
    },
-   "locales - separated by colon, Sample: --locales en,de,es": "locales - separated by colon, Sample: --locales en,de,es",
+   "locales - separated by colon, Sample: --locales en,de,es": "locales - Getrennt durch Beistrich, Beispiel: --locales en,de,es",
    "@locales - separated by colon, Sample: --locales en,de,es": {
       "type": "text",
       "placeholders": {}
    },
-   "Folder where .ARB-Files gets stored": "Folder where .ARB-Files gets stored",
+   "Folder where .ARB-Files gets stored": "Verzeichnis in dem die .arb-Files erstellt werden",
    "@Folder where .ARB-Files gets stored": {
       "type": "text",
       "placeholders": {}
    },
-   "Exclude folders from scaning": "Exclude folders from scaning",
+   "Exclude folders from scaning": "'exclude'-Verzeichnis beim Scan",
    "@Exclude folders from scaning": {
       "type": "text",
       "placeholders": {}
    },
-   "Suppress printing of warnings": "Suppress printing of warnings",
+   "Suppress printing of warnings": "Warnings unterdrücken",
    "@Suppress printing of warnings": {
       "type": "text",
       "placeholders": {}
    },
-   "Mode to run the code generator in. Either release or debug": "Mode to run the code generator in. Either release or debug",
+   "Mode to run the code generator in. Either release or debug": "Mode für den Kode-Generator. Either release or debug",
    "@Mode to run the code generator in. Either release or debug": {
       "type": "text",
       "placeholders": {}
    },
-   "Folder where you want to store the generated Dart-Files (Usually inside lib)": "Folder where you want to store the generated Dart-Files (Usually inside lib)",
+   "Folder where you want to store the generated Dart-Files (Usually inside lib)": "Verzeichnis für die generierten Dart-Files (Gewöhnlich lib/_l10)",
    "@Folder where you want to store the generated Dart-Files (Usually inside lib)": {
       "type": "text",
       "placeholders": {}
    },
-   "Overwrites intl_<local> if it exists": "Overwrites intl_<local> if it exists",
+   "Overwrites intl_<local> if it exists": "Überschreibt intl_<locale> wenn das File existiert",
    "@Overwrites intl_<local> if it exists": {
       "type": "text",
       "placeholders": {}
    },
-   "Localized file already exists! ([path])": "Localized file already exists! ([path])",
+  "Overwrite system locale (demonstration only)": "System-Locale überschreiben (demo-only)",
+   "@Overwrite system locale (demonstration only)": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Localized file already exists! ([path])": "Übersetztes files existiert bereits! ([path])",
    "@Localized file already exists! ([path])": {
       "type": "text",
       "placeholders": {}
    },
-   "Scanning": "Scanning",
+   "Scanning": "Durchsuche",
    "@Scanning": {
       "description": "In '_iterateThroughDirSync'",
       "type": "text",

@@ -14,7 +14,8 @@
     # Creates .arb-files for Tests
     #   -a Folder for generated .ARB-Files
     #   -g Folder for generated .dart-Files
-    #   -i Inore excluded Folders (by default 'test' is excluded!)       
+    #   -i Inore excluded Folders (by default 'test' is excluded!)
+    #   -f [optional] Overwrites generated intl_<locale>-File       
     #   test/unit/l10n/ - This folder get's scanned
     mkl10n -a test/unit/_resources/l10n -g test/unit/_resources -i test/unit/l10n/            
     

@@ -1,5 +1,5 @@
 {
-   "@@last_modified": "2018-09-13T14:31:04.821095",
+   "@@last_modified": "2018-09-13T15:28:44.196018",
    "Dirs to scan": "Dirs to scan",
    "@Dirs to scan": {
       "type": "text",
@@ -15,8 +15,8 @@
       "type": "text",
       "placeholders": {}
    },
-   "locales": "locales",
-   "@locales": {
+   "locales to generate": "locales to generate",
+   "@locales to generate": {
       "type": "text",
       "placeholders": {}
    },
@@ -85,8 +85,8 @@
       "type": "text",
       "placeholders": {}
    },
-   "Found '[key]' in [file]: [value]": "Found '[key]' in [file]: [value]",
-   "@Found '[key]' in [file]: [value]": {
+   "Found [key] in [file]: [value]": "Found [key] in [file]: [value]",
+   "@Found [key] in [file]: [value]": {
       "type": "text",
       "placeholders": {}
    },
@@ -100,8 +100,8 @@
       "type": "text",
       "placeholders": {}
    },
-   "mkl10n . - Generates lib/locale/messages.dart": "mkl10n . - Generates lib/locale/messages.dart",
-   "@mkl10n . - Generates lib/locale/messages.dart": {
+   "mkl10n . - Erstellt lib/_l10/messages_*.dart": "mkl10n . - Erstellt lib/_l10/messages_*.dart",
+   "@mkl10n . - Erstellt lib/_l10/messages_*.dart": {
       "type": "text",
       "placeholders": {}
    },
@@ -152,6 +152,11 @@
    },
    "Overwrites intl_<local> if it exists": "Overwrites intl_<local> if it exists",
    "@Overwrites intl_<local> if it exists": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Overwrite system locale (demonstration only)": "Overwrite system locale (demonstration only)",
+   "@Overwrite system locale (demonstration only)": {
       "type": "text",
       "placeholders": {}
    },

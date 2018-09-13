@@ -41,7 +41,7 @@ class Application {
         try {
             final ArgResults argResults = _options.parse(args);
             final Config config = new Config(argResults,locale);
-
+            
             _configLogging(config.loglevel);
 
             if (argResults[Options._ARG_HELP]) {
@@ -66,7 +66,7 @@ class Application {
 
                 arb.writeMessagesToOutputFile(Directory(config.outputDir), File(config.outputFile), allMessages);
 
-                final List<String> locales = config.locales.split(',')
+                final List<String> locales = config.localesToGenerate.split(',')
                     .map((final String locale) => locale.trim()).toList();
 
                 locales.forEach((final String locale) {
@@ -136,10 +136,7 @@ void main(List<String> arguments) {
         await initializeMessages(Intl.shortLocale(locale));
 
         final Application application = new Application();
-        application.run( arguments, locale );
+        await application.run( arguments, locale );
     });
-
-    /// only for testing
-    // final L10N l1 = const L10N("Ein TEST - 290714 1648");
 }
 
