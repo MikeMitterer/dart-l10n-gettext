@@ -27,6 +27,15 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+            steps {
+                ansiColor('xterm') {
+                    sh './deploy-samples.sh -d browser'
+                    sh './deploy-samples.sh -p browser'
+                }
+            }
+        }
+
     }
 }
                        
