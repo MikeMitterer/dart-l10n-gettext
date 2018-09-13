@@ -33,7 +33,7 @@ pipeline {
                     sh './deploy-samples.sh -x browser'
                     sh './deploy-samples.sh -u browser'
                     sh './deploy-samples.sh -d browser'
-                    sh './deploy-samples.sh -p browser'
+                    sh './deploy-samples.sh -p browser --force'
                 }
             }
         }
