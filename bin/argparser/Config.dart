@@ -5,9 +5,8 @@ part of l10n.app;
  * Most of these configs can be overwritten by commandline args.
  */
 class Config {
-    final Logger _logger = new Logger("mkl10llocale.Config");
+    // final Logger _logger = new Logger("mkl10llocale.Config");
 
-    static const String _KEY_LOCALE_DIR                 = "localeDir";
     static const String _KEY_TEMPLATES_DIR              = "templatesDir";
     static const String _KEY_HEADER_TEMPLATE            = "headertemplate";
     static const String _KEY_POT_DIR                    = "potdir";
@@ -36,7 +35,6 @@ class Config {
 
     Config(this._argResults,final String systemLocale) {
 
-        _settings[_KEY_LOCALE_DIR]              = 'locale';
         _settings[_KEY_TEMPLATES_DIR]           = 'templates';
         _settings[_KEY_HEADER_TEMPLATE]         = 'potheader.tpl';
         _settings[_KEY_POT_DIR]                 = 'templates/LC_MESSAGES';
@@ -74,24 +72,6 @@ class Config {
     }
 
     List<String> get dirstoscan => _argResults.rest;
-
-    /// Something like: locale/templates/LC_MESSAGES
-    String get potdir => "${_settings[_KEY_LOCALE_DIR]}/${_settings[_KEY_POT_DIR]}";
-
-    /// Where the pot-header-template is stored
-    String get templatesdir => "${_settings[_KEY_LOCALE_DIR]}/${_settings[_KEY_TEMPLATES_DIR]}";
-
-    /// Filename for Header-Template
-    String get headerTemplateFile => "$templatesdir/${_settings[_KEY_HEADER_TEMPLATE]}";
-
-    /// Something like: locale/templates/LC_MESSAGES/messages.pot
-    String get potfile => "$potdir/${_settings[_KEY_POT_FILENAME]}";
-
-    /// Something like: locale/en/LC_MESSAGES/messages.po
-    String getPOFile(final String locale) => "${_settings[_KEY_LOCALE_DIR]}/$locale/LC_MESSAGES/${_settings[_KEY_PO_FILENAME]}";
-
-    /// Something like: locale/messages.json
-    String get jsonfile => "${_settings[_KEY_LOCALE_DIR]}/${_settings[_KEY_JSON_FILENAME]}";
 
     // Something like: locale/messages.dart
     //String get dartfile => "${_settings[_KEY_DART_PATH]}/${_settings[_KEY_LOCALE_DIR]}/${_settings[_KEY_DART_FILENAME]}";
@@ -131,24 +111,19 @@ class Config {
         
         settings[l10n("Config-File")]  = configfile;
 
-        settings["POT-File"]                                    = potfile;
-        settings["Header-Template"]                             = headerTemplateFile;
-        settings["PO-File"]                                     = getPOFile("<locale>");
-        settings["JSON-File"]                                   = jsonfile;
-        //settings["DART-File"]                                   = dartfile;
-        settings["libprefix (${Config._KEY_LIB_PREFIX})"]       = libprefix;
-        settings["loglevel"]                                    = loglevel;
-        settings["locales"]                                     = locales;
-        settings["System-Locale"]                               = systemLocale;
-        settings["Suppress Warnings"]                           = suppressWarnings.toString();
-        settings["Output dir for .ARB-Files"]                   = outputDir;
-        settings["Output file"]                                 = outputFile;
-        settings["Use deferred loading"]                        = useDeferredLoading ? 'yes' : 'no';
-        settings["Code generation mode"]                        = codegenMode;
-        settings[Intl.message("Code generation dir")]           = codegenDir;
-        settings["Code generation mode"]                        = codegenMode;
-        settings["Ignore excluded folders"]                     = ignoreExclude ? 'yes' : 'no';
-        settings["Overwrite intl_<locale>"]                     = overwriteLocaleFile ? 'yes' : 'no';
+        settings[l10n("libprefix (${Config._KEY_LIB_PREFIX})")]       = libprefix;
+        settings[l10n("loglevel")]                                    = loglevel;
+        settings[l10n("locales")]                                     = locales;
+        settings[l10n("System-Locale")]                               = systemLocale;
+        settings[l10n("Suppress Warnings")]                           = suppressWarnings ? l10n('yes') : l10n('no');
+        settings[l10n("Output dir for .ARB-Files")]                   = outputDir;
+        settings[l10n("Output file")]                                 = outputFile;
+        settings[l10n("Use deferred loading")]                        = useDeferredLoading ? l10n('yes') : l10n('no');
+        settings[l10n("Code generation mode")]                        = codegenMode;
+        settings[l10n("Code generation dir")]                         = codegenDir;
+        settings[l10n("Code generation mode")]                        = codegenMode;
+        settings[l10n("Ignore excluded folders")]                     = ignoreExclude ? l10n('yes') : l10n('no');
+        settings[l10n("Overwrite intl_<locale>")]                     = overwriteLocaleFile ? l10n('yes') : l10n('no');
 
         if(dirstoscan.length > 0) {
             settings[(Intl.message("Dirs to scan"))] = dirstoscan.join(", ");
@@ -180,18 +155,6 @@ class Config {
         });
 
         print("");
-
-        // You will see this comment in the .po/.pot-File
-        print(l10n("External commands:"));
-        [ xgettext, msginit, msgmerge ].forEach((final ShellCommand command) async {
-            String exe = l10n("not installed!");
-            try {
-                exe = await command.executable;
-
-            } on StateError catch(_) {}
-
-            print("    ${(command.name + ':').padRight(maxKeyLength + 1)} ${exe}");
-        });
     }
 
     // -- private -------------------------------------------------------------
@@ -211,25 +174,9 @@ class Config {
             _settings[_KEY_LOGLEVEL] = _argResults[Options._ARG_LOGLEVEL];
         }
 
-        if(_argResults[Options._ARG_LIB_PREFIX] != null) {
-            _settings[_KEY_LIB_PREFIX] = _argResults[Options._ARG_LIB_PREFIX];
-        }
-
-        if(_argResults[Options._ARG_LOCALE_DIR] != null) {
-            _settings[_KEY_LOCALE_DIR] = "${checkPath(_argResults[Options._ARG_LOCALE_DIR])}/${_settings[_KEY_LOCALE_DIR]}";
-        }
-
         if(_argResults[Options._ARG_LOCALES] != null) {
             _settings[_KEY_LOCALES] = _argResults[Options._ARG_LOCALES];
         }
-
-//        if(_argResults[Options._ARG_DART_PATH] != null) {
-//            _settings[_KEY_DART_PATH] = checkPath(_argResults[Options._ARG_DART_PATH]);
-//        }
-//
-//        if(_argResults[Options._ARG_DART_PATH] != null) {
-//            _settings[_KEY_DART_PATH] = checkPath(_argResults[Options._ARG_DART_PATH]);
-//        }
 
         if(_argResults[Options._ARG_EXCLUDE] != null) {
             _settings[_KEY_EXCLUDE_DIRS] = checkPath(_argResults[Options._ARG_EXCLUDE]);
@@ -278,7 +225,9 @@ class Config {
                 else {
                     _settings[key] = map[key].toString();
                 }
-                print("Found $key in $configfile: ${map[key]}");
+                print(l10n("Found '[key]' in [file]: [value]",
+                    {"key" : key, "file" : configfile, "value" : map[key] }));
+
                 foundSetting = true;
             }
         });

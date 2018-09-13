@@ -1,10 +1,5 @@
 {
-   "@@last_modified": "2018-09-11T14:52:37.586771",
-   "Code generation dir": "Code generation dir",
-   "@Code generation dir": {
-      "type": "text",
-      "placeholders": {}
-   },
+   "@@last_modified": "2018-09-13T14:31:04.821095",
    "Dirs to scan": "Dirs to scan",
    "@Dirs to scan": {
       "type": "text",
@@ -12,6 +7,71 @@
    },
    "Config-File": "Config-File",
    "@Config-File": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "loglevel": "loglevel",
+   "@loglevel": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "locales": "locales",
+   "@locales": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "System-Locale": "System-Locale",
+   "@System-Locale": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Suppress Warnings": "Suppress Warnings",
+   "@Suppress Warnings": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "yes": "yes",
+   "@yes": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "no": "no",
+   "@no": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Output dir for .ARB-Files": "Output dir for .ARB-Files",
+   "@Output dir for .ARB-Files": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Output file": "Output file",
+   "@Output file": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Use deferred loading": "Use deferred loading",
+   "@Use deferred loading": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Code generation mode": "Code generation mode",
+   "@Code generation mode": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Code generation dir": "Code generation dir",
+   "@Code generation dir": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Ignore excluded folders": "Ignore excluded folders",
+   "@Ignore excluded folders": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Overwrite intl_<locale>": "Overwrite intl_<locale>",
+   "@Overwrite intl_<locale>": {
       "type": "text",
       "placeholders": {}
    },
@@ -25,13 +85,8 @@
       "type": "text",
       "placeholders": {}
    },
-   "External commands:": "External commands:",
-   "@External commands:": {
-      "type": "text",
-      "placeholders": {}
-   },
-   "not installed!": "not installed!",
-   "@not installed!": {
+   "Found '[key]' in [file]: [value]": "Found '[key]' in [file]: [value]",
+   "@Found '[key]' in [file]: [value]": {
       "type": "text",
       "placeholders": {}
    },
@@ -50,8 +105,8 @@
       "type": "text",
       "placeholders": {}
    },
-   "mkl10n -l en,de . - Generates translation for en + de": "mkl10n -l en,de . - Generates translation for en + de",
-   "@mkl10n -l en,de . - Generates translation for en + de": {
+   "mkl10n -l es,de . - Generates translation for es + de": "mkl10n -l es,de . - Generates translation for es + de",
+   "@mkl10n -l es,de . - Generates translation for es + de": {
       "type": "text",
       "placeholders": {}
    },
@@ -67,16 +122,6 @@
    },
    "locales - separated by colon, Sample: --locales en,de,es": "locales - separated by colon, Sample: --locales en,de,es",
    "@locales - separated by colon, Sample: --locales en,de,es": {
-      "type": "text",
-      "placeholders": {}
-   },
-   "Libprefix for generated DART-File (library <prefix>.locale;)": "Libprefix for generated DART-File (library <prefix>.locale;)",
-   "@Libprefix for generated DART-File (library <prefix>.locale;)": {
-      "type": "text",
-      "placeholders": {}
-   },
-   "Defines where to place your locale-Dir": "Defines where to place your locale-Dir",
-   "@Defines where to place your locale-Dir": {
       "type": "text",
       "placeholders": {}
    },
@@ -100,18 +145,18 @@
       "type": "text",
       "placeholders": {}
    },
-   "File where you want to store the generated Dart-Files (Usually inside lib)": "File where you want to store the generated Dart-Files (Usually inside lib)",
-   "@File where you want to store the generated Dart-Files (Usually inside lib)": {
-      "type": "text",
-      "placeholders": {}
-   },
-   "Ignore excluded folders": "Ignore excluded folders",
-   "@Ignore excluded folders": {
+   "Folder where you want to store the generated Dart-Files (Usually inside lib)": "Folder where you want to store the generated Dart-Files (Usually inside lib)",
+   "@Folder where you want to store the generated Dart-Files (Usually inside lib)": {
       "type": "text",
       "placeholders": {}
    },
    "Overwrites intl_<local> if it exists": "Overwrites intl_<local> if it exists",
    "@Overwrites intl_<local> if it exists": {
+      "type": "text",
+      "placeholders": {}
+   },
+   "Localized file already exists! ([path])": "Localized file already exists! ([path])",
+   "@Localized file already exists! ([path])": {
       "type": "text",
       "placeholders": {}
    },

@@ -6,7 +6,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl_browser.dart';
 
 import 'package:l10n/l10n.dart';
-import 'package:web/_l10n/messages_all.dart';
+import 'package:browser_example/_l10n/messages_all.dart';
 
 Future main() async {
     // Determine your locale

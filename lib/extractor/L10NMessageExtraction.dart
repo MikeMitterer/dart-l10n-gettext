@@ -83,7 +83,7 @@ class L10NMessageExtraction {
             return parseCompilationUnit(contents);
         }
         on AnalyzerErrorGroup {
-            print("Error in parsing $origin, no messages extracted.");
+            _logger.shout("Error in parsing $origin, no messages extracted.");
             rethrow;
         }
     }
@@ -134,7 +134,7 @@ class L10NFindingVisitor extends GeneralizingAstVisitor {
     /// plural as if it was an outermost message.
     @override
     void visitMethodInvocation(MethodInvocation node) {
-        _logger.info("  visitMethodInvocation ${node}");
+        _logger.fine("  visitMethodInvocation ${node}");
         if (!_createMessage(node)) {
             super.visitMethodInvocation(node);
         }
@@ -240,22 +240,22 @@ class L10NFindingVisitor extends GeneralizingAstVisitor {
             //message.addPieces([ arguments.first. ]);
         }
 
-        _logger.info("    Node-Name: ${node.methodName.name}, Args: ${arguments.join(", ")}");
+        _logger.fine("    Node-Name: ${node.methodName.name}, Args: ${arguments.join(", ")}");
 
         // We only rewrite messages with parameters, otherwise we use the literal
         // string as the name and no arguments are necessary.
         if (!message.hasName) {
-            _logger.info("      Message: $message without a name");
+            _logger.fine("      Message: $message without a name");
             if (arguments.first is SimpleStringLiteral || arguments.first is AdjacentStrings) {
 
-                // _logger.info("${arguments.first}:${arguments.first.runtimeType}");
+                // _logger.fine("${arguments.first}:${arguments.first.runtimeType}");
 
                 // If there's no name, and the message text is a simple string, compute
                 // a name based on that plus meaning, if present.
                 var simpleName = (arguments.first as StringLiteral).stringValue;
                 message.name = _computeMessageName(message.name, simpleName, message.meaning);
 
-                _logger.info("        -> ${message.name}");
+                _logger.fine("        -> ${message.name}");
             }
         }
         return message;

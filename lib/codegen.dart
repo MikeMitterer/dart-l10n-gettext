@@ -1,10 +1,8 @@
 library l10n.codegen;
 
-import "dart:collection";
 import 'dart:convert';
 import 'dart:io';
 import 'package:path/path.dart' as path;
-import 'package:intl_translation/extract_messages.dart';
 import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation/src/icu_parser.dart';

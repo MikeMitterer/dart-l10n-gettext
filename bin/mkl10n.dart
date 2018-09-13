@@ -2,13 +2,11 @@ library l10n.app;
 
 import 'dart:io';
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:args/args.dart';
 import 'package:yaml/yaml.dart' as yaml;
 import 'package:validate/validate.dart';
-import 'package:where/where.dart';
 
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
@@ -22,7 +20,6 @@ import 'package:logging/logging.dart';
 import 'package:console_log_handler/print_log_handler.dart';
 
 import 'package:l10n/l10n.dart';
-import 'package:l10n/locale/messages.dart';
 import 'package:l10n/arb.dart' as arb;
 import 'package:l10n/codegen.dart';
 import 'package:l10n/extractor.dart';
@@ -31,9 +28,6 @@ import 'package:l10n/_l10n/messages_all.dart';
 
 part 'argparser/Config.dart';
 part 'argparser/Options.dart';
-
-part 'commands/ShellCommand.dart';
-part 'commands/commands.dart';
 
 class Application {
     // final Logger _logger = new Logger("l10n.Application");
@@ -79,7 +73,7 @@ class Application {
                     arb.generateTranslationFile(
                         Directory(config.outputDir),
                         File(config.outputFile.replaceAll("_messages", "_${locale}")),
-                        locale, allMessages,config.overwriteLocaleFile);
+                        locale, allMessages,config.overwriteLocaleFile, config.suppressWarnings);
                 });
 
                 generateDartCode(() {
@@ -132,7 +126,6 @@ class Application {
 
 void main(List<String> arguments) {
     findSystemLocale().then((final String locale) async {
-        translate.locale = Intl.shortLocale(locale);
 
         // Avoids error message:
         //      LocaleDataException: Locale data has not been initialized,

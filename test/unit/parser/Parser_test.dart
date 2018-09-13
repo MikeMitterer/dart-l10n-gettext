@@ -38,7 +38,7 @@ class _TestPrintVisitor extends Visitor {
 
 
 main() async {
-    final Logger _logger = new Logger("test.unit.parser");
+    // final Logger _logger = new Logger("test.unit.parser");
 
     // If you want to see some log outptut set "defaultLogLevel:"
     // to Level.FINE or Level.FINER

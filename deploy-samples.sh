@@ -87,7 +87,7 @@ case "${CMDLINE}" in
     ;;
 
     -x|prepare|-prepare|--prepare)
-        if [ -n "${OPTION1+set}" -a "${OPTION1}" != "--force"  ]; then
+        if [ -n "${OPTION1+set}" -a "${OPTION1}" != "--force" -a "${OPTION1}" != "" ]; then
             prepareSamples "${EXAMPLE_FOLDER}/${OPTION1}"
         else
             prepareSamples "${EXAMPLES[@]}"

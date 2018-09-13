@@ -1,4 +1,4 @@
-define(['dart_sdk', 'packages/intl/intl_browser', 'packages/intl/intl', 'packages/intl/date_symbol_data_local', 'packages/web/_l10n/messages_all', 'packages/l10n/l10n'], function(dart_sdk, intl_browser, intl, date_symbol_data_local, messages_all, l10n) {
+define(['dart_sdk', 'packages/intl/intl_browser', 'packages/intl/intl', 'packages/intl/date_symbol_data_local', 'packages/browser_example/_l10n/messages_all', 'packages/l10n/l10n'], function(dart_sdk, intl_browser, intl, date_symbol_data_local, messages_all, l10n) {
   'use strict';
   const core = dart_sdk.core;
   const html = dart_sdk.html;

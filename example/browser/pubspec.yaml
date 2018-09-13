@@ -1,4 +1,4 @@
-name: web
+name: browser_example
 description: An absolute bare-bones web app.
 # version: 1.0.0
 #homepage: https://www.example.com
@@ -14,3 +14,6 @@ dependencies:
 dev_dependencies:
   build_runner: ^0.10.0
   build_web_compilers: ^0.4.0
+
+  sass_builder: any
+

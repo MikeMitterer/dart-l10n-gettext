@@ -37,7 +37,7 @@ String makePrettyJsonString(final json) {
 /// Goes through the files
 void iterateThroughDirSync(final String dir,final List<String> extensions,  final List<String> dirsToExclude, void callback(final File file)) {
     String scanningMessage() => Intl.message("Scanning",desc: "In '_iterateThroughDirSync'");
-    _logger.info("${scanningMessage()}: $dir");
+    _logger.fine("${scanningMessage()}: $dir");
 
     // its OK if the path starts with packages but not if the path contains packages (avoid recursion)
     final RegExp regexp = new RegExp("^/*packages/*");
@@ -45,7 +45,7 @@ void iterateThroughDirSync(final String dir,final List<String> extensions,  fina
     final Directory directory = new Directory(dir);
     if (directory.existsSync()) {
         directory.listSync(recursive: true).where((final FileSystemEntity entity) {
-            _logger.info("Entity: ${entity}");
+            _logger.finer("Entity: ${entity}");
 
             bool isValidExtension(final String path)
                 => extensions.any((final String extension) => path.toLowerCase().endsWith("${extension.toLowerCase()}"));
@@ -55,7 +55,7 @@ void iterateThroughDirSync(final String dir,final List<String> extensions,  fina
                 && isValidExtension(entity.path));
 
             if(!isUsableFile) {
-                _logger.info("...not usable!");
+                _logger.finer("...not usable!");
                 return false;
             }
             if(entity.path.contains("packages")) {
@@ -66,14 +66,14 @@ void iterateThroughDirSync(final String dir,final List<String> extensions,  fina
             if(entity.path.startsWith(".pub/") || entity.path.startsWith("./.pub/") ||
                 entity.path.startsWith(".git/") || entity.path.startsWith("./.git/") ||
                 entity.path.startsWith("build/") || entity.path.startsWith("./build/")){
-                _logger.info("...build, .pub or .git-Folder!");
+                _logger.finer("...build, .pub or .git-Folder!");
                 return false;
             }
 
             for(final String dirToExclude in dirsToExclude) {
                 final String dir = dirToExclude.trim();
                 if(entity.path.startsWith("${dir}/") || entity.path.startsWith("./${dir}/")) {
-                    _logger.info("...starts with ${dir} - not allowed!");
+                    _logger.finer("...starts with ${dir} - not allowed!");
                     return false;
                 }
             }
@@ -82,7 +82,7 @@ void iterateThroughDirSync(final String dir,final List<String> extensions,  fina
 
         }).map((final FileSystemEntity entity) => new File(entity.path))
             .forEach((final File file) {
-            _logger.info("  Found: ${file}");
+            _logger.fine("  Found: ${file}");
             callback(file);
         });
     }

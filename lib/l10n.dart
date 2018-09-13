@@ -1,10 +1,8 @@
 library l10n;
 
 import "dart:collection";
-import 'package:logging/logging.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
-import 'package:dryice/dryice.dart';
 
 import "package:validate/validate.dart";
 
@@ -13,9 +11,6 @@ export 'package:intl/intl.dart';
 part "interfaces.dart";
 
 part 'l10n/L10NImpl.dart';
-part 'l10n/L10NTranslate.dart';
-
-//final L10NTranslate TRANSLATOR = L10NTranslate();
 
 /// Shortcut to get a L10N object
 ///

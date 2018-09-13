@@ -12,7 +12,7 @@ import 'package:l10n/parser.dart' as l10n;
 import 'package:l10n/extractor.dart';
 
 main() async {
-    final Logger _logger = new Logger("test.unit.htmlextraction");
+    // final Logger _logger = new Logger("test.unit.htmlextraction");
 
     configLogging();
     //await saveDefaultCredentials();

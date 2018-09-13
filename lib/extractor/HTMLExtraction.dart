@@ -93,7 +93,7 @@ class L10NStatementVisitor extends l10n.Visitor {
 
   @override
   void visitL10n(final l10n.L10NStatement statement) {
-      _logger.info("  visitL10n ${statement}");
+      _logger.fine("  visitL10n ${statement}");
 
       messages.putIfAbsent(statement.msgid, () {
           final message = new MainMessage();

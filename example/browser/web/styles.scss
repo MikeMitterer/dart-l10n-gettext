@@ -1,0 +1,232 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+html, body {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    font-family: 'Roboto', sans-serif;
+}
+> * {
+    box-sizing: border-box;
+}
+
+$background-color: #383838;
+
+// - Application -----------------------------------------------------------------------------------
+
+#loader {
+    display: none;
+    padding: 20px;
+    text-align: center;
+}
+
+body.loading {
+    #loader {
+        display: block;
+    }
+    main {
+        visibility: hidden;
+    }
+}
+
+#langswitcher {
+    display: flex;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end; // ⇾
+    align-content: space-between; // ||
+    align-items: center; // ↓
+
+    a {
+        margin: 0 0.5em;
+        text-decoration: none;
+    }
+
+    margin: 0;
+}
+
+
+// - Page layout -----------------------------------------------------------------------------------
+
+body {
+    display: grid;
+    grid-template-areas:
+            "header header header"
+            "article article article"
+            "footer footer footer";
+
+    grid-template-columns: 1fr 1fr 1fr;
+    //grid-template-columns: 1fr;
+
+    grid-template-rows: 40px 1fr 50px;
+
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+    height: 100vh;
+    margin: 0;
+}
+
+header, footer, article {}
+footer, article { padding: 10px; }
+header { padding: 5px; }
+
+header {
+    grid-area: header;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end; // ⇾
+    align-content: space-between; // ||
+    align-items: center; // ↓
+
+    font-size: 14px;
+
+    > * {
+        min-width: 50%;
+    }
+}
+
+footer {
+    grid-area: footer;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between; // ⇾
+    align-content: space-between; // ||
+    align-items: center; // ↓
+
+    font-size: 12px;
+}
+
+main, #mainArticle {
+    grid-area: article;
+
+    overflow: scroll;
+
+    body.loading & {
+        display: none;
+    }
+}
+
+//#content {
+//    padding: 20px;
+//    text-align: center;
+//}
+
+.dark-mode {
+    background-color: $background-color;
+    color: white;
+    a { color: white; }
+}
+
+header.cols, footer.cols {
+}
+
+// - Details ---------------------------------------------------------------------------------------
+
+nav.toolbar {
+    padding: 5px;
+    font-weight: 100;
+    
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+
+        li {
+            display: inline;
+
+            &:last-child a:after {
+                content: '';
+                padding-left: 0;
+                padding-right : 0;
+            }
+        }
+
+        a {
+            text-decoration: none;
+
+            &:after {
+                content: '|';
+                padding-left: 0.5em;
+                padding-right : 0.5em;
+            }
+        }
+    }
+}
+
+
+.cols {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center; // ⇾
+    align-content: center; // ||
+    align-items: flex-start; // ↓
+
+    > * {
+        margin-top: 1em;
+        margin-bottom: 1em;
+
+        padding-right: 10px;
+
+        :last-child {
+            padding-right: 0;
+        }
+    }
+    //#log { width: 50%; }
+    //img {
+    //    width: 40%;
+    //    border-radius: 5px;
+    //    margin-right: 5px;
+    //}
+}
+
+#pageFooter {
+    font-weight: 100;
+    a {
+        text-decoration: none;
+    }
+
+    .published {
+        font-size: 90%;
+        color : gray;
+    }
+}
+
+// - Spinner ---------------------------------------------------------------------------------------
+
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+}
+
+.spinner {
+    display: none;
+    body.loading & { display: block; }
+
+    &:before {
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        margin-top: -10px;
+        margin-left: -10px;
+        border-radius: 50%;
+        border-top: 2px solid #FD9A00;
+        border-right: 2px solid transparent;
+        animation: spinner .6s linear infinite;
+    }
+
+    .dark-mode & {
+        color: gray;
+    }
+}

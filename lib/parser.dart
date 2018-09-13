@@ -26,11 +26,7 @@
  */
 library l10n.parser;
 
-import 'dart:async';
-import 'dart:io';
 import 'dart:math' as math;
-import 'package:intl/intl.dart';
-import 'package:logging/logging.dart';
 import 'package:optional/optional.dart';
 import 'package:validate/validate.dart';
 

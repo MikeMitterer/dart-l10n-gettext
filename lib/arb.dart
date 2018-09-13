@@ -2,6 +2,7 @@ library l10n.arb;
 
 import 'dart:io';
 import 'dart:async';
+import 'package:l10n/l10n.dart';
 import 'package:path/path.dart' as path;
 import 'package:logging/logging.dart';
 import 'package:intl_translation/extract_messages.dart';
@@ -40,7 +41,7 @@ Future<Map<String, MainMessage>> scanDirsAndGenerateARBMessages(
             utils.iterateThroughDirSync(dir, [ ".dart", ".html" ], dirsToExclude, (final File file) {
                 final extension = path.extension(file.path).toLowerCase();
 
-                _logger.info("  -> ${file.path}");
+                _logger.fine("  -> ${file.path}");
 
                 if(extension == '.html') {
                     Map<String, MainMessage> messages = htmlMessageExtractor.parseFile(file);
@@ -101,7 +102,7 @@ void generateTranslationFile(
     final Directory dir,
     final File file,
     final String locale,
-    final Map<String,MainMessage> allMessages, final overwriteLocaleFile) {
+    final Map<String,MainMessage> allMessages, final overwriteLocaleFile, final bool suppressWarning) {
 
     Validate.notNull(dir);
     Validate.notNull(file);
@@ -110,8 +111,8 @@ void generateTranslationFile(
 
     final fullPath = File(path.join(dir.path,file.path));
 
-    if(fullPath.existsSync() && overwriteLocaleFile == false) {
-        _logger.warning("Localized file already exists! (${fullPath.path})");
+    if(fullPath.existsSync() && overwriteLocaleFile == false && suppressWarning == false) {
+        _logger.warning(l10n("Localized file already exists! ([path])",{ "path" : fullPath.path }));
         return;
     }
 

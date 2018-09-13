@@ -25,7 +25,8 @@ var baseUrl = (function () {
 
 let modulePaths = {
  "dart_sdk": "packages/$sdk/dev_compiler/amd/dart_sdk",
- "packages/dryice/dryice": "packages/dryice/dryice.ddc",
+ "packages/browser_example/_l10n/messages_all": "packages/browser_example/_l10n/messages_all.ddc",
+ "packages/browser_example/_l10n/messages_de": "packages/browser_example/_l10n/messages_de.ddc",
  "packages/intl/date_symbol_data_local": "packages/intl/date_symbol_data_local.ddc",
  "packages/intl/date_symbols": "packages/intl/date_symbols.ddc",
  "packages/intl/date_time_patterns": "packages/intl/date_time_patterns.ddc",
@@ -36,13 +37,7 @@ let modulePaths = {
  "packages/intl/number_symbols_data": "packages/intl/number_symbols_data.ddc",
  "packages/intl/src/plural_rules": "packages/intl/src/plural_rules.ddc",
  "packages/l10n/l10n": "packages/l10n/l10n.ddc",
- "packages/logging/logging": "packages/logging/logging.ddc",
- "packages/reflectable/capability": "packages/reflectable/capability.ddc",
- "packages/reflectable/mirrors": "packages/reflectable/mirrors.ddc",
- "packages/reflectable/src/encoding_constants": "packages/reflectable/src/encoding_constants.ddc",
  "packages/validate/expect": "packages/validate/expect.ddc",
- "packages/web/_l10n/messages_all": "packages/web/_l10n/messages_all.ddc",
- "packages/web/_l10n/messages_de": "packages/web/_l10n/messages_de.ddc",
  "web/main": "main.ddc"
 };
 if(!window.$dartLoader) {
