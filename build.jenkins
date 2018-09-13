@@ -23,7 +23,8 @@ pipeline {
         stage('Test') {
             steps {
                 ansiColor('xterm') {
-                    sh 'pub run build_runner --delete-conflicting-outputs test'
+                    sh 'rm -f .dart_tool'
+                    sh 'pub run build_runner test'
                 }
             }
         }
