@@ -23,13 +23,15 @@ pipeline {
         stage('Test') {
             steps {
                 ansiColor('xterm') {
-                    sh 'pub run build_runner test'
+                    sh 'pub run build_runner --delete-conflicting-outputs test'
                 }
             }
         }
         stage('Deploy') {
             steps {
                 ansiColor('xterm') {
+                    sh './deploy-samples.sh -x browser'
+                    sh './deploy-samples.sh -u browser'
                     sh './deploy-samples.sh -d browser'
                     sh './deploy-samples.sh -p browser'
                 }
