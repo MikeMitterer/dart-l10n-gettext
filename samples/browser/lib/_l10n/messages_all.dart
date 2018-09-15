@@ -27,17 +27,18 @@ MessageLookupByLibrary _findExact(localeName) {
 
 /// User programs should call this before using [localeName] for messages.
 Future<bool> initializeMessages(String localeName) async {
-  var availableLocale = Intl.verifiedLocale(
-    localeName,
-    (locale) => _deferredLibraries[locale] != null,
-    onFailure: (_) => null);
+  var availableLocale = Intl.verifiedLocale( localeName,
+          (locale) => _deferredLibraries[locale] != null,
+                onFailure: (_) => null);
   if (availableLocale == null) {
     return new Future.value(false);
   }
+
   var lib = _deferredLibraries[availableLocale];
   await (lib == null ? new Future.value(false) : lib());
   initializeInternalMessageLookup(() => new CompositeMessageLookup());
   messageLookup.addLocale(availableLocale, _findGeneratedMessagesFor);
+
   return new Future.value(true);
 }
 
@@ -50,8 +51,7 @@ bool _messagesExistFor(String locale) {
 }
 
 MessageLookupByLibrary _findGeneratedMessagesFor(locale) {
-  var actualLocale = Intl.verifiedLocale(locale, _messagesExistFor,
-      onFailure: (_) => null);
+  var actualLocale = Intl.verifiedLocale(locale, _messagesExistFor,  onFailure: (_) => null);
   if (actualLocale == null) return null;
   return _findExact(actualLocale);
 }

@@ -13,10 +13,13 @@ Future main() async {
     final String locale = await findSystemLocale();
     final String shortLocale = Intl.shortLocale(Uri.base.queryParameters['lang'] ?? locale);
 
+    // Important - otherwise the Browser doesn't show the right language!
+    Intl.systemLocale = shortLocale;
+
     // Avoids error message:
     //      LocaleDataException: Locale data has not been initialized,
     //      call initializeDateFormatting(<locale>).
-    await initializeDateFormatting(locale);
+    await initializeDateFormatting(shortLocale);
 
     // Initialize translation-table
     await initializeMessages(shortLocale);
