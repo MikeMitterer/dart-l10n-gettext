@@ -21,6 +21,8 @@ Future main() async {
     // Initialize translation-table
     await initializeMessages(shortLocale);
 
+    (dom.querySelector("head") as dom.HeadElement).lang = shortLocale;
+
     dom.querySelectorAll('.translate')
         .map((final dom.Element element) => element as dom.HtmlElement)
         .forEach((final dom.HtmlElement element) {

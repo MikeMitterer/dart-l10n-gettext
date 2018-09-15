@@ -4,3 +4,4 @@ packages/**
 ##locale
 *.po~
 *.pot
+samples/browser/deploy/*
