@@ -48,6 +48,8 @@ void main() async {
         () => findSystemLocale(),
         (final String locale) => initializeMessages(locale)
     );    
+    // Set "lang" in the DOM
+    (dom.querySelector("head") as dom.HeadElement).lang = locale;
 
     // App specific code
     // ...
