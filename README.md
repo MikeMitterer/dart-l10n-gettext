@@ -42,20 +42,23 @@ import 'package:intl/intl_standalone.dart';
 import 'package:l10n/l10n.dart';
 import 'package:<your package>/_l10n/messages_all.dart';
 
-Future main() async {
-    // Determine your locale
-    final String locale = await findSystemLocale();
-    final String shortLocale = Intl.shortLocale(locale);
+void main() async {
+    // Init section
+    final shortLocale = await initLanguageSettings(
+        () => findSystemLocale(),
+        (final String locale) => initializeMessages(locale)
+    );    
 
-    // Avoids error message:
-    //      LocaleDataException: Locale data has not been initialized,
-    //      call initializeDateFormatting(<locale>).
-    await initializeDateFormatting(locale);
+    // App specific code
+    // ...
+    String message() => Intl.message("First test");
+    print(message());
+    print(l10n("Second test"));
 
-    // Initialize translation-table
-    await initializeMessages(shortLocale);
-
-    // Here comes you app-code
+    [ "Mike", "Gerda", "Sarh"].forEach((name) {
+        print(l10n("Good morning [name]",{ "name" : name }));
+    });
+    
     // ...
 }
 ```
