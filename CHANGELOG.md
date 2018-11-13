@@ -4,9 +4,15 @@ Creates translatable PO-Files, strong orientation to xgettext
 ## [Unreleased](http://github.com/mikemitterer/dart-l10n-gettext/compare/v2.0...HEAD)
 
 ### Feature
+* initLanguageSetting shortens the init-section in main [09537d8](https://github.com/mikemitterer/dart-l10n-gettext/commit/09537d85e3a2eacbf0bf3a4e1cf2284417b30939)
 * Easy translation with mkl10n [7c6f264](https://github.com/mikemitterer/dart-l10n-gettext/commit/7c6f264dc53270db6bcd84e9748c0e0ff195e141)
 
+### Bugs
+* Browser didn't show the right language if Browser-Language was just English [a05d0f2](https://github.com/mikemitterer/dart-l10n-gettext/commit/a05d0f21702ec26b54ec356623ce65ef44dfad52)
+* Language does not change on client-side [23f6700](https://github.com/mikemitterer/dart-l10n-gettext/commit/23f6700cd1c8e5dad970ae4214fb0cf3f992f9b2)
+
 ### Docs
+* Browser-Sample got a separate _initLanguageSettings-function [cb0734c](https://github.com/mikemitterer/dart-l10n-gettext/commit/cb0734c4e3b51fc43bf5beb816177155ec02e320)
 * Typos in README [02c4201](https://github.com/mikemitterer/dart-l10n-gettext/commit/02c4201d9d5a17e698fdc174601083c20bc50ef9)
 
 ## [v1.4](http://github.com/mikemitterer/dart-l10n-gettext/compare/v1.3...v1.4) - 2018-08-29
