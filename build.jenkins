@@ -30,14 +30,13 @@ pipeline {
         stage('Deploy') {
             steps {
                 ansiColor('xterm') {
-                    sh './deploy-samples.sh -x browser'
-                    sh './deploy-samples.sh -u browser'
-                    sh './deploy-samples.sh -d browser'
-                    sh './deploy-samples.sh -p browser --force'
+                    sh 'deploySamples.sh -x browser'
+                    sh 'deploySamples.sh -u browser'
+                    sh 'deploySamples.sh -d browser'
+                    sh 'deploySamples.sh -p browser --force'
                 }
             }
         }
 
     }
 }
-                       
