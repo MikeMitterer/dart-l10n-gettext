@@ -1,6 +1,7 @@
 library l10n;
 
-import "dart:collection";
+import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -34,10 +35,10 @@ String tr(final String msgid, [final Map<String, dynamic> vars = const {} ]) {
 ///
 ///     // Include this if you run your app in the browser
 ///     import 'package:intl/intl_browser.dart';
-///     
+///
 ///     import 'package:l10n/l10n.dart';
 ///     import 'package:browser_example/_l10n/messages_all.dart';
-///     
+///
 ///     Future main() async {
 ///         final String locale = await initLanguageSettings(
 ///                 () => findSystemLocale(),
@@ -45,7 +46,7 @@ String tr(final String msgid, [final Map<String, dynamic> vars = const {} ]) {
 ///         );
 ///         ...
 ///     }
-///     
+///
 Future<String> initLanguageSettings(
     Future<String> findLocale(),
     Future<bool> initMessages(final String locale)) async {
