@@ -11,6 +11,7 @@ main() async {
     await findSystemLocale();
     await initializeMessages('de');
 
+    Intl.defaultLocale = 'de';
     // Keep this block!
     // prepTests scans this section (via HTMLExtraction)
     final template = """
@@ -59,7 +60,7 @@ main() async {
 
         test('> part of HTML-Block (template)', () {
             // Use lookupMessage directly to make sure this translation is based on _(...) from
-            // template-String 
+            // template-String
             expect(messageLookup.lookupMessage("Test 11: 12345678aA16#", "de",null,[],null)
                 ,"Test 11: abc#");
 

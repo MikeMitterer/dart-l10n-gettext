@@ -7,7 +7,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -156,7 +156,7 @@ class L10NFindingVisitor extends GeneralizingAstVisitor {
         }
 
         // e.g. l10n("Test 2 - Plural Name: {name}",{ "name" : "Mike" });
-        if(arguments.length == 2 && arguments.last is! MapLiteral) {
+        if(arguments.length == 2 && arguments.last is! SetOrMapLiteral) {
             return false;
         }
 
@@ -191,7 +191,7 @@ class L10NFindingVisitor extends GeneralizingAstVisitor {
             _logger.shout("Unexpected exception: $e, $s");
             throw L10NMessageExtractionException("Unexpected exception: $e, $s");
         }
-        
+
         return false;
     }
 
@@ -208,7 +208,7 @@ class L10NFindingVisitor extends GeneralizingAstVisitor {
 
             final messageCode =
                 message.toOriginalCode(includeDesc: false, includeExamples: false);
-            
+
             if (existingCode != messageCode) {
                 extraction._makeWarning("WARNING: Duplicate message name:\n"
                     "'${message.name}' occurs more than once in ${extraction.origin}");
