@@ -9,7 +9,7 @@ import 'package:browser_example/_l10n/messages_all.dart';
 
 Future main() async {
     // initLanguageSettings checks the browser url if it finds
-    // a "lang" query param and sets the locale accordingly 
+    // a "lang" query param and sets the locale accordingly
     final String locale = await initLanguageSettings(
             () => findSystemLocale(),
             (final String locale) => initializeMessages(locale)
